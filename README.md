@@ -1,2 +1,2 @@
 # BuildingBuildBillions
-23年度ゲームプロジェクト
+2023年度ゲームプロジェクト
