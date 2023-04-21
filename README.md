@@ -8,6 +8,6 @@
 - 報告、連絡、相談はこまめにする。
 
 ## 命名規則
-|Pblic変数|private変数|local変数|
+|Public変数|private変数|local変数|
 |:--:|:--:|:--:|
 |Upper|_ + lower|lower|
