@@ -6,13 +6,13 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 {
     [SerializeField]
     private float _setTime = 0.0f;
-    private float _time = 0.0f;
-    public float Time => _time;
+    private float _countDownTime = 0.0f;
+    public float CountDownTime => _countDownTime;
 
     // Start is called before the first frame update
     void Start()
     {
-        _time = _setTime;        
+        _countDownTime = _setTime;        
     }
 
     // Update is called once per frame
@@ -26,6 +26,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     /// </summary>
     private void CountDown()
     {
-        _time--;
+        _countDownTime -= Time.deltaTime;
     }
 }
