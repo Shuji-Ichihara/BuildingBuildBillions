@@ -11,12 +11,12 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _timeText.text = GameManager.Instance.Time.ToString();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        _timeText.text = string.Format("{0:#}", GameManager.Instance.CountDownTime);
     }
 }
