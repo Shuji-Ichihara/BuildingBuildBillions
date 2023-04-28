@@ -20,21 +20,31 @@ public class CameraControllerTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CameraZoom();
-        Debug.Log($"{_mainCamera.fieldOfView}");
+        //ホイールを取得して、均しのためにtime.deltaTimeをかけておく
+        var scroll = Input.mouseScrollDelta.y * Time.deltaTime * 100;
+        Debug.Log(_mainCamera.orthographicSize);
+
+        //mainCam.orthographicSizeは0だとエラー出るっぽいので回避策
+        if (_mainCamera.orthographicSize >= 540 && _mainCamera.orthographicSize <= 540 * 2)
+        {
+            _mainCamera.orthographicSize += scroll;
+            _mainCamera.orthographicSize = Mathf.Clamp(_mainCamera.orthographicSize
+                                                     , 540
+                                                     , 540 * 2);
+        }
     }
 
     private void CameraZoom()
     {
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         Zoom(scroll, _mouseZoomSpeed);
-        
+
     }
 
     private void Zoom(float deltaMagnitudeDiff, float speed)
     {
-        _mainCamera.fieldOfView += deltaMagnitudeDiff * speed;
-        _mainCamera.fieldOfView = Mathf.Clamp(_mainCamera.fieldOfView
+        _mainCamera.orthographicSize += deltaMagnitudeDiff * speed;
+        _mainCamera.orthographicSize = Mathf.Clamp(_mainCamera.fieldOfView
                                             , _zoomMinBound
                                             , _zoomMaxBound);
     }
