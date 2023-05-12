@@ -7,6 +7,7 @@ public class CameraControllerTest : MonoBehaviour
     // メインカメラ
     [SerializeField]
     private Camera _camera = null;
+    public Camera Camera => _camera;
 
     // Start is called before the first frame update
     void Start()
@@ -17,39 +18,43 @@ public class CameraControllerTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // カメラズームのテストプログラム
-        var scroll = Input.GetAxis("Vertical") * Time.deltaTime * 100;
-        Debug.Log(_camera.orthographicSize);
-        MainCameraMove();
+        ZoomCamera();
+    }
+
+    /// <summary>
+    /// カメラズームのプログラム
+    /// </summary>
+    private void ZoomCamera()
+    {
+        // カメラの OrthographicSize の変化量
+        float zoom = Input.GetAxis("Vertical") * Time.deltaTime * 100;
 
         // mainCam.orthographicSizeは0だとエラー出るっぽいので回避策
         if (_camera.orthographicSize >= 540 && _camera.orthographicSize <= 540 * 2)
         {
-            _camera.orthographicSize += scroll;
+            _camera.orthographicSize += zoom;
             _camera.orthographicSize = Mathf.Clamp(_camera.orthographicSize
                                                      , 540
-                                                     , 540 * 2);
+                                                     , Screen.height);
         }
 
-    }
-
-    private void MainCameraMove()
-    {
-        float cameraMoveYValue = 1.0f;
+        // カメラの Y 座標の移動量
+        float cameraMoveYValue = 100.0f;
         // カメラの z 座標を移動
-        if (Input.GetKey(KeyCode.A))
+        if (zoom > 0.0f)
         {
-            _camera.transform.position += Vector3.up * cameraMoveYValue * Time.deltaTime * 100;
+            _camera.transform.position += Vector3.up * cameraMoveYValue * Time.deltaTime;
         }
-        else if (Input.GetKey(KeyCode.D))
+        else if (zoom < 0.0f)
         {
-            _camera.transform.position += Vector3.down * cameraMoveYValue * Time.deltaTime * 100;
+            _camera.transform.position += Vector3.down * cameraMoveYValue * Time.deltaTime;
         }
         // カメラの Y 座標の移動範囲を制限
         _camera.transform.position = new Vector3(0.0f
-                                                   , Mathf.Clamp(_camera.transform.position.y
-                                                               , 0.0f
-                                                               , Screen.height / 2.0f)
-                                                   , _camera.transform.position.z);
+                                               , Mathf.Clamp(_camera.transform.position.y
+                                                            , 0.0f
+                                                            , Screen.height / 2.0f)
+                                               , _camera.transform.position.z);
+        GameManager.Instance.MoveJadgementBarFallPoint(zoom);
     }
 }
