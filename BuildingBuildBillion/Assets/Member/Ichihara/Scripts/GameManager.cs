@@ -18,7 +18,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     [SerializeField]
     private float _jadgementBarFallPointHeight = 0.0f;
     // _jadgementBarFallPoint の初期座標
-    private Vector3 _jadgementBarFallPosition = Vector3.zero;   
+    private Vector3 _jadgementBarFallPosition = Vector3.zero;
 
     // Start is called before the first frame update
     void Start()
@@ -45,14 +45,14 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     /// <summary>
     /// カメラのズーム、移動に連動して JadgementBarFallPoint の Y 座標を移動させる
     /// </summary>
-    /// <param name="zoom">カメラのズームの移動量</param>
-    public void MoveJadgementBarFallPoint(float zoom)
+    /// <param name="Value">カメラのズームの移動量</param>
+    public void MoveJadgementBarFallPoint(bool Value)
     {
-        if (zoom > 0.0f)
+        if (Value == true)
         {
             _jadgementBarFallPoint.transform.position += Vector3.up * _jadgementBarFallPointHeight * Time.deltaTime;
         }
-        else if (zoom < 0.0f)
+        else if (Value == false)
         {
             _jadgementBarFallPoint.transform.position += Vector3.down * _jadgementBarFallPointHeight * Time.deltaTime;
         }
