@@ -6,7 +6,7 @@ public class CameraControllerTest : MonoBehaviour
 {
     // メインカメラ
     [SerializeField]
-    private Camera _mainCamera = null;
+    private Camera _camera = null;
 
     // Start is called before the first frame update
     void Start()
@@ -19,14 +19,14 @@ public class CameraControllerTest : MonoBehaviour
     {
         // カメラズームのテストプログラム
         var scroll = Input.GetAxis("Vertical") * Time.deltaTime * 100;
-        Debug.Log(_mainCamera.orthographicSize);
+        Debug.Log(_camera.orthographicSize);
         MainCameraMove();
 
         // mainCam.orthographicSizeは0だとエラー出るっぽいので回避策
-        if (_mainCamera.orthographicSize >= 540 && _mainCamera.orthographicSize <= 540 * 2)
+        if (_camera.orthographicSize >= 540 && _camera.orthographicSize <= 540 * 2)
         {
-            _mainCamera.orthographicSize += scroll;
-            _mainCamera.orthographicSize = Mathf.Clamp(_mainCamera.orthographicSize
+            _camera.orthographicSize += scroll;
+            _camera.orthographicSize = Mathf.Clamp(_camera.orthographicSize
                                                      , 540
                                                      , 540 * 2);
         }
@@ -39,17 +39,17 @@ public class CameraControllerTest : MonoBehaviour
         // カメラの z 座標を移動
         if (Input.GetKey(KeyCode.A))
         {
-            _mainCamera.transform.position += Vector3.up * cameraMoveYValue * Time.deltaTime * 100;
+            _camera.transform.position += Vector3.up * cameraMoveYValue * Time.deltaTime * 100;
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            _mainCamera.transform.position += Vector3.down * cameraMoveYValue * Time.deltaTime * 100;
+            _camera.transform.position += Vector3.down * cameraMoveYValue * Time.deltaTime * 100;
         }
         // カメラの Y 座標の移動範囲を制限
-        _mainCamera.transform.position = new Vector3(0.0f
-                                                   , Mathf.Clamp(_mainCamera.transform.position.y
+        _camera.transform.position = new Vector3(0.0f
+                                                   , Mathf.Clamp(_camera.transform.position.y
                                                                , 0.0f
                                                                , Screen.height / 2.0f)
-                                                   , _mainCamera.transform.position.z);
+                                                   , _camera.transform.position.z);
     }
 }
