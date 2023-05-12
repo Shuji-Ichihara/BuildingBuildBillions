@@ -1,30 +1,28 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraControllerTest : MonoBehaviour
 {
-    // ƒƒCƒ“ƒJƒƒ‰
+    // ãƒ¡ã‚¤ãƒ³ã‚«ãƒ¡ãƒ©
+    [SerializeField]
     private Camera _mainCamera = null;
-
-    private float _mouseZoomSpeed = 15.0f;
-    private float _zoomMinBound = 0.1f;
-    private float _zoomMaxBound = 179.9f;
 
     // Start is called before the first frame update
     void Start()
     {
-        _mainCamera = Camera.main;
+        //_mainCamera = Camera.main;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //ƒzƒC[ƒ‹‚ðŽæ“¾‚µ‚ÄA‹Ï‚µ‚Ì‚½‚ß‚Étime.deltaTime‚ð‚©‚¯‚Ä‚¨‚­
-        var scroll = Input.mouseScrollDelta.y * Time.deltaTime * 100;
+        //ãƒ›ã‚¤ãƒ¼ãƒ«ã‚’å–å¾—ã—ã¦ã€å‡ã—ã®ãŸã‚ã«time.deltaTimeã‚’ã‹ã‘ã¦ãŠã
+        var scroll = Input.GetAxis("Vertical") * Time.deltaTime * 100;
         Debug.Log(_mainCamera.orthographicSize);
+        MainCameraMove(scroll);
 
-        //mainCam.orthographicSize‚Í0‚¾‚ÆƒGƒ‰[o‚é‚Á‚Û‚¢‚Ì‚Å‰ñ”ðô
+        // mainCam.orthographicSizeã¯0ã ã¨ã‚¨ãƒ©ãƒ¼å‡ºã‚‹ã£ã½ã„ã®ã§å›žé¿ç­–
         if (_mainCamera.orthographicSize >= 540 && _mainCamera.orthographicSize <= 540 * 2)
         {
             _mainCamera.orthographicSize += scroll;
@@ -32,20 +30,13 @@ public class CameraControllerTest : MonoBehaviour
                                                      , 540
                                                      , 540 * 2);
         }
-    }
-
-    private void CameraZoom()
-    {
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
-        Zoom(scroll, _mouseZoomSpeed);
 
     }
 
-    private void Zoom(float deltaMagnitudeDiff, float speed)
+    private void MainCameraMove(float mouseScrollWheel)
     {
-        _mainCamera.orthographicSize += deltaMagnitudeDiff * speed;
-        _mainCamera.orthographicSize = Mathf.Clamp(_mainCamera.fieldOfView
-                                            , _zoomMinBound
-                                            , _zoomMaxBound);
+        // ã‚«ãƒ¡ãƒ©ã® z åº§æ¨™ã‚’ç§»å‹•
+        _mainCamera.transform.position += new Vector3(0, 0, mouseScrollWheel);
+        Debug.Log($"{_mainCamera.transform.position.z}");
     }
 }
