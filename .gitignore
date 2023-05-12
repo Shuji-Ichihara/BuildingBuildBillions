@@ -73,5 +73,6 @@ crashlytics-build.properties
 BuildingBuildBillion/.vsconfig
 BuildingBuildBillion/Library/*
 BuildingBuildBillion/Logs/*
+BuildingBuildBillion/Obj/*
 BuildingBuildBillion/Temp/*
 BuildingBuildBillion/UserSettings/*
