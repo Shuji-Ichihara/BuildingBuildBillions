@@ -57,4 +57,6 @@ public class CameraControllerTest : MonoBehaviour
                                                , _camera.transform.position.z);
         GameManager.Instance.MoveJadgementBarFallPoint(zoom);
     }
+    // 自動でカメラズームを制御
+    // ズームに応じてカメラの Y 座標を移動
 }
