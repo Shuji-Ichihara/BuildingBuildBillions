@@ -51,6 +51,7 @@ public class FadeEvent : MonoBehaviour
             SetColor();
             yield return null;
         }
+        SceneMove.instance.MainGame();
     }
     IEnumerator FadeInCor()
     {
@@ -64,6 +65,7 @@ public class FadeEvent : MonoBehaviour
 
     void SetColor()
     {
+        
         if(a>1)
         {
             a = 1;
