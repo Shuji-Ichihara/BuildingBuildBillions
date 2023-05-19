@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
+
 
 public class billcontroller2P : MonoBehaviour
 {
@@ -68,13 +68,6 @@ public class billcontroller2P : MonoBehaviour
         //{
         //    Debug.Log("button5");
         //}
-        var gamepad = Gamepad.current;
-        if (gamepad == null)
-        {
-            Debug.Log("ゲームパッドがありません。");
-
-            return;
-        }
 
         fromMoveHorizonal += Time.deltaTime;
 
@@ -145,7 +138,7 @@ public class billcontroller2P : MonoBehaviour
             leftwall = false;
         }
         //右の壁に当たった時に値を戻す
-        if (transform.position.x > 8)
+        if (transform.position.x > 8 || transform.position.x > 0)
         {
             rightwall = true;
         }

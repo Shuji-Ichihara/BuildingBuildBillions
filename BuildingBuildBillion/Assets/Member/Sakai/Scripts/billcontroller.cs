@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
+
 
 public class billcontroller : MonoBehaviour
 {
@@ -68,13 +68,6 @@ public class billcontroller : MonoBehaviour
         //{
         //    Debug.Log("button5");
         //}
-        var gamepad = Gamepad.current;
-        if (gamepad == null)
-        {
-            Debug.Log("ゲームパッドがありません。");
-
-            return;
-        }
 
         fromMoveHorizonal += Time.deltaTime;
 
@@ -113,6 +106,7 @@ public class billcontroller : MonoBehaviour
             {
                 transform.Rotate(0, 0, -RotateAxis);
             }
+            //キーボード入力をお入れる
         }
     }
 
@@ -136,7 +130,7 @@ public class billcontroller : MonoBehaviour
         }
 
         //左の壁に当たった時に値を戻す
-        if (transform.position.x < -8)
+        if (transform.position.x < -8 || transform.position.x < 0)
         {
             leftwall = true;
         }
