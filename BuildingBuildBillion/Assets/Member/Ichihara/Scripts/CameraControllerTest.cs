@@ -14,17 +14,11 @@ public class CameraControllerTest : SingletonMonoBehaviour<CameraControllerTest>
     // カメラの Y 軸方向の変化量
     [SerializeField]
     private float _moveCameraSpeed = 100.0f;
-    [Space(3)]
-    // 画面内に収めるビルの高さと画面の割合
-    [SerializeField, Range(0.0f, 1.0f)]
-    private float _buildingHeightAndScreenRatio = 0.8f;
 
     // Start is called before the first frame update
     void Start()
     {
         _camera.orthographicSize = 540.0f;
-        // (0, 0)がスクリーンの中央である為、与えた値の半分にする
-        _buildingHeightAndScreenRatio *= 0.5f;
     }
 
     /// <summary>
@@ -51,15 +45,17 @@ public class CameraControllerTest : SingletonMonoBehaviour<CameraControllerTest>
         bool isMoveCameraSwtich = true;
         while (_camera.orthographicSize >= 540 && _camera.orthographicSize <= Screen.height)
         {
+            float buildingHeightAndScreenRatio = GameManager.Instance.BuildingHeightAndScreenRatio;
+            float buildingTop = _camera.orthographicSize * buildingHeightAndScreenRatio;
             // I キーを押したらズームアウト
-            if (Input.GetKeyDown(KeyCode.I))
+            if (GetBuildingTop().y < buildingTop)
             {
                 if (zoom < 0.0f) { zoom *= -1; }
                 moveVector = Vector3.up;
                 isMoveCameraSwtich = true;
             }
             // O キーを押したらズームイン
-            else if (Input.GetKeyDown(KeyCode.O))
+            else if (GetBuildingTop().y > buildingTop)
             {
                 zoom *= -1;
                 moveVector = Vector3.down;
@@ -97,11 +93,12 @@ public class CameraControllerTest : SingletonMonoBehaviour<CameraControllerTest>
     }
 
     // 積みあがっている建材の中で、一番 Y 座標が大きい建材を検出する
-    private void CheckBuildingTop()
+    public Vector3 GetBuildingTop()
     {
-        float buildingTop =  _camera.orthographicSize * _buildingHeightAndScreenRatio;
         // 落下したオブジェクトを検索
-        // GameObject obj = 
+        // 要変更
+        GameObject obj = GameObject.Find("BuildingMaterial");
+        return obj.transform.position;
     }
     // 自動でカメラズームを制御
 }
