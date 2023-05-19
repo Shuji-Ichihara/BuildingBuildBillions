@@ -42,7 +42,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     /// </summary>
     private void CountDown()
     {
-        if (_countDownTime< 0.0f) { return; }
+        if (_countDownTime < 0.0f) { return; }
         _countDownTime -= Time.deltaTime;
     }
 
