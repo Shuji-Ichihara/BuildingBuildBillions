@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class GameManager : SingletonMonoBehaviour<GameManager>
 {
+    // コントローラに引き渡す用の emun 変数
+    public enum BuildingMaterialStatus
+    {
+        Normal1,
+        Normal2,
+        Cannon,
+        ConveyorBelt,
+        Crane,
+    }
+
     [Header("制限時間")]
     [SerializeField]
     private float _setTime = 0.0f;
@@ -32,6 +42,11 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     void Update()
     {
         CountDown();
+        // CalucrateCameraMovement を開始する条件
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            CameraControllerTest.Instance.CallCalucrateCameraMovement();
+        }
     }
 
     /// <summary>
@@ -43,16 +58,16 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     }
 
     /// <summary>
-    /// カメラのズーム、移動に連動して JadgementBarFallPoint の Y 座標を移動させる
+    /// カメラのズーム、移動に連動して JadgementBarFallPoint を Y 軸方向に移動させる
     /// </summary>
-    /// <param name="Value">カメラのズームの移動量</param>
-    public void MoveJadgementBarFallPoint(bool Value)
+    /// <param name="yAxis">カメラのズームの移動方向</param>
+    public void MoveJadgementBarFallPoint(bool yAxis)
     {
-        if (Value == true)
+        if (yAxis == true)
         {
             _jadgementBarFallPoint.transform.position += Vector3.up * _jadgementBarFallPointHeight * Time.deltaTime;
         }
-        else if (Value == false)
+        else if (yAxis == false)
         {
             _jadgementBarFallPoint.transform.position += Vector3.down * _jadgementBarFallPointHeight * Time.deltaTime;
         }
@@ -62,4 +77,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
                                                                           , Screen.height * 1.5f + _jadgementBarFallPointHeight)
                                                               , 0.0f);
     }
+
+
 }
