@@ -348,8 +348,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camera: {fileID: 211844785}
-  _zoomCameraSpeed: 70
-  _moveCameraSpeed: 100
+  _zoomCameraSpeed: 60
+  _moveCameraSpeed: 80
   _buildingHeightAndScreenRatio: 0.8
 --- !u!114 &448205298
 MonoBehaviour:
