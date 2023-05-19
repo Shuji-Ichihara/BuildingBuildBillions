@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
 public class SceneMove : MonoBehaviour
 {
     public static SceneMove instance;
