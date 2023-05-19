@@ -19,6 +19,10 @@ public class billcontroller : MonoBehaviour
     Rigidbody2D rb;
     bool pad = false;
 
+    [SerializeField]
+    float restTime = 0.25f;
+    float fromMoveHorizonal = 0.0f;
+
     void Start()
     {
 
@@ -54,7 +58,16 @@ public class billcontroller : MonoBehaviour
     {
         //Debug.Log(Stop);
         BillMovememt(Input.GetAxisRaw("D_Pad_H"),Input.GetAxisRaw("D_Pad_V"));
-
+        Rotate(90);
+        //BillMovememt(Input.GetAxisRaw("Ratate_right"), Input.GetAxisRaw("Rotate_left"));
+        //if (Input.GetKeyDown("joystick button 4"))
+        //{
+        //    Debug.Log("button4");
+        //}
+        //if (Input.GetKeyDown("joystick button 5"))
+        //{
+        //    Debug.Log("button5");
+        //}
         var gamepad = Gamepad.current;
         if (gamepad == null)
         {
@@ -62,10 +75,43 @@ public class billcontroller : MonoBehaviour
         
             return;
         }
+
+        fromMoveHorizonal += Time.deltaTime;
+
+        if (fromMoveHorizonal >= restTime)
+        {
+            pad = true;
+            fromMoveHorizonal = 0.0f;
+        }
        
     }
+
+    private void Rotate(float RotateAxis,bool cannon =false)
+    {
+        if (cannon == true)
+        {
+            if (Input.GetKey("joystick button 4"))
+            {
+                transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), RotateAxis);
+            }
+            if (Input.GetKey("joystick button 5"))
+            {
+                transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), -RotateAxis);
+            }
+        }
+        else if(cannon == false)
+        {
+            if (Input.GetKeyDown("joystick button 4"))
+            {
+                transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), RotateAxis);
+            }
+            if (Input.GetKeyDown("joystick button 5"))
+            {
+                transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), -RotateAxis);
+            }
+        }
+    }
   
-   
     private void BillMovememt(float inputhorizotal,float inputvertical)
     {
         Debug.Log(inputhorizotal);
@@ -78,20 +124,17 @@ public class billcontroller : MonoBehaviour
         // 右矢印キーで右に動く
         // if (Input.GetKeyDown(KeyCode.RightArrow))
         //{
-        if(inputhorizotal !=0 || inputvertical !=0)
-        {
-            if (pad == false && inputhorizotal == 0)
-            {
-                pad = true;
-            }
-            if (pad == true && inputhorizotal != 0)
-            {
-                transform.position += new Vector3(inputhorizotal, inputvertical, 0);
 
-                pad = false;
-                //}
-            }
-        }
+        if (pad == true && inputhorizotal * inputhorizotal >= 0.25f)
+        {
+            float moveDistance = 1.0f;
+            if (inputhorizotal < 0) moveDistance *= -1;
+
+            transform.position += new Vector3(moveDistance, 0, 0);
+
+            pad = false;
+
+        }        
         
         //左の壁に当たった時に値を戻す
         if (transform.position.x < -8)
@@ -115,13 +158,16 @@ public class billcontroller : MonoBehaviour
         }
         
             // 自動で下に移動させつつ、下矢印キーでも移動する
-            if ( Time.time - previousTime >= fallTime)
+            if (pad == true && inputvertical * inputvertical >= 0.25f || Time.time - previousTime >= fallTime)
             {
                 transform.position += new Vector3(0, -1, 0);
                 previousTime = Time.time;
 
+            pad = false;
             }
-        
+        float Rtri = Input.GetAxis("Rotate_right");
+        float Ltri = Input.GetAxis("Rotate_left");
+
         if (Stop == true)
         {
             rb.constraints = RigidbodyConstraints2D.None;
@@ -131,11 +177,11 @@ public class billcontroller : MonoBehaviour
            
             this.enabled = false;
         }
-        else if (Input.GetKeyDown(KeyCode.W))
-        {
-            // ブロックを上矢印キーを押して回転させる
-            transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), 90);
-        }
+        //else if (Rtri > 0)
+        //{
+        //    // ブロックを上矢印キーを押して回転させる
+        //    transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), 90);
+        //}
 
         if (billstop == true)
         {
