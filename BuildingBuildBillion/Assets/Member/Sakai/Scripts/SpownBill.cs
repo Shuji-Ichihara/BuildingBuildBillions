@@ -5,14 +5,18 @@ using UnityEngine;
 public class SpownBill : MonoBehaviour
 {
     public GameObject[] Bills;
+   
     // Start is called before the first frame update
     void Start()
     {
         NewBill();
+       
     }
 
     public void NewBill()
     {
+        if(Bills.Length != 0)
         Instantiate(Bills[Random.Range(0, Bills.Length)], transform.position, Quaternion.identity);
     }
+   
 }

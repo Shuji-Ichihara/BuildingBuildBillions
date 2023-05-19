@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class billcontroller : MonoBehaviour
+public class billcontroller2P : MonoBehaviour
 {
     public float previousTime;
     // ブロックの落ちる時間
@@ -56,7 +56,7 @@ public class billcontroller : MonoBehaviour
     void Update()
     {
         //Debug.Log(Stop);
-        BillMovememt(Input.GetAxisRaw("D_Pad_H"), Input.GetAxisRaw("D_Pad_V"));
+        BillMovememt(Input.GetAxisRaw("D_Pad_H2P"), Input.GetAxisRaw("D_Pad_V2P"));
 
         Rotate(90);
         //BillMovememt(Input.GetAxisRaw("Ratate_right"), Input.GetAxisRaw("Rotate_left"));
@@ -88,7 +88,6 @@ public class billcontroller : MonoBehaviour
 
     private void Rotate(int RotateAxis, bool cannon = false)
     {
-
         if (cannon == true)
         {
             if (Input.GetKey("joystick button 4"))
@@ -97,19 +96,19 @@ public class billcontroller : MonoBehaviour
             }
             if (Input.GetKey("joystick button 5"))
             {
-                transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), -RotateAxis);
+                transform.Rotate(0, 0, -RotateAxis);
             }
         }
         else if (cannon == false)
         {
-            Debug.Log("false1");
-            if (Input.GetButtonDown("Rotate_right_1P"))
+            Debug.Log("hi");
+
+            if (Input.GetButtonDown("Rotate_right_2P"))
             {
-                Debug.Log("r1");
+                Debug.Log("yyye");
                 transform.Rotate(0, 0, RotateAxis);
-                //transform.RotateAround(transform.TransformPoint(rotationPoint), Vector3.forward, RotateAxis);
             }
-            if (Input.GetButtonDown("Rotate_left_1P"))
+            if (Input.GetButtonDown("Rotate_left_2P"))
             {
                 transform.Rotate(0, 0, -RotateAxis);
             }
@@ -170,7 +169,7 @@ public class billcontroller : MonoBehaviour
             rb.constraints = RigidbodyConstraints2D.None;
             transform.position = new Vector3(transform.position.x, 1, 0);//座標を(0,1)に戻す
 
-            FindObjectOfType<SpownBill>().NewBill();//新しいビルをリスポーン
+            FindObjectOfType<SpownBill2P>().NewBill2P();//新しいビルをリスポーン
 
             this.enabled = false;
         }
@@ -184,7 +183,7 @@ public class billcontroller : MonoBehaviour
         {
             rb.constraints = RigidbodyConstraints2D.None;
             transform.position = new Vector3(transform.position.x, transform.position.y, 0);//座標をその場にとどまる
-            FindObjectOfType<SpownBill>().NewBill();//新しいビルをリスポーン
+            FindObjectOfType<SpownBill2P>().NewBill2P();//新しいビルをリスポーン
 
 
 
