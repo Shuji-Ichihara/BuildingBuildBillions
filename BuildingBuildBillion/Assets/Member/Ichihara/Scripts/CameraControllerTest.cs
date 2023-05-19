@@ -23,6 +23,8 @@ public class CameraControllerTest : SingletonMonoBehaviour<CameraControllerTest>
     void Start()
     {
         _camera.orthographicSize = 540.0f;
+        // (0, 0)がスクリーンの中央である為、与えた値の半分にする
+        _buildingHeightAndScreenRatio *= 0.5f;
     }
 
     /// <summary>
@@ -97,7 +99,9 @@ public class CameraControllerTest : SingletonMonoBehaviour<CameraControllerTest>
     // 積みあがっている建材の中で、一番 Y 座標が大きい建材を検出する
     private void CheckBuildingTop()
     {
-        float buildingTop = Screen.height * _buildingHeightAndScreenRatio;
+        float buildingTop =  _camera.orthographicSize * _buildingHeightAndScreenRatio;
+        // 落下したオブジェクトを検索
+        // GameObject obj = 
     }
     // 自動でカメラズームを制御
 }
