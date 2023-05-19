@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,10 +6,10 @@ using UnityEngine;
 public class billcontroller : MonoBehaviour
 {
     public float previousTime;
-    // ƒuƒƒbƒN‚Ì—‚¿‚éŠÔ
+    // ãƒ–ãƒ­ãƒƒã‚¯ã®è½ã¡ã‚‹æ™‚é–“
     public float fallTime = 1f;
 
-    // ƒuƒƒbƒN‰ñ“]
+    // ãƒ–ãƒ­ãƒƒã‚¯å›è»¢
     public Vector3 rotationPoint;
     private bool Stop;
     private bool rightwall;
@@ -95,7 +95,7 @@ public class billcontroller : MonoBehaviour
         }
         else if (cannon == false)
         {
-            Debug.Log("false1");
+           
             if (Input.GetButtonDown("Rotate_right_1P"))
             {
                 Debug.Log("r1");
@@ -106,12 +106,21 @@ public class billcontroller : MonoBehaviour
             {
                 transform.Rotate(0, 0, -RotateAxis);
             }
-            //ƒL[ƒ{[ƒh“ü—Í‚ğ‚¨“ü‚ê‚é
+         
+            if (Input.GetKeyDown(KeyCode.A ))
+            {
+                transform.position += new Vector3(-1, 0, 0);
+            }
+            else if (Input.GetKeyDown(KeyCode.D))
+            {
+                transform.position += new Vector3(1, 0, 0);
+            }
+            //ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰å…¥åŠ›ã‚’ãŠå…¥ã‚Œã‚‹
         }
     }
 
     /// <summary>
-    /// ƒuƒƒbƒNˆÚ“®ŠÖ”
+    /// ãƒ–ãƒ­ãƒƒã‚¯ç§»å‹•é–¢æ•°
     /// </summary>
     /// <param name="inputhorizotal"></param>
     /// <param name="inputvertical"></param>
@@ -129,8 +138,8 @@ public class billcontroller : MonoBehaviour
 
         }
 
-        //¶‚Ì•Ç‚É“–‚½‚Á‚½‚É’l‚ğ–ß‚·
-        if (transform.position.x < -8 || transform.position.x < 0)
+        //å·¦ã®å£ã«å½“ãŸã£ãŸæ™‚ã«å€¤ã‚’æˆ»ã™
+        if (transform.position.x < -8)
         {
             leftwall = true;
         }
@@ -139,7 +148,7 @@ public class billcontroller : MonoBehaviour
             transform.position = new Vector3(-8, transform.position.y, 0);
             leftwall = false;
         }
-        //‰E‚Ì•Ç‚É“–‚½‚Á‚½‚É’l‚ğ–ß‚·
+        //å³ã®å£ã«å½“ãŸã£ãŸæ™‚ã«å€¤ã‚’æˆ»ã™
         if (transform.position.x > 8)
         {
             rightwall = true;
@@ -150,7 +159,7 @@ public class billcontroller : MonoBehaviour
             rightwall = false;
         }
 
-        // ©“®‚Å‰º‚ÉˆÚ“®‚³‚¹‚Â‚ÂA‰º–îˆóƒL[‚Å‚àˆÚ“®‚·‚é
+        // è‡ªå‹•ã§ä¸‹ã«ç§»å‹•ã•ã›ã¤ã¤ã€ä¸‹çŸ¢å°ã‚­ãƒ¼ã§ã‚‚ç§»å‹•ã™ã‚‹
         if (pad == true && inputvertical * inputvertical >= 0.25f || Time.time - previousTime >= fallTime)
         {
             transform.position += new Vector3(0, -1, 0);
@@ -162,23 +171,23 @@ public class billcontroller : MonoBehaviour
         if (Stop == true)
         {
             rb.constraints = RigidbodyConstraints2D.None;
-            transform.position = new Vector3(transform.position.x, 1, 0);//À•W‚ğ(0,1)‚É–ß‚·
+            transform.position = new Vector3(transform.position.x, 1, 0);//åº§æ¨™ã‚’(0,1)ã«æˆ»ã™
 
-            FindObjectOfType<SpownBill>().NewBill();//V‚µ‚¢ƒrƒ‹‚ğƒŠƒXƒ|[ƒ“
+            FindObjectOfType<SpownBill>().NewBill();//æ–°ã—ã„ãƒ“ãƒ«ã‚’ãƒªã‚¹ãƒãƒ¼ãƒ³
 
             this.enabled = false;
         }
         //else if (Rtri > 0)
         //{
-        //    // ƒuƒƒbƒN‚ğã–îˆóƒL[‚ğ‰Ÿ‚µ‚Ä‰ñ“]‚³‚¹‚é
+        //    // ãƒ–ãƒ­ãƒƒã‚¯ã‚’ä¸ŠçŸ¢å°ã‚­ãƒ¼ã‚’æŠ¼ã—ã¦å›è»¢ã•ã›ã‚‹
         //    transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), 90);
         //}
 
         if (billstop == true)
         {
             rb.constraints = RigidbodyConstraints2D.None;
-            transform.position = new Vector3(transform.position.x, transform.position.y, 0);//À•W‚ğ‚»‚Ìê‚É‚Æ‚Ç‚Ü‚é
-            FindObjectOfType<SpownBill>().NewBill();//V‚µ‚¢ƒrƒ‹‚ğƒŠƒXƒ|[ƒ“
+            transform.position = new Vector3(transform.position.x, transform.position.y, 0);//åº§æ¨™ã‚’ãã®å ´ã«ã¨ã©ã¾ã‚‹
+            FindObjectOfType<SpownBill>().NewBill();//æ–°ã—ã„ãƒ“ãƒ«ã‚’ãƒªã‚¹ãƒãƒ¼ãƒ³
 
 
 
