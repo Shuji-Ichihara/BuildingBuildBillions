@@ -10,10 +10,14 @@ public class CameraControllerTest : SingletonMonoBehaviour<CameraControllerTest>
     private Camera _camera = null;
     // カメラズームのスピードの変化量
     [SerializeField]
-    private float _zoomCameraSpeed = 65.0f;
+    private float _zoomCameraSpeed = 70.0f;
     // カメラの Y 軸方向の変化量
     [SerializeField]
     private float _moveCameraSpeed = 100.0f;
+    [Space(3)]
+    // 画面内に収めるビルの高さと画面の割合
+    [SerializeField, Range(0.0f, 1.0f)]
+    private float _buildingHeightAndScreenRatio = 0.8f;
 
     // Start is called before the first frame update
     void Start()
@@ -21,13 +25,16 @@ public class CameraControllerTest : SingletonMonoBehaviour<CameraControllerTest>
         _camera.orthographicSize = 540.0f;
     }
 
+    /// <summary>
+    /// CalucrateCameraMovement を呼び出す
+    /// </summary>
     public void CallCalucrateCameraMovement()
     {
         CalucrateCameraMovement(this.GetCancellationTokenOnDestroy()).Forget();
     }
 
     /// <summary>
-    /// カメラズームのプログラム
+    /// カメラズーム
     /// </summary>
     private async UniTask CalucrateCameraMovement(CancellationToken token = default)
     {
@@ -40,16 +47,16 @@ public class CameraControllerTest : SingletonMonoBehaviour<CameraControllerTest>
         // 判定バーの移動方向の設定
         // 初期値が最低値の為、true を代入
         bool isMoveCameraSwtich = true;
-        while(_camera.orthographicSize >= 540 && _camera.orthographicSize <= Screen.height)
+        while (_camera.orthographicSize >= 540 && _camera.orthographicSize <= Screen.height)
         {
-            // I キーを押したらズームイン
+            // I キーを押したらズームアウト
             if (Input.GetKeyDown(KeyCode.I))
             {
                 if (zoom < 0.0f) { zoom *= -1; }
                 moveVector = Vector3.up;
                 isMoveCameraSwtich = true;
             }
-            // O キーを押したらズームアウト
+            // O キーを押したらズームイン
             else if (Input.GetKeyDown(KeyCode.O))
             {
                 zoom *= -1;
@@ -64,8 +71,18 @@ public class CameraControllerTest : SingletonMonoBehaviour<CameraControllerTest>
         }
     }
 
+    /// <summary>
+    /// カメラの Y 軸移動
+    /// </summary>
+    /// <param name="zoom">カメラズームの変化量</param>
+    /// <param name="vector">カメラの Y 軸の移動方向</param>
+    /// <param name="moveSwitch">カメラの移動方向の切り替え</param>
+    /// <param name="token">UniTask 中止用のトークン</param>
+    /// <returns></returns>
     private async UniTask MoveCamera(float zoom, Vector3 vector, bool moveSwitch, CancellationToken token = default)
     {
+        // 変更の可能性有
+        await UniTask.Yield(token);
         _camera.orthographicSize += zoom;
         _camera.transform.position += vector * _moveCameraSpeed * Time.deltaTime;
         JadgementBarControllerTest.Instance.MoveJadgementBarFallPoint(moveSwitch);
@@ -75,8 +92,12 @@ public class CameraControllerTest : SingletonMonoBehaviour<CameraControllerTest>
                                                             , 0.0f
                                                             , Screen.height / 2.0f)
                                                , _camera.transform.position.z);
-        // 変更の可能性有
-        await UniTask.Yield(token);
+    }
+
+    // 積みあがっている建材の中で、一番 Y 座標が大きい建材を検出する
+    private void CheckBuildingTop()
+    {
+        float buildingTop = Screen.height * _buildingHeightAndScreenRatio;
     }
     // 自動でカメラズームを制御
 }
