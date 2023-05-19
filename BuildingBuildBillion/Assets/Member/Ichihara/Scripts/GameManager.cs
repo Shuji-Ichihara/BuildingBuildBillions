@@ -19,11 +19,19 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     private float _setTime = 0.0f;
     private float _countDownTime = 0.0f;
     public float CountDownTime => _countDownTime;
+    [Space(3)]
+
+    // 画面内に収めるビルの高さと画面の割合
+    [SerializeField, Range(0.0f, 1.0f)]
+    private float _buildingHeightAndScreenRatio = 0.8f;
+    public float BuildingHeightAndScreenRatio => _buildingHeightAndScreenRatio;
 
     // Start is called before the first frame update
     void Start()
     {
         _countDownTime = _setTime;
+        // (0, 0)がスクリーンの中央である為、与えた値の半分にする
+        _buildingHeightAndScreenRatio *= 0.5f;
     }
 
     // Update is called once per frame
