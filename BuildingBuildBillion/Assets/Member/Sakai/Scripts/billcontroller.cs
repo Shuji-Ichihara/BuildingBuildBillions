@@ -109,10 +109,18 @@ public class billcontroller : MonoBehaviour
          
             if (Input.GetKeyDown(KeyCode.A ))
             {
-                transform.position += new Vector3(-1, 0, 0);
+                var screenPoint2P = Camera.main.WorldToViewportPoint(this.transform.position + new Vector3(-1, 0, 0));// 0,0~1.1
+
+                if (screenPoint2P.x <= 0.48 && screenPoint2P.x >= 0)
+                    transform.position += new Vector3(-1, 0, 0);
+                
             }
             else if (Input.GetKeyDown(KeyCode.D))
             {
+                var screenPoint2P = Camera.main.WorldToViewportPoint(this.transform.position + new Vector3(1, 0, 0));// 0,0~1.1
+
+                if (screenPoint2P.x <= 0.48 && screenPoint2P.x >= 0)
+                  
                 transform.position += new Vector3(1, 0, 0);
             }
             //キーボード入力をお入れる
@@ -132,35 +140,38 @@ public class billcontroller : MonoBehaviour
             float moveDistance = 1.0f;
             if (inputhorizotal < 0) moveDistance *= -1;
 
-            transform.position += new Vector3(moveDistance, 0, 0);
+            var screenPoint2P = Camera.main.WorldToViewportPoint(this.transform.position + new Vector3(moveDistance, 0, 0));// 0,0~1.1
+
+            if (screenPoint2P.x >= 0.48 && screenPoint2P.x <= 1)
+                transform.position += new Vector3(moveDistance, 0, 0);
 
             pad = false;
 
         }
-
-        //左の壁に当たった時に値を戻す
-        if (transform.position.x < -8)
-        {
-            leftwall = true;
-        }
-        if (leftwall == true)
-        {
-            transform.position = new Vector3(-8, transform.position.y, 0);
-            leftwall = false;
-        }
+        var screenPoint = Camera.main.WorldToViewportPoint(this.transform.position);// 0,0~1.1
+        ////左の壁に当たった時に値を戻す
+        //if (0 >= screenPoint.x)
+        //{
+        //    leftwall = true;
+        //}
+        //if (leftwall == true)
+        //{
+        //    transform.position = new Vector3(-8, transform.position.y, 0);
+        //    leftwall = false;
+        //}
         //右の壁に当たった時に値を戻す
-        if (transform.position.x > 8)
-        {
-            rightwall = true;
-        }
-        if (rightwall == true)
-        {
-            transform.position = new Vector3(8, transform.position.y, 0);
-            rightwall = false;
-        }
+        //if (screenPoint.x >= 0.5)
+        //{
+        //    rightwall = true;
+        //}
+        //if (rightwall == true)
+        //{
+        //    transform.position = new Vector3(0, transform.position.y, 0);
+        //    rightwall = false;
+        //}
 
         // 自動で下に移動させつつ、下矢印キーでも移動する
-        if (pad == true && inputvertical * inputvertical >= 0.25f || Time.time - previousTime >= fallTime)
+        if (pad == true && inputvertical * inputvertical >= 0.25f || Time.time - previousTime >= fallTime || Input.GetKeyDown(KeyCode.S))
         {
             transform.position += new Vector3(0, -1, 0);
             previousTime = Time.time;

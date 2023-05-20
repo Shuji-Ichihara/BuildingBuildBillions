@@ -6,6 +6,7 @@ TagManager:
   tags:
   - stage
   - Bill
+  - Bill2
   layers:
   - Default
   - TransparentFX

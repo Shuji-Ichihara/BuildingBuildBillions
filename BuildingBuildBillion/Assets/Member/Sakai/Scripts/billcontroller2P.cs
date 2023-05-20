@@ -22,10 +22,12 @@ public class billcontroller2P : MonoBehaviour
     float restTime = 0.25f;
     float fromMoveHorizonal = 0.0f;
    
+
     void Start()
     {
 
         rb = this.gameObject.GetComponent<Rigidbody2D>();
+       
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -34,7 +36,7 @@ public class billcontroller2P : MonoBehaviour
         {
             Stop = true;
         }
-        if (collision.gameObject.CompareTag("Bill"))
+        if (collision.gameObject.CompareTag("Bill2"))
         {
 
             billstop = true;
@@ -46,7 +48,7 @@ public class billcontroller2P : MonoBehaviour
         {
             Stop = true;
         }
-        if (collision.gameObject.CompareTag("Bill"))
+        if (collision.gameObject.CompareTag("Bill2"))
         {
 
             billstop = true;
@@ -105,13 +107,20 @@ public class billcontroller2P : MonoBehaviour
             {
                 transform.Rotate(0, 0, -RotateAxis);
             }          
+           
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                transform.position += new Vector3(-1, 0, 0);
+                var screenPoint = Camera.main.WorldToViewportPoint(this.transform.position + new Vector3(-1, 0, 0));// 0,0~1.1
+             
+                if (screenPoint.x >= 0.51 && screenPoint.x <= 1)
+                    transform.position += new Vector3(-1, 0, 0);
             }
             else if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                transform.position += new Vector3(1, 0, 0);
+                var screenPoint = Camera.main.WorldToViewportPoint(this.transform.position + new Vector3(1, 0, 0));// 0,0~1.1
+                
+                if (screenPoint.x >= 0.51 && screenPoint.x <= 1)
+                    transform.position += new Vector3(1, 0, 0);
             }
         }
     }
@@ -128,37 +137,45 @@ public class billcontroller2P : MonoBehaviour
         {
             float moveDistance = 1.0f;
             if (inputhorizotal < 0) moveDistance *= -1;
-
+            var screenPoint = Camera.main.WorldToViewportPoint(this.transform.position+new Vector3(moveDistance, 0, 0));// 0,0~1.1
+           
+            if(screenPoint.x >= 0.51 && screenPoint.x <=1)
             transform.position += new Vector3(moveDistance, 0, 0);
 
             pad = false;
 
         }
-
+        
         //左の壁に当たった時に値を戻す
-        if (transform.position.x < -8)
-        {
-            leftwall = true;
-        }
-        if (leftwall == true)
-        {
-            transform.position = new Vector3(-8, transform.position.y, 0);
-            leftwall = false;
-        }
+        //if (0.5 >= screenPoint.x)
+        //{
+        //    leftwall = true;
+        //}
+        //if (leftwall == true)
+        //{
+        //    transform.position = new Vector3(1, transform.position.y, 0);
+        //    leftwall = false;
+        //}
         ////右の壁に当たった時に値を戻す
-        if (transform.position.x > 8)
-        {
-            rightwall = true;
-        }
+        //if ( screenPoint.x>= 1)
+        //{
+        //    rightwall = true;
+        //}
 
-        if (rightwall == true)
-        {
-            transform.position = new Vector3(8, transform.position.y, 0);
-            rightwall = false;
-        }
-        //Mathf.Clamp(this.transform.position.x , 0, Camera.main.pixelWidth);
+        //if (rightwall == true)
+        //{
+        //    transform.position = new Vector3(8, transform.position.y, 0);
+        //    rightwall = false;
+        //}
+
+        
+        
+        //Mathf.Clamp(this.transform.position.x , Camera.main.pixelWidth / 2 , Camera.main.pixelWidth);
+        //this.transform.position = new Vector3(Mathf.Clamp(this.transform.position.x, 0, Screen.width), transform.position.y, transform.position.z);
+
+
         // 自動で下に移動させつつ、下矢印キーでも移動する
-        if (pad == true && inputvertical * inputvertical >= 0.25f || Time.time - previousTime >= fallTime)
+        if (pad == true && inputvertical * inputvertical >= 0.25f || Time.time - previousTime >= fallTime || Input.GetKeyDown(KeyCode.DownArrow))
         {
             transform.position += new Vector3(0, -1, 0);
             previousTime = Time.time;
