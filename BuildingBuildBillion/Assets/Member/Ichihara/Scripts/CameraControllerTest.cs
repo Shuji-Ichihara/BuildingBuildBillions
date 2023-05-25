@@ -47,14 +47,14 @@ public class CameraControllerTest : SingletonMonoBehaviour<CameraControllerTest>
         {
             float buildingHeightAndScreenRatio = GameManager.Instance.BuildingHeightAndScreenRatio;
             float buildingTop = _camera.orthographicSize * buildingHeightAndScreenRatio;
-            // I キーを押したらズームアウト
-            if (GetBuildingTop().y < buildingTop)
+            // ビルの高さが buildingTop より高ければズームアウト
+            if (GetBuildingTop().y <= buildingTop)
             {
                 if (zoom < 0.0f) { zoom *= -1; }
                 moveVector = Vector3.up;
                 isMoveCameraSwtich = true;
             }
-            // O キーを押したらズームイン
+            // ビルの高さが buildingTop より低ければズームイン
             else if (GetBuildingTop().y > buildingTop)
             {
                 zoom *= -1;
@@ -93,12 +93,14 @@ public class CameraControllerTest : SingletonMonoBehaviour<CameraControllerTest>
     }
 
     // 積みあがっている建材の中で、一番 Y 座標が大きい建材を検出する
+
     public Vector3 GetBuildingTop()
     {
         // 落下したオブジェクトを検索
         // 要変更
-        GameObject obj = GameObject.Find("BuildingMaterial");
+        GameObject obj = GameObject.FindGameObjectWithTag("BuildingMaterial");
+        Debug.Log($"{obj}");
         return obj.transform.position;
     }
-    // 自動でカメラズームを制御
+
 }
