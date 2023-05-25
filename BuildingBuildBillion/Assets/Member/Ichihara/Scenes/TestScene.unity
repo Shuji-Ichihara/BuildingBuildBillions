@@ -350,7 +350,6 @@ MonoBehaviour:
   _camera: {fileID: 211844785}
   _zoomCameraSpeed: 80
   _moveCameraSpeed: 100
-  _buildingHeightAndScreenRatio: 0.8
 --- !u!114 &448205298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -377,6 +376,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _setTime: 10
+  _buildingHeightAndScreenRatio: 0.8
 --- !u!4 &448205300
 Transform:
   m_ObjectHideFlags: 0
@@ -1186,7 +1186,7 @@ GameObject:
   - component: {fileID: 2111579995}
   - component: {fileID: 2111579997}
   m_Layer: 0
-  m_Name: Square
+  m_Name: BuildingMaterial
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
