@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class UIManager : MonoBehaviour
+public class UIManager : SingletonMonoBehaviour<UIManager>
 {
     [SerializeField]
     private TextMeshProUGUI _timeText = null;
