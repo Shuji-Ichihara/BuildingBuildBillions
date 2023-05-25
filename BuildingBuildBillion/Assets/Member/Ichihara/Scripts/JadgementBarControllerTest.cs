@@ -18,11 +18,12 @@ public class JadgementBarControllerTest : SingletonMonoBehaviour<JadgementBarCon
     // Start is called before the first frame update
     void Start()
     {
+        // JadgementBar クラスが Rigidbody を RequireComponent している
         _jadgementBar.AddComponent<JadgementBar>();
         _rb2D = _jadgementBar.GetComponent<Rigidbody2D>();
         _rb2D.constraints = RigidbodyConstraints2D.FreezeRotation;
         _rb2D.gravityScale = 0.0f;
-        // 初期座標を代入
+        // このスクリプトアタッチされているオブジェクトの初期座標で初期化
         _jadgementBarFallPosition = Vector3.up * (Screen.height / 2.0f + _jadgementBarFallPointHeight);
         transform.position = _jadgementBarFallPosition;
     }
@@ -61,8 +62,8 @@ public class JadgementBarControllerTest : SingletonMonoBehaviour<JadgementBarCon
     /// <summary>
     /// 勝敗判定
     /// </summary>
-    /// <param name="vec2">接触したオブジェクトの座標</param>
-    public void Jadgement(Vector2 vec2)
+    /// <param name="vec2">接触したオブジェクトの 2D 座標</param>
+    public void Jadge(Vector2 vec2)
     {
         if (vec2.x < 0.0f)
         {
