@@ -31,7 +31,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     {
         _countDownTime = _setTime;
         // (0, 0)がスクリーンの中央である為、与えた値の半分にする
-        _buildingHeightAndScreenRatio *= 0.5f;
+        _buildingHeightAndScreenRatio *= 1.0f / 2.0f;
     }
 
     // Update is called once per frame
