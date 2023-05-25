@@ -93,7 +93,6 @@ public class CameraControllerTest : SingletonMonoBehaviour<CameraControllerTest>
     }
 
     // 積みあがっている建材の中で、一番 Y 座標が大きい建材を検出する
-
     public Vector3 GetBuildingTop()
     {
         // 落下したオブジェクトを検索
