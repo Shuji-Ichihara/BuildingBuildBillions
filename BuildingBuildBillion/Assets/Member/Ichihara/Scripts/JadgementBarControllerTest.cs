@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class JadgementBarControllerTest : SingletonMonoBehaviour<JadgementBarControllerTest>
 {
@@ -9,11 +7,11 @@ public class JadgementBarControllerTest : SingletonMonoBehaviour<JadgementBarCon
     [SerializeField]
     private GameObject _jadgementBar = null;
     private Rigidbody2D _rb2D = null;
-    // 画面トップから _jadgementBarFallPoint をどのくらい離すかを決める
+    // 画面トップから JadgementBarFallPoint をどのくらい離すかを決める
     [SerializeField]
     private float _jadgementBarFallPointHeight = 0.0f;
     // アタッチされているオブジェクトの初期座標
-    private Vector3 _jadgementBarFallPosition = Vector3.zero;
+    private Vector3 _defaultJadgementBarFallPosition = Vector3.zero;
 
     // Start is called before the first frame update
     void Start()
@@ -24,19 +22,23 @@ public class JadgementBarControllerTest : SingletonMonoBehaviour<JadgementBarCon
         _rb2D.constraints = RigidbodyConstraints2D.FreezeRotation;
         _rb2D.gravityScale = 0.0f;
         // このスクリプトアタッチされているオブジェクトの初期座標で初期化
-        _jadgementBarFallPosition = Vector3.up * (Screen.height / 2.0f + _jadgementBarFallPointHeight);
-        transform.position = _jadgementBarFallPosition;
+        _defaultJadgementBarFallPosition = Vector3.up * (Screen.height / 2.0f + _jadgementBarFallPointHeight);
+        transform.position = _defaultJadgementBarFallPosition;
     }
 
-    private void FixedUpdate()
+    private async void FixedUpdate()
     {
         // 変更の可能性有
         if(GameManager.Instance.CountDownTime < 0.0f)
         {
+            if(false == GameManager.Instance.IsEndGame)
+            {
+                await GameManager.Instance.EndGame();
+                GameManager.Instance.IsEndGame = true;
+            }
             _rb2D.gravityScale = 1.0f;
         }
     }
-
 
     /// <summary>
     /// カメラのズーム、移動に連動して JadgementBarFallPoint を Y 軸方向に移動させる
@@ -54,7 +56,7 @@ public class JadgementBarControllerTest : SingletonMonoBehaviour<JadgementBarCon
         }
         transform.position = new Vector3(0.0f
                                         ,Mathf.Clamp(transform.position.y
-                                                    ,_jadgementBarFallPosition.y
+                                                    ,_defaultJadgementBarFallPosition.y
                                                     ,Screen.height * 1.5f + _jadgementBarFallPointHeight)
                                         ,0.0f);
     }
