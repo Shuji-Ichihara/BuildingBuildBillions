@@ -70,7 +70,7 @@ public class CraneSensor : MonoBehaviour
             sumTime += Time.deltaTime;
             var ratio = sumTime / pickUpTime;
 
-            distanceJoint2D.distance = Mathf.Lerp(6f, 0.5f, ratio);
+            distanceJoint2D.distance = Mathf.Lerp(15f, 0.5f, ratio);
             if(ratio > 1f)
             {
                 break;

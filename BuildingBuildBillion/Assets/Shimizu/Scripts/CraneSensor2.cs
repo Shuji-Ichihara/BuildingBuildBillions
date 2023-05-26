@@ -4,22 +4,25 @@ using UnityEngine;
 
 public class CraneSensor2 : MonoBehaviour
 {
-    [Header("アーム移動幅")]
-    [SerializeField]
+    [Header("アーム移動幅"),SerializeField]
     private float width = 1;
     [SerializeField]
     DistanceJoint2D distanceJoint2D;
-
+    [SerializeField]
+    CraneJib craneJib;
 
     private Vector2 defaultPosition; //デフォルトポジション格納用
 
     private bool armCanMove = false; //アームが移動するかどうか
     private bool armCatch = false;
+    private bool isCatch = false;
 
     private float pickUpTime = 3;
 
     private GameObject parentObj;
     private GameObject otherObject;
+
+    private float otherObjStartPos;
 
     BoxCollider2D boxCollider2D;
 
@@ -53,25 +56,28 @@ public class CraneSensor2 : MonoBehaviour
         }
         else if(armCatch)
         {
-            transform.position = otherObject.transform.position;
+            transform.localPosition = otherObject.transform.localPosition;
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Materials"))
+        if (collision.gameObject.CompareTag("Materials"))
         {
             armCanMove = false;
             armCatch = true;
             otherObject = collision.gameObject;
-            boxCollider2D.enabled = false;
+            //boxCollider2D.enabled = false;
+
             //クレーンオブジェクトの子にする
             collision.gameObject.transform.parent = parentObj.transform;
-
+            //Destroy(collision.gameObject.GetComponent<Rigidbody2D>());
+            collision.gameObject.GetComponent<BoxCollider2D>().usedByComposite = true;
+            //ジョイント設定
             distanceJoint2D.enabled = true;
             distanceJoint2D.connectedBody = collision.gameObject.GetComponent<Rigidbody2D>();
+            distanceJoint2D.connectedAnchor = collision.gameObject.transform.InverseTransformPoint(this.transform.position);
             StartCoroutine(ConfigureDistance());
             //Debug.Log("つかんだよ");
-
 
         }
     }
@@ -87,9 +93,10 @@ public class CraneSensor2 : MonoBehaviour
             sumTime += Time.deltaTime;
             var ratio = sumTime / pickUpTime;
 
-            distanceJoint2D.distance = Mathf.Lerp(6f, 0.5f, ratio);
+            distanceJoint2D.distance = Mathf.Lerp(15f, 0.5f, ratio);
             if (ratio > 1f)
             {
+                craneJib.CanContract();
                 break;
             }
             yield return null;

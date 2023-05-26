@@ -13,7 +13,7 @@ public class IsGroundCrane : MonoBehaviour
         if (limit)
         {
             limit = false;
-            craneJib.CanExtend();
+            craneJib.CanTurn();
         }
     }
     private void OnTriggerStay2D(Collider2D collision)
@@ -21,7 +21,7 @@ public class IsGroundCrane : MonoBehaviour
         if (limit)
         {
             limit = false;
-            craneJib.CanExtend();
+            craneJib.CanTurn();
         }
     }
 }

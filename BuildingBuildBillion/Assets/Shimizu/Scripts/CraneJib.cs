@@ -5,47 +5,100 @@ using UnityEngine;
 public class CraneJib : MonoBehaviour
 {
     private float startPosition;
-    private float endPosition = 4;
+    private float endPosition;
     private float speed = 2f;
     private float ratio = 0;
-    //[System.NonSerialized]
+
+    private float startRotation = 0;
+    private float speedRotation = 2;
+    private float ratioRotation = 0;
+
+    private bool jibTurn = false;
+    private bool jibReTurn = false;
     private bool jibExtend = false;
-    [System.NonSerialized]
-    public bool jibContract = false;
+    private bool jibContract = false;
     [SerializeField]
     CraneSensor2 craneSensor;
+    [Header("ÉAÅ[ÉÄäpìx"),SerializeField]
+    private float angle = 30f;
     private void Start()
     {
-        startPosition = transform.position.x;
-        endPosition = transform.position.x + 3;
+        startPosition = transform.localPosition.x;
+        endPosition = transform.localPosition.x + 4.5f;
+        craneSensor.GetComponent<Transform>();
     }
     private void Update()
     {
-        //Debug.Log(jibExtend);
-        if(jibExtend)
+        //30ìx(ê›íËÇµÇΩäpìx)Ç…ã»Ç∞ÇÈ
+        if (jibTurn)
         {
-            transform.position = new Vector2(Mathf.Lerp(startPosition, endPosition, ratio),transform.position.y);
+            craneSensor.transform.parent.localRotation = Quaternion.Lerp(Quaternion.Euler(0, 0, 0), Quaternion.Euler(0, 0, -angle), ratioRotation);
+            transform.localRotation = Quaternion.Lerp(Quaternion.Euler(0, 0, 0), Quaternion.Euler(0, 0, angle), ratioRotation);
+            ratioRotation += Time.deltaTime / speedRotation;
+            if (ratioRotation > 1.1f)
+            {
+                jibTurn = false;
+                ratioRotation = 0;
+                CanExtend();
+            }
+        }
+        //äpìxÇñﬂÇ∑
+        if (jibReTurn)
+        {
+            craneSensor.transform.parent.localRotation = Quaternion.Lerp(Quaternion.Euler(0, 0, -angle), Quaternion.Euler(0, 0, 0), ratioRotation);
+            transform.localRotation = Quaternion.Lerp(Quaternion.Euler(0, 0, angle), Quaternion.Euler(0, 0, 0), ratioRotation);
+            ratioRotation += Time.deltaTime / speedRotation;
+            if (ratioRotation > 1.1f)
+            {
+                jibReTurn = false;
+                ratioRotation = 0;
+                //CanContract();
+            }
+        }
+        //Debug.Log(jibExtend);
+        //òrÇ™êLÇ—ÇÈ
+        if (jibExtend)
+        {
+            transform.localPosition = new Vector2(Mathf.Lerp(startPosition, endPosition, ratio),transform.localPosition.y);
             ratio += Time.deltaTime / speed;
-            if(ratio > 1)
+            if(ratio > 1.1f)
             {
                 jibExtend = false;
                 ratio = 0;
                 craneSensor.CraneMoveOn();
             }
         }
+        //òrÇ™èkÇﬁ
         if(jibContract)
         {
-            transform.position = new Vector2(Mathf.Lerp(endPosition, startPosition, ratio), transform.position.y);
+            transform.localPosition = new Vector2(Mathf.Lerp(endPosition, startPosition+1.5f, ratio), transform.localPosition.y);
             ratio += Time.deltaTime / speed;
-            if (ratio > 1)
+            if (ratio > 1.1f)
             {
                 jibContract = false;
                 ratio = 0;
+                ReturnAngle();
             }
         }
     }
-    public void CanExtend()
+    public void CanTurn()
+    {
+        jibTurn = true;
+    }
+    public void ReturnAngle()
+    {
+        jibReTurn = true;
+    }
+    private void CanExtend()
     {
         jibExtend = true;
+    }
+    public void CanContract()
+    {
+        jibContract= true;
+    }
+    public void ExitContract()
+    {
+        jibContract = false;
     }
 }
