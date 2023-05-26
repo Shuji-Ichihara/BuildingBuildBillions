@@ -55,7 +55,7 @@ public class billcontroller2P : MonoBehaviour
         }
     }
 
-    void Update()
+    void FixedUpdate()
     {
         //Debug.Log(Stop);
         BillMovememt(Input.GetAxisRaw("D_Pad_H2P"), Input.GetAxisRaw("D_Pad_V2P"));
@@ -110,17 +110,34 @@ public class billcontroller2P : MonoBehaviour
            
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                var screenPoint = Camera.main.WorldToViewportPoint(this.transform.position + new Vector3(-1, 0, 0));// 0,0~1.1
+                var screenPoint = CameraControllerTest.Instance.Camera.WorldToViewportPoint(this.transform.position + new Vector3(-1, 0, 0));// 0,0~1.1
              
-                if (screenPoint.x >= 0.51 && screenPoint.x <= 1)
-                    transform.position += new Vector3(-1, 0, 0);
+                //if (screenPoint.x >= 0.51 && screenPoint.x <= 1)
+                //    transform.position += new Vector3(-1, 0, 0);
+
+                // 市原が記述
+                // 要変更
+                if (CameraControllerTest.Instance.Camera.orthographicSize < 1080.0f * 1.5f)
+                {
+                    if (screenPoint.x >= 0.55f && screenPoint.x <= 0.8f)
+                        transform.position += new Vector3(-50.0f, 0, 0);
+                }
+                if (screenPoint.x > 0.55f)
+                    transform.position += new Vector3(-50.0f, 0, 0);
             }
             else if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                var screenPoint = Camera.main.WorldToViewportPoint(this.transform.position + new Vector3(1, 0, 0));// 0,0~1.1
-                
-                if (screenPoint.x >= 0.51 && screenPoint.x <= 1)
-                    transform.position += new Vector3(1, 0, 0);
+                var screenPoint = CameraControllerTest.Instance.Camera.WorldToViewportPoint(this.transform.position + new Vector3(1, 0, 0));// 0,0~1.1
+
+                // 市原が記述
+                // 要変更
+                if (CameraControllerTest.Instance.Camera.orthographicSize < 1080.0f * 1.5f)
+                {
+                    if (screenPoint.x >= 0.55 && screenPoint.x <= 0.8f)
+                        transform.position += new Vector3(50.0f, 0, 0);
+                }
+                if (screenPoint.x < 1.0f)
+                    transform.position += new Vector3(50.0f, 0, 0);
             }
         }
     }
@@ -135,7 +152,7 @@ public class billcontroller2P : MonoBehaviour
     {
         if (pad == true && inputhorizotal * inputhorizotal >= 0.25f)
         {
-            float moveDistance = 1.0f;
+            float moveDistance = 50.0f;
             if (inputhorizotal < 0) moveDistance *= -1;
             var screenPoint = Camera.main.WorldToViewportPoint(this.transform.position+new Vector3(moveDistance, 0, 0));// 0,0~1.1
            
@@ -177,7 +194,7 @@ public class billcontroller2P : MonoBehaviour
         // 自動で下に移動させつつ、下矢印キーでも移動する
         if (pad == true && inputvertical * inputvertical >= 0.25f || Time.time - previousTime >= fallTime || Input.GetKeyDown(KeyCode.DownArrow))
         {
-            transform.position += new Vector3(0, -1, 0);
+            transform.position += new Vector3(0, -50.0f, 0);
             previousTime = Time.time;
 
             pad = false;
@@ -186,7 +203,7 @@ public class billcontroller2P : MonoBehaviour
         if (Stop == true)
         {
             rb.constraints = RigidbodyConstraints2D.None;
-            transform.position = new Vector3(transform.position.x, 1, 0);//座標を(0,1)に戻す
+            //transform.position = new Vector3(transform.position.x, 1, 0);//座標を(0,1)に戻す
 
             FindObjectOfType<SpownBill2P>().NewBill2P();//新しいビルをリスポーン
 
@@ -201,7 +218,7 @@ public class billcontroller2P : MonoBehaviour
         if (billstop == true)
         {
             rb.constraints = RigidbodyConstraints2D.None;
-            transform.position = new Vector3(transform.position.x, transform.position.y, 0);//座標をその場にとどまる
+            // transform.position = new Vector3(transform.position.x, transform.position.y, 0);//座標をその場にとどまる
             FindObjectOfType<SpownBill2P>().NewBill2P();//新しいビルをリスポーン
 
 
@@ -209,5 +226,11 @@ public class billcontroller2P : MonoBehaviour
             this.enabled = false;
         }
 
+    }
+
+    public void FreezeAll(GameObject obj)
+    {
+        Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
     }
 }

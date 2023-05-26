@@ -86,6 +86,7 @@ public class billcontroller : MonoBehaviour
         {
             if (Input.GetKey("joystick button 4"))
             {
+                Debug.Log("aaaa");
                 transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), RotateAxis);
             }
             if (Input.GetKey("joystick button 5"))
@@ -95,7 +96,7 @@ public class billcontroller : MonoBehaviour
         }
         else if (cannon == false)
         {
-           
+
             if (Input.GetButtonDown("Rotate_right_1P"))
             {
                 Debug.Log("r1");
@@ -106,22 +107,35 @@ public class billcontroller : MonoBehaviour
             {
                 transform.Rotate(0, 0, -RotateAxis);
             }
-         
-            if (Input.GetKeyDown(KeyCode.A ))
-            {
-                var screenPoint2P = Camera.main.WorldToViewportPoint(this.transform.position + new Vector3(-1, 0, 0));// 0,0~1.1
 
-                if (screenPoint2P.x <= 0.48 && screenPoint2P.x >= 0)
-                    transform.position += new Vector3(-1, 0, 0);
-                
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                var screenPoint2P = CameraControllerTest.Instance.Camera.WorldToViewportPoint(this.transform.position + new Vector3(-1, 0, 0));// 0,0~1.1
+
+                // 市原が記述
+                // 要変更
+                if (CameraControllerTest.Instance.Camera.orthographicSize < 1080.0f * 1.5f)
+                {
+                    if (screenPoint2P.x >= 0.2f && screenPoint2P.x <= 1)
+                        transform.position += new Vector3(-50.0f, 0, 0);
+                }
+                if (screenPoint2P.x > 0.0f)
+                    transform.position += new Vector3(-50.0f, 0, 0);
+
             }
             else if (Input.GetKeyDown(KeyCode.D))
             {
-                var screenPoint2P = Camera.main.WorldToViewportPoint(this.transform.position + new Vector3(1, 0, 0));// 0,0~1.1
+                var screenPoint2P = CameraControllerTest.Instance.Camera.WorldToViewportPoint(this.transform.position + new Vector3(1, 0, 0));// 0,0~1.1
 
-                if (screenPoint2P.x <= 0.48 && screenPoint2P.x >= 0)
-                  
-                transform.position += new Vector3(1, 0, 0);
+                // 市原が記述
+                // 要変更
+                if (CameraControllerTest.Instance.Camera.orthographicSize < 1080.0f * 1.5f)
+                {
+                    if (screenPoint2P.x >= 0.2f && screenPoint2P.x <= 0.45f)
+                        transform.position += new Vector3(50.0f, 0, 0);
+                }
+                if (screenPoint2P.x < 0.45f)
+                    transform.position += new Vector3(50.0f, 0, 0);
             }
             //キーボード入力をお入れる
         }
@@ -137,13 +151,18 @@ public class billcontroller : MonoBehaviour
     {
         if (pad == true && inputhorizotal * inputhorizotal >= 0.25f)
         {
-            float moveDistance = 1.0f;
+            float moveDistance = 50.0f;
             if (inputhorizotal < 0) moveDistance *= -1;
 
+            Debug.Log($"{this.transform.position}");
             var screenPoint2P = Camera.main.WorldToViewportPoint(this.transform.position + new Vector3(moveDistance, 0, 0));// 0,0~1.1
 
-            if (screenPoint2P.x >= 0.48 && screenPoint2P.x <= 1)
-                transform.position += new Vector3(moveDistance, 0, 0);
+            if (CameraControllerTest.Instance.Camera.orthographicSize < 1080.0f * 1.5f)
+            {
+                if (screenPoint2P.x >= 0.48 && screenPoint2P.x <= 1)
+                    transform.position += new Vector3(moveDistance, 0, 0);
+            }
+            transform.position += new Vector3(moveDistance, 0, 0);
 
             pad = false;
 
@@ -173,7 +192,7 @@ public class billcontroller : MonoBehaviour
         // 自動で下に移動させつつ、下矢印キーでも移動する
         if (pad == true && inputvertical * inputvertical >= 0.25f || Time.time - previousTime >= fallTime || Input.GetKeyDown(KeyCode.S))
         {
-            transform.position += new Vector3(0, -1, 0);
+            transform.position += new Vector3(0, -50.0f, 0);
             previousTime = Time.time;
 
             pad = false;
@@ -182,7 +201,7 @@ public class billcontroller : MonoBehaviour
         if (Stop == true)
         {
             rb.constraints = RigidbodyConstraints2D.None;
-            transform.position = new Vector3(transform.position.x, 1, 0);//座標を(0,1)に戻す
+            // transform.position = new Vector3(transform.position.x, 1, 0);//座標を(0,1)に戻す
 
             FindObjectOfType<SpownBill>().NewBill();//新しいビルをリスポーン
 
@@ -205,5 +224,11 @@ public class billcontroller : MonoBehaviour
             this.enabled = false;
         }
 
+    }
+
+    public void FreezeAll(GameObject obj)
+    {
+        Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
     }
 }
