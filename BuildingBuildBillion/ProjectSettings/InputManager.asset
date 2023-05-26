@@ -4,6 +4,7 @@
 InputManager:
   m_ObjectHideFlags: 0
   serializedVersion: 2
+<<<<<<< HEAD
   m_Axes:
   - serializedVersion: 3
     m_Name: D_Pad_H
@@ -325,4 +326,7 @@ InputManager:
     type: 2
     axis: 5
     joyNum: 0
+=======
+  m_Axes: []
+>>>>>>> origin/feature/sakai/BillController
   m_UsePhysicalKeys: 0

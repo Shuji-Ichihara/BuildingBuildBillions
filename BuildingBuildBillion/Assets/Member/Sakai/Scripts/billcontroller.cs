@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-
+using UnityEngine.InputSystem;
 
 public class billcontroller : MonoBehaviour
 {
@@ -33,11 +34,13 @@ public class billcontroller : MonoBehaviour
         if (collision.gameObject.CompareTag("stage"))
         {
             Stop = true;
+            this.GetComponent<PlayerInput>().enabled = false;
         }
         if (collision.gameObject.CompareTag("Bill"))
         {
 
             billstop = true;
+            this.GetComponent<PlayerInput>().enabled = false;
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -45,20 +48,40 @@ public class billcontroller : MonoBehaviour
         if (collision.gameObject.CompareTag("stage"))
         {
             Stop = true;
+            this.GetComponent<PlayerInput>().enabled = false;
         }
         if (collision.gameObject.CompareTag("Bill"))
         {
 
             billstop = true;
+            this.GetComponent<PlayerInput>().enabled = false;
         }
     }
 
     void Update()
     {
-        //Debug.Log(Stop);
-        BillMovememt(Input.GetAxisRaw("D_Pad_H"), Input.GetAxisRaw("D_Pad_V"));
+        if (Time.time - previousTime >= fallTime)
+        {
+            transform.position += new Vector3(0, -1, 0);
+            previousTime = Time.time;
+        }
+        if (Stop == true)
+        {
+            rb.constraints = RigidbodyConstraints2D.None;
+            transform.position = new Vector3(transform.position.x, 1, 0);//座標を(0,1)に戻す
+            this.enabled = false;
+        }
+        if (billstop == true)
+        {
+            rb.constraints = RigidbodyConstraints2D.None;
+            transform.position = new Vector3(transform.position.x, transform.position.y, 0);//座標をその場にとどまる
 
-        Rotate(90);
+            this.enabled = false;
+        }
+        //Debug.Log(Stop);
+        //BillMovememt(Input.GetAxisRaw("D_Pad_H"), Input.GetAxisRaw("D_Pad_V"));
+
+        //Rotate(90);
         //BillMovememt(Input.GetAxisRaw("Ratate_right"), Input.GetAxisRaw("Rotate_left"));
         //if (Input.GetKeyDown("joystick button 4"))
         //{
@@ -77,55 +100,65 @@ public class billcontroller : MonoBehaviour
             fromMoveHorizonal = 0.0f;
         }
 
+
     }
 
-    private void Rotate(int RotateAxis, bool cannon = false)
+    public void L_Rotation()
     {
-
-        if (cannon == true)
-        {
-            if (Input.GetKey("joystick button 4"))
-            {
-                transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), RotateAxis);
-            }
-            if (Input.GetKey("joystick button 5"))
-            {
-                transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), -RotateAxis);
-            }
-        }
-        else if (cannon == false)
-        {
-           
-            if (Input.GetButtonDown("Rotate_right_1P"))
-            {
-                Debug.Log("r1");
-                transform.Rotate(0, 0, RotateAxis);
-                //transform.RotateAround(transform.TransformPoint(rotationPoint), Vector3.forward, RotateAxis);
-            }
-            if (Input.GetButtonDown("Rotate_left_1P"))
-            {
-                transform.Rotate(0, 0, -RotateAxis);
-            }
-         
-            if (Input.GetKeyDown(KeyCode.A ))
-            {
-                var screenPoint2P = Camera.main.WorldToViewportPoint(this.transform.position + new Vector3(-1, 0, 0));// 0,0~1.1
-
-                if (screenPoint2P.x <= 0.48 && screenPoint2P.x >= 0)
-                    transform.position += new Vector3(-1, 0, 0);
-                
-            }
-            else if (Input.GetKeyDown(KeyCode.D))
-            {
-                var screenPoint2P = Camera.main.WorldToViewportPoint(this.transform.position + new Vector3(1, 0, 0));// 0,0~1.1
-
-                if (screenPoint2P.x <= 0.48 && screenPoint2P.x >= 0)
-                  
-                transform.position += new Vector3(1, 0, 0);
-            }
-            //キーボード入力をお入れる
-        }
+        transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), 90);
     }
+    public void R_Rotation()
+    {
+        transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), -90);
+    }
+    //public void Rotate(InputAction.CallbackContext context, bool cannon = false)
+    //{
+    //    Debug.Log(context)
+
+    //    if (cannon == true)
+    //    {
+    //        if (Input.GetKey("joystick button 4"))
+    //        {
+    //            transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), RotateAxis);
+    //        }
+    //        if (Input.GetKey("joystick button 5"))
+    //        {
+    //            transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), -RotateAxis);
+    //        }
+    //    }
+    //    else if (cannon == false)
+    //    {
+
+    //        //if (Input.GetButtonDown("Rotate_right_1P"))
+    //        //{
+    //        //    Debug.Log("r1");
+    //        //    transform.Rotate(0, 0, RotateAxis);
+    //        //    //transform.RotateAround(transform.TransformPoint(rotationPoint), Vector3.forward, RotateAxis);
+    //        //}
+    //        //if (Input.GetButtonDown("Rotate_left_1P"))
+    //        //{
+    //        //    transform.Rotate(0, 0, -RotateAxis);
+    //        //}
+
+    //        //if (Input.GetKeyDown(KeyCode.A ))
+    //        //{
+    //        //    var screenPoint2P = Camera.main.WorldToViewportPoint(this.transform.position + new Vector3(-1, 0, 0));// 0,0~1.1
+
+    //        //    if (screenPoint2P.x <= 0.48 && screenPoint2P.x >= 0)
+    //        //        transform.position += new Vector3(-1, 0, 0);
+
+    //        //}
+    //        //else if (Input.GetKeyDown(KeyCode.D))
+    //        //{
+    //        //    var screenPoint2P = Camera.main.WorldToViewportPoint(this.transform.position + new Vector3(1, 0, 0));// 0,0~1.1
+
+    //        //    if (screenPoint2P.x <= 0.48 && screenPoint2P.x >= 0)
+
+    //        //    transform.position += new Vector3(1, 0, 0);
+    //        //}
+    //        //キーボード入力をお入れる
+    //    }
+    //}
 
     /// <summary>
     /// ブロック移動関数
@@ -133,21 +166,28 @@ public class billcontroller : MonoBehaviour
     /// <param name="inputhorizotal"></param>
     /// <param name="inputvertical"></param>
     /// <param name="Player"> false =1p true=2p</param>
-    private void BillMovememt(float inputhorizotal, float inputvertical)
+    public void BillMovememt(InputAction.CallbackContext context)
     {
-        if (pad == true && inputhorizotal * inputhorizotal >= 0.25f)
+        var k = context.ReadValue<Vector2>();
+        Debug.Log(k);
+        if (pad == true && k.x * k.x >= 0.25f)
         {
             float moveDistance = 1.0f;
-            if (inputhorizotal < 0) moveDistance *= -1;
-
+            if (k.x < 0) moveDistance *= -1;
             var screenPoint2P = Camera.main.WorldToViewportPoint(this.transform.position + new Vector3(moveDistance, 0, 0));// 0,0~1.1
 
             if (screenPoint2P.x <= 0.48 && screenPoint2P.x >= 0)
+<<<<<<< HEAD
             
                 transform.position += new Vector3(moveDistance, 0, 0);
 
                 pad = false;
             
+=======
+                transform.position += new Vector3(moveDistance, 0, 0);
+
+            pad = false;
+>>>>>>> origin/feature/sakai/BillController
         }
         var screenPoint = Camera.main.WorldToViewportPoint(this.transform.position);// 0,0~1.1
         ////左の壁に当たった時に値を戻す
@@ -172,39 +212,42 @@ public class billcontroller : MonoBehaviour
         //}
 
         // 自動で下に移動させつつ、下矢印キーでも移動する
-        if (pad == true && inputvertical * inputvertical >= 0.25f || Time.time - previousTime >= fallTime || Input.GetKeyDown(KeyCode.S))
+        if (pad == true && k.y * k.y >= 0.25f || Input.GetKeyDown(KeyCode.S))
         {
-            transform.position += new Vector3(0, -1, 0);
-            previousTime = Time.time;
-
-            pad = false;
+            if (k.y <= 0.25f)
+            {
+                transform.position += new Vector3(0, Mathf.Sign(k.y), 0);
+                pad = false;
+            }
         }
 
-        if (Stop == true)
-        {
-            rb.constraints = RigidbodyConstraints2D.None;
-            transform.position = new Vector3(transform.position.x, 1, 0);//座標を(0,1)に戻す
-
-            FindObjectOfType<SpownBill>().NewBill();//新しいビルをリスポーン
-
-            this.enabled = false;
-        }
-        //else if (Rtri > 0)
+        //if (Stop == true)
         //{
-        //    // ブロックを上矢印キーを押して回転させる
-        //    transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), 90);
+        //    //rb.constraints = RigidbodyConstraints2D.None;
+        //    //transform.position = new Vector3(transform.position.x, 1, 0);//座標を(0,1)に戻す
+
+
+
+        //    this.enabled = false;
+        //}
+        ////else if (Rtri > 0)
+        ////{
+        ////    // ブロックを上矢印キーを押して回転させる
+        ////    transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), 90);
+        ////}
+
+        //if (billstop == true)
+        //{
+        //    rb.constraints = RigidbodyConstraints2D.None;
+        //    transform.position = new Vector3(transform.position.x, transform.position.y, 0);//座標をその場にとどまる
+
+        //    this.enabled = false;
         //}
 
-        if (billstop == true)
-        {
-            rb.constraints = RigidbodyConstraints2D.None;
-            transform.position = new Vector3(transform.position.x, transform.position.y, 0);//座標をその場にとどまる
-            FindObjectOfType<SpownBill>().NewBill();//新しいビルをリスポーン
-
-
-
-            this.enabled = false;
-        }
-
+    }
+    void OnDisable()
+    {
+        this.GetComponent<PlayerInput>().enabled = false;
+        FindObjectOfType<SpownBill>().NewBill();//新しいビルをリスポーン
     }
 }
