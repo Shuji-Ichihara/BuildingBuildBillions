@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/feature/sakai/BillController
 
 public class billcontroller2P : MonoBehaviour
 {
@@ -212,19 +209,11 @@ public class billcontroller2P : MonoBehaviour
         // 自動で下に移動させつつ、下矢印キーでも移動する
         if (pad == true && k.y * k.y >= 0.25f || Input.GetKeyDown(KeyCode.DownArrow))
         {
-<<<<<<< HEAD
-            transform.position += new Vector3(0, -1, 0);
+            //transform.position += new Vector3(0, -1, 0);
 
-            previousTime = Time.time;
+            //previousTime = Time.time;
 
-            pad = false;
-=======
-            if(k.y <=0.25f)
-            {
-                transform.position += new Vector3(0, Mathf.Sign(k.y), 0);
-                pad = false;
-            }
->>>>>>> origin/feature/sakai/BillController
+            //pad = false;
         }
 
         //if (Stop == true)
