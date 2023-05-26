@@ -45,8 +45,7 @@ public class CameraControllerTest : SingletonMonoBehaviour<CameraControllerTest>
         bool isMoveCameraSwtich = true;
         while (_camera.orthographicSize >= 540 && _camera.orthographicSize <= Screen.height)
         {
-            float buildingHeightAndScreenRatio = GameManager.Instance.BuildingHeightAndScreenRatio;
-            float buildingTop = _camera.orthographicSize * buildingHeightAndScreenRatio;
+            float buildingTop = _camera.orthographicSize * GameManager.Instance.BuildingHeightAndScreenRatio;
             // ビルの高さが buildingTop より高ければズームアウト
             if (GetBuildingTop().y <= buildingTop)
             {
@@ -101,5 +100,4 @@ public class CameraControllerTest : SingletonMonoBehaviour<CameraControllerTest>
         Debug.Log($"{obj}");
         return obj.transform.position;
     }
-
 }
