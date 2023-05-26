@@ -142,11 +142,12 @@ public class billcontroller : MonoBehaviour
 
             var screenPoint2P = Camera.main.WorldToViewportPoint(this.transform.position + new Vector3(moveDistance, 0, 0));// 0,0~1.1
 
-            if (screenPoint2P.x >= 0.48 && screenPoint2P.x <= 1)
+            if (screenPoint2P.x <= 0.48 && screenPoint2P.x >= 0)
+            
                 transform.position += new Vector3(moveDistance, 0, 0);
 
-            pad = false;
-
+                pad = false;
+            
         }
         var screenPoint = Camera.main.WorldToViewportPoint(this.transform.position);// 0,0~1.1
         ////左の壁に当たった時に値を戻す

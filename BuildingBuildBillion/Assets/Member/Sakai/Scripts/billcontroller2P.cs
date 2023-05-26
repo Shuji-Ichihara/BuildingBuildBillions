@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 
 public class billcontroller2P : MonoBehaviour
@@ -54,7 +55,7 @@ public class billcontroller2P : MonoBehaviour
             billstop = true;
         }
     }
-
+ 
     void Update()
     {
         //Debug.Log(Stop);
@@ -178,6 +179,7 @@ public class billcontroller2P : MonoBehaviour
         if (pad == true && inputvertical * inputvertical >= 0.25f || Time.time - previousTime >= fallTime || Input.GetKeyDown(KeyCode.DownArrow))
         {
             transform.position += new Vector3(0, -1, 0);
+
             previousTime = Time.time;
 
             pad = false;

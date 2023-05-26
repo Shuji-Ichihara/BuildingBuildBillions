@@ -52,7 +52,7 @@ InputManager:
     invert: 0
     type: 0
     axis: 3
-    joyNum: 1
+    joyNum: 3
   - serializedVersion: 3
     m_Name: Rotate_left_1P
     descriptiveName: 
@@ -68,7 +68,7 @@ InputManager:
     invert: 0
     type: 0
     axis: 4
-    joyNum: 1
+    joyNum: 3
   - serializedVersion: 3
     m_Name: D_Pad_H2P
     descriptiveName: 
@@ -84,7 +84,7 @@ InputManager:
     invert: 0
     type: 2
     axis: 5
-    joyNum: 2
+    joyNum: 4
   - serializedVersion: 3
     m_Name: D_Pad_V2P
     descriptiveName: 
@@ -100,13 +100,13 @@ InputManager:
     invert: 0
     type: 2
     axis: 6
-    joyNum: 2
+    joyNum: 4
   - serializedVersion: 3
     m_Name: Rotate_right_2P
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: joystick 2 button 4
+    positiveButton: joystick 4 button 4
     altNegativeButton: 
     altPositiveButton: 
     gravity: 0
@@ -116,13 +116,13 @@ InputManager:
     invert: 0
     type: 0
     axis: 4
-    joyNum: 2
+    joyNum: 4
   - serializedVersion: 3
     m_Name: Rotate_left_2P
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: joystick 2 button 5
+    positiveButton: joystick 4 button 5
     altNegativeButton: 
     altPositiveButton: 
     gravity: 0
@@ -132,7 +132,7 @@ InputManager:
     invert: 0
     type: 0
     axis: 4
-    joyNum: 2
+    joyNum: 4
   - serializedVersion: 3
     m_Name: Enable Debug Button 1
     descriptiveName: 
