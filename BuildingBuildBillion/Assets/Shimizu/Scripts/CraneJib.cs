@@ -21,10 +21,15 @@ public class CraneJib : MonoBehaviour
     CraneSensor2 craneSensor;
     [Header("ÉAÅ[ÉÄäpìx"),SerializeField]
     private float angle = 30f;
+    [SerializeField]
+    private GameObject jib2TurnPoint;
+    [SerializeField]
+    private GameObject jib;
+
     private void Start()
     {
-        startPosition = transform.localPosition.x;
-        endPosition = transform.localPosition.x + 4.5f;
+        startPosition = jib.transform.localPosition.x;
+        endPosition = jib.transform.localPosition.x + 4;
         craneSensor.GetComponent<Transform>();
     }
     private void Update()
@@ -32,6 +37,7 @@ public class CraneJib : MonoBehaviour
         //30ìx(ê›íËÇµÇΩäpìx)Ç…ã»Ç∞ÇÈ
         if (jibTurn)
         {
+            jib2TurnPoint.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(0, 0, 0), Quaternion.Euler(0, 0, angle), ratioRotation);
             craneSensor.transform.parent.localRotation = Quaternion.Lerp(Quaternion.Euler(0, 0, 0), Quaternion.Euler(0, 0, -angle), ratioRotation);
             transform.localRotation = Quaternion.Lerp(Quaternion.Euler(0, 0, 0), Quaternion.Euler(0, 0, angle), ratioRotation);
             ratioRotation += Time.deltaTime / speedRotation;
@@ -45,6 +51,7 @@ public class CraneJib : MonoBehaviour
         //äpìxÇñﬂÇ∑
         if (jibReTurn)
         {
+            jib2TurnPoint.transform.rotation = Quaternion.Lerp(Quaternion.Euler(0, 0, angle), Quaternion.Euler(0, 0, 0), ratioRotation);
             craneSensor.transform.parent.localRotation = Quaternion.Lerp(Quaternion.Euler(0, 0, -angle), Quaternion.Euler(0, 0, 0), ratioRotation);
             transform.localRotation = Quaternion.Lerp(Quaternion.Euler(0, 0, angle), Quaternion.Euler(0, 0, 0), ratioRotation);
             ratioRotation += Time.deltaTime / speedRotation;
@@ -59,7 +66,7 @@ public class CraneJib : MonoBehaviour
         //òrÇ™êLÇ—ÇÈ
         if (jibExtend)
         {
-            transform.localPosition = new Vector2(Mathf.Lerp(startPosition, endPosition, ratio),transform.localPosition.y);
+            jib.transform.localPosition = new Vector2(Mathf.Lerp(startPosition, endPosition, ratio), jib.transform.localPosition.y);
             ratio += Time.deltaTime / speed;
             if(ratio > 1.1f)
             {
@@ -71,7 +78,7 @@ public class CraneJib : MonoBehaviour
         //òrÇ™èkÇﬁ
         if(jibContract)
         {
-            transform.localPosition = new Vector2(Mathf.Lerp(endPosition, startPosition+1.5f, ratio), transform.localPosition.y);
+            jib.transform.localPosition = new Vector2(Mathf.Lerp(endPosition, startPosition + 1.5f, ratio), jib.transform.localPosition.y);
             ratio += Time.deltaTime / speed;
             if (ratio > 1.1f)
             {
