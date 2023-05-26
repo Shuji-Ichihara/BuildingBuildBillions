@@ -8,6 +8,7 @@ public class CameraControllerTest : SingletonMonoBehaviour<CameraControllerTest>
     // ズームさせるカメラ
     [SerializeField]
     private Camera _camera = null;
+    public Camera Camera => _camera;
     // カメラズームのスピードの変化量
     [SerializeField]
     private float _zoomCameraSpeed = 70.0f;
@@ -84,6 +85,7 @@ public class CameraControllerTest : SingletonMonoBehaviour<CameraControllerTest>
         _camera.orthographicSize += zoom;
         _camera.transform.position += vector * _moveCameraSpeed * Time.deltaTime;
         JadgementBarControllerTest.Instance.MoveJadgementBarFallPoint(moveSwitch);
+        GameManager.Instance.MoveBuildSpawnPoint(moveSwitch, _zoomCameraSpeed * _moveCameraSpeed);
         // カメラの Y 座標の移動限界を定義
         _camera.transform.position = new Vector3(0.0f
                                                , Mathf.Clamp(_camera.transform.position.y
@@ -93,11 +95,22 @@ public class CameraControllerTest : SingletonMonoBehaviour<CameraControllerTest>
     }
 
     // 積みあがっている建材の中で、一番 Y 座標が大きい建材を検出する
-    public Vector3 GetBuildingTop()
+    private Vector3 GetBuildingTop()
     {
         // 落下したオブジェクトを検索
         // 要変更
-        GameObject obj = GameObject.FindGameObjectWithTag("BuildingMaterial");
+        GameObject obj;
+        GameObject dummy1 = GameManager.Instance.SpownBill.Obj;
+        GameObject dummy2 = GameManager.Instance.SpownBill2P.Obj;
+        if (dummy1.transform.position.y > dummy2.transform.position.y)
+        {
+            obj = dummy1;
+        }
+        else
+        {
+            obj = dummy2;
+        }
+
         Debug.Log($"{obj}");
         return obj.transform.position;
     }
