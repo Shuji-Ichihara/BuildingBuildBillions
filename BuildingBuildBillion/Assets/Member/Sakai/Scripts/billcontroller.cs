@@ -173,7 +173,7 @@ public class billcontroller : MonoBehaviour
         if (pad == true && k.x * k.x >= 0.25f)
         {
             float moveDistance = 50.0f;
-            if (inputhorizotal < 0) moveDistance *= -1;
+            if (k.x < 0) moveDistance *= -1;
 
             Debug.Log($"{this.transform.position}");
             var screenPoint2P = Camera.main.WorldToViewportPoint(this.transform.position + new Vector3(moveDistance, 0, 0));// 0,0~1.1
