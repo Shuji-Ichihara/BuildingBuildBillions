@@ -497,7 +497,7 @@ PrefabInstance:
       objectReference: {fileID: 351090091}
     - target: {fileID: 1275756992796047655, guid: 9de20941fdb3d1b4fa4952bc6796d7e3, type: 3}
       propertyPath: _setTime
-      value: 10
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 1275756992796047655, guid: 9de20941fdb3d1b4fa4952bc6796d7e3, type: 3}
       propertyPath: _spownBill
@@ -676,6 +676,22 @@ PrefabInstance:
     - target: {fileID: 7208757306015148329, guid: 59afc03ace22e27429c4c4a5373324c2, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 7208757308007680365, guid: 59afc03ace22e27429c4c4a5373324c2, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7208757308007680365, guid: 59afc03ace22e27429c4c4a5373324c2, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7208757308007680365, guid: 59afc03ace22e27429c4c4a5373324c2, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7208757308007680365, guid: 59afc03ace22e27429c4c4a5373324c2, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4278190080
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59afc03ace22e27429c4c4a5373324c2, type: 3}
