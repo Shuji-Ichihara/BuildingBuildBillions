@@ -515,6 +515,10 @@ PrefabInstance:
       propertyPath: _buildSpawnPoint2
       value: 
       objectReference: {fileID: 1498903410}
+    - target: {fileID: 1275756992796047655, guid: 9de20941fdb3d1b4fa4952bc6796d7e3, type: 3}
+      propertyPath: _buildingHeightAndScreenRatio
+      value: 0.6
+      objectReference: {fileID: 0}
     - target: {fileID: 1275756992796047673, guid: 9de20941fdb3d1b4fa4952bc6796d7e3, type: 3}
       propertyPath: m_Name
       value: GameManager
