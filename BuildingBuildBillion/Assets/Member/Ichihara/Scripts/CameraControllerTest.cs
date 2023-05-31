@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ public class CameraControllerTest : SingletonMonoBehaviour<CameraControllerTest>
     public Camera Camera => _camera;
     // カメラズームのスピードの変化量
     [SerializeField]
-    private float _zoomCameraSpeed = 70.0f;
+    private float _zoomCameraSpeed = 80.0f;
     // カメラの Y 軸方向の変化量
     [SerializeField]
     private float _moveCameraSpeed = 100.0f;
@@ -37,31 +38,36 @@ public class CameraControllerTest : SingletonMonoBehaviour<CameraControllerTest>
     {
         // カメラの OrthographicSize の変化量
         float zoom = _zoomCameraSpeed * Time.deltaTime;
-
         // カメラの Y 座標の移動方向を格納する変数
-        // 初期値が最低値の為、Vector3.up を代入
+        // 初期値が最低値の為、Vector3.up で初期化
         Vector3 moveVector = Vector3.up;
         // 判定バーの移動方向の設定
-        // 初期値が最低値の為、true を代入
+        // 初期値が最低値の為、true で初期化
         bool isMoveCameraSwtich = true;
         while (_camera.orthographicSize >= 540 && _camera.orthographicSize <= Screen.height)
         {
-            float buildingHeightAndScreenRatio = GameManager.Instance.BuildingHeightAndScreenRatio;
-            float buildingTop = _camera.orthographicSize * buildingHeightAndScreenRatio;
-            // ビルの高さが buildingTop より高ければズームアウト
-            if (GetBuildingTop().y <= buildingTop)
+            // 要変更
+            if (GameManager.Instance.CountDownTime < 0.0f) { break; }
+
+            // カメラがズームアウトするのに必要なビルの高さ
+            float buildingTop = _camera.orthographicSize * GameManager.Instance.BuildingHeightAndScreenRatio;
+            // ビルの高さが buildingTop 以上であればズームアウト
+            //Debug.Log($"ズームアウト : {GetBuildingTop().y > buildingTop}, {GetBuildingTop()}, {zoom}");
+            //Debug.Log($"ズームイン : {GetBuildingTop().y < buildingTop}, {GetBuildingTop()}, {zoom}");
+            if (GetBuildingTop().y > buildingTop)
             {
                 if (zoom < 0.0f) { zoom *= -1; }
                 moveVector = Vector3.up;
                 isMoveCameraSwtich = true;
             }
             // ビルの高さが buildingTop より低ければズームイン
-            else if (GetBuildingTop().y > buildingTop)
+            else if (GetBuildingTop().y < buildingTop)
             {
-                zoom *= -1;
+                if (zoom > 0.0f) { zoom *= -1; }
                 moveVector = Vector3.down;
                 isMoveCameraSwtich = false;
             }
+            else { continue; }
             await MoveCamera(zoom, moveVector, isMoveCameraSwtich, token);
             // カメラの Orthgraphic の限界値を定義
             _camera.orthographicSize = Mathf.Clamp(_camera.orthographicSize
@@ -81,11 +87,11 @@ public class CameraControllerTest : SingletonMonoBehaviour<CameraControllerTest>
     private async UniTask MoveCamera(float zoom, Vector3 vector, bool moveSwitch, CancellationToken token = default)
     {
         // 変更の可能性有
-        await UniTask.Yield(token);
+        await UniTask.WaitForFixedUpdate(token);
         _camera.orthographicSize += zoom;
         _camera.transform.position += vector * _moveCameraSpeed * Time.deltaTime;
         JadgementBarControllerTest.Instance.MoveJadgementBarFallPoint(moveSwitch);
-        GameManager.Instance.MoveBuildSpawnPoint(moveSwitch, _zoomCameraSpeed * _moveCameraSpeed);
+        GameManager.Instance.MoveBuildSpawnPoint();
         // カメラの Y 座標の移動限界を定義
         _camera.transform.position = new Vector3(0.0f
                                                , Mathf.Clamp(_camera.transform.position.y
@@ -94,25 +100,34 @@ public class CameraControllerTest : SingletonMonoBehaviour<CameraControllerTest>
                                                , _camera.transform.position.z);
     }
 
-    // 積みあがっている建材の中で、一番 Y 座標が大きい建材を検出する
-    private Vector3 GetBuildingTop()
+    /// <summary>
+    /// 積みあがっている建材オブジェクトで、一番 Y 座標が大きい建材オブジェクトを検索する
+    /// </summary>
+    /// <returns></returns>
+    private Vector3 GetBuildingTop(Vector3 vec3 = default)
     {
-        // 落下したオブジェクトを検索
+        // 接地したオブジェクトを検索
         // 要変更
-        GameObject obj;
-        GameObject dummy1 = GameManager.Instance.SpownBill.Obj;
-        GameObject dummy2 = GameManager.Instance.SpownBill2P.Obj;
-        if (dummy1.transform.position.y > dummy2.transform.position.y)
+        var dummy1Position = GameManager.Instance.SpownBill.BuildingPosition;
+        var dummy2Position = GameManager.Instance.SpownBill2P.BuildingPosition;
+        // 勝敗判定時、 MissingReferenceException が発生する場合がある為、例外処理を行う
+        try
         {
-            obj = dummy1;
-        }
-        else
-        {
-            obj = dummy2;
-        }
+            if (dummy1Position.y > dummy2Position.y)
+            {
+                vec3 = dummy1Position;
+            }
+            else if (dummy1Position.y < dummy2Position.y)
+            {
+                vec3 = dummy2Position;
+            }
 
-        Debug.Log($"{obj}");
-        return obj.transform.position;
+        }
+        catch (MissingReferenceException mre)
+        {
+            Debug.Log(mre + "無視していいよ");
+            throw;
+        }
+        return vec3;
     }
-
 }
