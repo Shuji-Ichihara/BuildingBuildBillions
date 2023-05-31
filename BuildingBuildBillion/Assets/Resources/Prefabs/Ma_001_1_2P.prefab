@@ -114,7 +114,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 4.2, y: 4.2}
   m_EdgeRadius: 0
 --- !u!50 &8129232725402303745
 Rigidbody2D:
@@ -152,7 +152,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.75
+  m_Radius: 3
 --- !u!114 &8844578038013634164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,7 +193,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.05, y: 1.05}
+  m_Size: {x: 4.41, y: 4.41}
   m_EdgeRadius: 0
 --- !u!114 &217066399062873346
 MonoBehaviour:
