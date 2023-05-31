@@ -16,8 +16,11 @@ public class JadgementBarControllerTest : SingletonMonoBehaviour<JadgementBarCon
     // Start is called before the first frame update
     void Start()
     {
-        // JadgementBar クラスが Rigidbody を RequireComponent している
+        // JadgementBar クラスが Rigidbody と Collider2D を RequireComponent している
         _jadgementBar.AddComponent<JadgementBar>();
+        // ゲーム中は必要ないので enabled を false にする
+        _jadgementBar.GetComponent<SpriteRenderer>().enabled = false;
+        _jadgementBar.GetComponent<Collider2D>().enabled = false;
         _rb2D = _jadgementBar.GetComponent<Rigidbody2D>();
         _rb2D.constraints = RigidbodyConstraints2D.FreezeRotation;
         _rb2D.gravityScale = 0.0f;
@@ -33,7 +36,13 @@ public class JadgementBarControllerTest : SingletonMonoBehaviour<JadgementBarCon
         {
             if(false == GameManager.Instance.IsEndGame)
             {
+                // カウントダウンが終了したら操作中のオブジェクトを破棄する
+                Destroy(GameManager.Instance.SpownBill.Obj);
+                Destroy(GameManager.Instance.SpownBill2P.Obj);
                 await GameManager.Instance.EndGame();
+                // 勝敗判定に必要なので enabled を true にする
+                _jadgementBar.GetComponent<SpriteRenderer>().enabled = true;
+                _jadgementBar.GetComponent<Collider2D>().enabled = true;
                 GameManager.Instance.IsEndGame = true;
             }
             _rb2D.gravityScale = 1.0f;
@@ -75,8 +84,7 @@ public class JadgementBarControllerTest : SingletonMonoBehaviour<JadgementBarCon
         {
             Debug.Log($"Player2 Win!!");
         }
-        // 接触したオブジェクトの x 座標が 0 の場合(後で取り掛かる)
-        else
+        else // 引き分けの場合の処理
         {
             Debug.Log($"Draw");
         }
