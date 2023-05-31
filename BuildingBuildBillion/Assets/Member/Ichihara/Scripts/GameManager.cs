@@ -52,6 +52,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         // _buildSpawnPoint の初期値を代入
         _defaultBuildSpawnPoint1 = _buildSpawnPoint1.transform.position;
         _defaultBuildSpawnPoint2 = _buildSpawnPoint2.transform.position;
+        CameraControllerTest.Instance.CallCalucrateCameraMovement();
     }
 
     // Update is called once per frame
@@ -71,13 +72,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     /// </summary>
     private void CountDown()
     {
-        if (_countDownTime < 0.0f)
-        {
-            // カウントダウンが終了したら操作中のオブジェクトを破棄する
-            Destroy(SpownBill.Obj);
-            Destroy(SpownBill2P.Obj);
-            return;
-        }
+        if (_countDownTime < 0.0f) { return; }
         _countDownTime -= Time.deltaTime;
     }
 
@@ -104,55 +99,48 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     {
         foreach (GameObject obj in objects)
         {
+            if (obj == null) { break; }
             var component1 = obj.GetComponent<billcontroller>();
             var component2 = obj.GetComponent<billcontroller2P>();
             if (component1 != null)
             {
                 billcontroller billController = obj.GetComponent<billcontroller>();
-                billController.FreezeAll(obj);
+                billController.FreezeAllConstraints(obj);
             }
             else if (component2 != null)
             {
                 billcontroller2P billController2P = obj.GetComponent<billcontroller2P>();
-                billController2P.FreezeAll(obj);
+                billController2P.FreezeAllConstraints(obj);
             }
-            await UniTask.DelayFrame(1, PlayerLoopTiming.Update, token);
+            await UniTask.Yield(token);
         }
     }
 
     /// <summary>
     /// 建材がスポーンするポイントを移動させる
     /// </summary>
-    /// <param name="yAxis">移動方向のベクトル</param>
-    public void MoveBuildSpawnPoint(bool yAxis, float speed)
+    public void MoveBuildSpawnPoint()
     {
-        if (yAxis == true)
-        {
-            _buildSpawnPoint1.transform.position += new Vector3(0.0f
-                                                              , Vector3.up.y * speed * Time.deltaTime
-                                                              , 0.0f);
-            _buildSpawnPoint2.transform.position += new Vector3(0.0f
-                                                              , Vector3.up.y * speed * Time.deltaTime
-                                                              , 0.0f);
-        }
-        else if (yAxis == false)
-        {
-            _buildSpawnPoint1.transform.position += new Vector3(0.0f
-                                                              , Vector3.down.y * speed * Time.deltaTime
-                                                              , 0.0f);
-            _buildSpawnPoint2.transform.position += new Vector3(0.0f
-                                                              , Vector3.down.y * speed * Time.deltaTime
-                                                              , 0.0f);
-        }
+        _buildSpawnPoint1.transform.position = new Vector3(_buildSpawnPoint1.transform.position.x
+                                                         , CameraControllerTest.Instance.Camera.orthographicSize 
+                                                         + CameraControllerTest.Instance.Camera.transform.position.y
+                                                         , 0.0f);
+        _buildSpawnPoint2.transform.position = new Vector3(_buildSpawnPoint2.transform.position.x
+                                                         , CameraControllerTest.Instance.Camera.orthographicSize
+                                                         + CameraControllerTest.Instance.Camera.transform.position.y
+                                                         , 0.0f);
+        // 各スポーンポイントの移動限界値を設定
         _buildSpawnPoint1.transform.position = new Vector3(_buildSpawnPoint1.transform.position.x
                                                          , Mathf.Clamp(_buildSpawnPoint1.transform.position.y
                                                                      , _defaultBuildSpawnPoint1.y
-                                                                     , Screen.height * 1.5f)
+                                                                     , Screen.height 
+                                                                     + CameraControllerTest.Instance.Camera.transform.position.y)
                                                          , 0.0f);
         _buildSpawnPoint2.transform.position = new Vector3(_buildSpawnPoint2.transform.position.x
                                                          , Mathf.Clamp(_buildSpawnPoint2.transform.position.y
                                                                      , _defaultBuildSpawnPoint2.y
-                                                                     , Screen.height * 1.5f)
+                                                                     , Screen.height
+                                                                     + CameraControllerTest.Instance.Camera.transform.position.y)
                                                          , 0.0f);
     }
 
