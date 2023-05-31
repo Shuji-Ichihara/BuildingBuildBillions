@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Cannon : MonoBehaviour
 {
-    [SerializeField, Header("発射までにかかる時間")] private float _fireTime; //発射にかかる秒数
+    [SerializeField, Header("発射までにかかる時間")] private float _fireTime = 1; //発射にかかる秒数
     [SerializeField, Header("弾発射のインパクト")] private float _cannnonBulletImpact;   //弾のスピード
     [SerializeField] private GameObject _cannonBullet;
     [SerializeField] private GameObject _cannonMuzzle;
@@ -15,7 +15,7 @@ public class Cannon : MonoBehaviour
     private void Start()
     {
         _rg = this.gameObject.GetComponent<Rigidbody2D>();
-        StartCoroutine(CannonFire());//こいつの呼ぶ場所は配置したらでおね。
+        
     }
     private void Update()
     {
@@ -35,8 +35,8 @@ public class Cannon : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.H))
         {
             _rg.constraints = RigidbodyConstraints2D.None;
+            StartCoroutine(CannonFire());//こいつの呼ぶ場所は配置したらでおね。
         }
-
         if (Input.GetKeyDown("joystick button 4"))
         {
             Debug.Log("L"); //L?
@@ -66,6 +66,11 @@ public class Cannon : MonoBehaviour
     /// </summary>
     public IEnumerator CannonFire()
     {
+        // ローカル座標を基準に、回転を取得
+        Vector3 localangle = _cannonTransform.localEulerAngles;
+        //ローカル座標を基準にして_rotValue分回転
+        localangle.z += 0.0001f;
+        _cannonTransform.localEulerAngles = localangle; // 回転角度を設定
         _rg.constraints = RigidbodyConstraints2D.FreezeRotation;
         yield return new WaitForSeconds(_fireTime);
         GameObject clone = Instantiate(_cannonBullet, _cannonMuzzle.transform.position, this.transform.rotation);
