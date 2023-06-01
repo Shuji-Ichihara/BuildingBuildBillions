@@ -13,8 +13,8 @@ public class billcontroller : MonoBehaviour
     // ブロック回転
     public Vector3 rotationPoint;
     private bool Stop;
-    private bool rightwall;
-    private bool leftwall;
+    //private bool rightwall;
+    //private bool leftwall;
     private bool billstop;
     Rigidbody2D rb;
     bool pad = false;
@@ -23,9 +23,10 @@ public class billcontroller : MonoBehaviour
     float restTime = 0.25f;
     float fromMoveHorizonal = 0.0f;
 
+    //public Vector3 billControllerPosition { get; private set; }
+
     void Start()
     {
-
         rb = this.gameObject.GetComponent<Rigidbody2D>();
     }
 
@@ -108,7 +109,7 @@ public class billcontroller : MonoBehaviour
     public void BillMovememt(InputAction.CallbackContext context)
     {
         var k = context.ReadValue<Vector2>();
-        Debug.Log(k);
+        //Debug.Log(k);
         if (pad == true && k.x * k.x >= 0.25f)
         {
             float moveDistance = 50.0f;
@@ -142,9 +143,11 @@ public class billcontroller : MonoBehaviour
     {
         this.GetComponent<PlayerInput>().enabled = false;
         FindObjectOfType<SpownBill>().NewBill();//新しいビルをリスポーン
+        // このオブジェクトが無効化される時に、自身の座標を格納
+        GameManager.Instance.SpownBill.BuildingPosition = transform.position;
     }
 
-    public void FreezeAll(GameObject obj)
+    public void FreezeAllConstraints(GameObject obj)
     {
         Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
         rb.constraints = RigidbodyConstraints2D.FreezeAll;

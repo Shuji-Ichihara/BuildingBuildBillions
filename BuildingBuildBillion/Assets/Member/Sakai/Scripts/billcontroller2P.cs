@@ -13,8 +13,8 @@ public class billcontroller2P : MonoBehaviour
     // ブロック回転
     public Vector3 rotationPoint;
     private bool Stop;
-    private bool rightwall;
-    private bool leftwall;
+    //private bool rightwall;
+    //private bool leftwall;
     private bool billstop;
     Rigidbody2D rb;
     bool pad = false;
@@ -22,6 +22,8 @@ public class billcontroller2P : MonoBehaviour
     [SerializeField]
     float restTime = 0.25f;
     float fromMoveHorizonal = 0.0f;
+
+    //public Vector3 billController2PPosition { get; private set; }
 
     void Start()
     {
@@ -38,7 +40,6 @@ public class billcontroller2P : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Bill2"))
         {
-
             billstop = true;
         }
     }
@@ -94,50 +95,7 @@ public class billcontroller2P : MonoBehaviour
     {
         transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), -90);
     }
-    //if (Input.GetButtonDown("Rotate_right_2P"))
-    //        //{
-    //        //    Debug.Log("yyye");
-    //        //    transform.Rotate(0, 0, RotateAxis);
-    //        //}
-    //        //if (Input.GetButtonDown("Rotate_left_2P"))
-    //        //{
-    //        //    transform.Rotate(0, 0, -RotateAxis);
-    //        //}          
-    /*
-     if (Input.GetKeyDown(KeyCode.LeftArrow))
-     {
-         var screenPoint = CameraControllerTest.Instance.Camera.WorldToViewportPoint(this.transform.position + new Vector3(-1, 0, 0));// 0,0~1.1
 
-         //if (screenPoint.x >= 0.51 && screenPoint.x <= 1)
-         //    transform.position += new Vector3(-1, 0, 0);
-
-         // 市原が記述
-         // 要変更
-         if (CameraControllerTest.Instance.Camera.orthographicSize < 1080.0f * 1.5f)
-         {
-             if (screenPoint.x >= 0.55f && screenPoint.x <= 0.8f)
-                 transform.position += new Vector3(-50.0f, 0, 0);
-         }
-         if (screenPoint.x > 0.55f)
-             transform.position += new Vector3(-50.0f, 0, 0);
-     }
-     else if (Input.GetKeyDown(KeyCode.RightArrow))
-     {
-         var screenPoint = CameraControllerTest.Instance.Camera.WorldToViewportPoint(this.transform.position + new Vector3(1, 0, 0));// 0,0~1.1
-
-         // 市原が記述
-         // 要変更
-         if (CameraControllerTest.Instance.Camera.orthographicSize < 1080.0f * 1.5f)
-         {
-             if (screenPoint.x >= 0.55 && screenPoint.x <= 0.8f)
-                 transform.position += new Vector3(50.0f, 0, 0);
-         }
-         if (screenPoint.x < 1.0f)
-             transform.position += new Vector3(50.0f, 0, 0);
-     }
- }
-}
-    */
     /// <summary>
     /// ブロック移動関数
     /// </summary>
@@ -147,7 +105,7 @@ public class billcontroller2P : MonoBehaviour
     public void BillMovememt(InputAction.CallbackContext context)
     {
         var k = context.ReadValue<Vector2>();
-        Debug.Log(k);
+        //Debug.Log(k);
         if (pad == true && k.x * k.x >= 0.25f)
         {
             float moveDistance = 50.0f;
@@ -174,22 +132,18 @@ public class billcontroller2P : MonoBehaviour
                 pad = false;
             }
         }
-
-        if (billstop == true)
-        {
-            rb.constraints = RigidbodyConstraints2D.None;
-            // transform.position = new Vector3(transform.position.x, transform.position.y, 0);//座標をその場にとどまる
-            FindObjectOfType<SpownBill2P>().NewBill2P();//新しいビルをリスポーン
-        }
-
     }
+
     void OnDisable()
     {
         this.GetComponent<PlayerInput>().enabled = false;
         FindObjectOfType<SpownBill2P>().NewBill2P();//新しいビルをリスポーン
+        // このオブジェクトが無効化される時に、自身の座標を格納
+        GameManager.Instance.SpownBill2P.BuildingPosition = gameObject.transform.position;
     }
 
-    public void FreezeAll(GameObject obj)
+
+    public void FreezeAllConstraints(GameObject obj)
     {
         Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
         rb.constraints = RigidbodyConstraints2D.FreezeAll;
