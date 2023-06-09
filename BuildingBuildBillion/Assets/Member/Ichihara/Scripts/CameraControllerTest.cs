@@ -89,7 +89,7 @@ public class CameraControllerTest : SingletonMonoBehaviour<CameraControllerTest>
         _camera.orthographicSize += zoom;
         _camera.transform.position += vector * _moveCameraSpeed * Time.deltaTime;
         JadgementBarControllerTest.Instance.MoveJadgementBarFallPoint(moveSwitch);
-        GameManager.Instance.MoveBuildSpawnPoint();
+        GameManager.Instance.MoveBuildingSpawnPoint();
         // カメラの Y 座標の移動限界を定義
         _camera.transform.position = new Vector3(0.0f
                                                , Mathf.Clamp(_camera.transform.position.y
