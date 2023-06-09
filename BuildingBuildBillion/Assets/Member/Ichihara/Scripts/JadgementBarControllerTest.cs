@@ -37,8 +37,8 @@ public class JadgementBarControllerTest : SingletonMonoBehaviour<JadgementBarCon
             if(false == GameManager.Instance.IsEndGame)
             {
                 // カウントダウンが終了したら操作中のオブジェクトを破棄する
-                Destroy(GameManager.Instance.SpownBill.Obj);
-                Destroy(GameManager.Instance.SpownBill2P.Obj);
+                Destroy(GameManager.Instance.Obj);
+                Destroy(GameManager.Instance.Obj2);
                 await GameManager.Instance.EndGame();
                 // 勝敗判定に必要なので enabled を true にする
                 _jadgementBar.GetComponent<SpriteRenderer>().enabled = true;
