@@ -9,28 +9,19 @@
                     "name": "1P_Move",
                     "type": "Value",
                     "id": "2d38dda0-5e1e-4dea-8224-8fbb8134c181",
-                    "expectedControlType": "Vector2",
+                    "expectedControlType": "Dpad",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
                 },
                 {
-                    "name": "LeftRotaion",
-                    "type": "Value",
-                    "id": "0b47bd94-41c5-47a8-ae38-05dcda3db69f",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "RightRotation",
+                    "name": "Ro",
                     "type": "Button",
-                    "id": "adf7001d-38b9-468d-a6df-dcfa37f8da0f",
+                    "id": "9af0d44f-b6c6-4490-ab5d-a4d081381d38",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -47,23 +38,23 @@
                 },
                 {
                     "name": "",
-                    "id": "5f3699c3-bc80-41d7-81ab-a28c75de7144",
-                    "path": "<Gamepad>/leftShoulder",
+                    "id": "afe91ab7-b646-4872-8314-b6d89277eb02",
+                    "path": "<XInputController>/leftShoulder",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Gamepad",
-                    "action": "LeftRotaion",
+                    "groups": "",
+                    "action": "Ro",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "3f21786b-4edf-4b88-ba0e-94c7a1279bb7",
+                    "id": "b62b5378-479e-4ad4-9d62-127cdf4f0449",
                     "path": "<Gamepad>/rightShoulder",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Gamepad",
-                    "action": "RightRotation",
+                    "groups": "",
+                    "action": "Ro",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

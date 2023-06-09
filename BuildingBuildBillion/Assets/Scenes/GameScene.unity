@@ -132,7 +132,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3035006443894946442, guid: e2fd76f9a2d706549ada359f3a642337, type: 3}
       propertyPath: Bills.Array.size
-      value: 6
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3035006443894946442, guid: e2fd76f9a2d706549ada359f3a642337, type: 3}
       propertyPath: Bills.Array.data[0]
@@ -141,7 +141,7 @@ PrefabInstance:
     - target: {fileID: 3035006443894946442, guid: e2fd76f9a2d706549ada359f3a642337, type: 3}
       propertyPath: Bills.Array.data[1]
       value: 
-      objectReference: {fileID: 4632328116425368548, guid: e063b1eb42be8d74bb503731bcd09e93, type: 3}
+      objectReference: {fileID: 4356865857506395295, guid: 51313add21296dc45a39cd8e6a466359, type: 3}
     - target: {fileID: 3035006443894946442, guid: e2fd76f9a2d706549ada359f3a642337, type: 3}
       propertyPath: Bills.Array.data[2]
       value: 
@@ -947,7 +947,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6644617886362527705, guid: 43bdb773fcc3b0943a4f1a3f297e2fc7, type: 3}
       propertyPath: Bills2P.Array.size
-      value: 6
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6644617886362527705, guid: 43bdb773fcc3b0943a4f1a3f297e2fc7, type: 3}
       propertyPath: Bills2P.Array.data[0]
@@ -956,7 +956,7 @@ PrefabInstance:
     - target: {fileID: 6644617886362527705, guid: 43bdb773fcc3b0943a4f1a3f297e2fc7, type: 3}
       propertyPath: Bills2P.Array.data[1]
       value: 
-      objectReference: {fileID: 4632328116425368548, guid: d74b96b1eb0f4a347bddd7c47e649374, type: 3}
+      objectReference: {fileID: 4356865857506395295, guid: 9ada6eed4979cd84e9698a6c63bbda40, type: 3}
     - target: {fileID: 6644617886362527705, guid: 43bdb773fcc3b0943a4f1a3f297e2fc7, type: 3}
       propertyPath: Bills2P.Array.data[2]
       value: 
