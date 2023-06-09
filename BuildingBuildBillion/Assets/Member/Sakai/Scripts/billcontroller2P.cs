@@ -21,7 +21,7 @@ public class billcontroller2P : MonoBehaviour
     bool pad = false;
 
     [SerializeField]
-    float restTime = 0.25f;
+    float restTime = 0.15f;
     float fromMoveHorizonal = 0.0f;
 
     //public Vector3 billController2PPosition { get; private set; }
@@ -56,13 +56,7 @@ public class billcontroller2P : MonoBehaviour
             billstop = true;
         }
     }
-<<<<<<< HEAD
- 
-    void Update()
-=======
-
     void FixedUpdate()
->>>>>>> origin/featrure/develop
     {
         if (Time.time - previousTime >= fallTime)
         {
@@ -132,19 +126,11 @@ public class billcontroller2P : MonoBehaviour
         // 自動で下に移動させつつ、下矢印キーでも移動する
         if (pad == true && k.y * k.y >= 0.25f || Input.GetKeyDown(KeyCode.DownArrow))
         {
-<<<<<<< HEAD
-            //transform.position += new Vector3(0, -1, 0);
-
-            //previousTime = Time.time;
-
-            //pad = false;
-=======
             if (k.y <= 0.25f)
             {
                 transform.position += new Vector3(0, Mathf.Sign(k.y) * 50.0f, 0);
                 pad = false;
             }
->>>>>>> origin/featrure/develop
         }
     }
 

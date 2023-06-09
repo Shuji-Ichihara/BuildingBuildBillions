@@ -80,13 +80,13 @@ public class billcontroller : MonoBehaviour
             this.enabled = false;
         }
 
-        fromMoveHorizonal += Time.deltaTime;
+        //fromMoveHorizonal += Time.deltaTime;
 
-        if (fromMoveHorizonal >= restTime)
-        {
+        //if (fromMoveHorizonal >= restTime)
+        //{
             pad = true;
-            fromMoveHorizonal = 0.0f;
-        }
+        //    fromMoveHorizonal = 0.0f;
+        //}
 
 
     }
@@ -110,33 +110,18 @@ public class billcontroller : MonoBehaviour
     {
         var k = context.ReadValue<Vector2>();
         //Debug.Log(k);
-        if (pad == true && k.x * k.x >= 0.25f)
+        if (pad == true && k.x * k.x >= 0.15f)
         {
             float moveDistance = 50.0f;
             if (k.x < 0) moveDistance *= -1;
 
             var screenPoint2P = Camera.main.WorldToViewportPoint(this.transform.position + new Vector3(moveDistance, 0, 0));// 0,0~1.1
 
-<<<<<<< HEAD
             if (screenPoint2P.x <= 0.48 && screenPoint2P.x >= 0)
 
                 transform.position += new Vector3(moveDistance, 0, 0);
-=======
-            if (CameraControllerTest.Instance.Camera.orthographicSize < 1080.0f * 1.5f)
-            {
-                if (screenPoint2P.x >= 0.2f && screenPoint2P.x <= 0.45f)
-                    transform.position += new Vector3(moveDistance, 0, 0);
-            }
-            transform.position += new Vector3(moveDistance, 0, 0);
->>>>>>> origin/featrure/develop
 
                 pad = false;
-            
-//=======
-//                transform.position += new Vector3(moveDistance, 0, 0);
-
-//            pad = false;
-//>>>>>>> origin/feature/sakai/BillController
         }
         // var screenPoint = Camera.main.WorldToViewportPoint(this.transform.position);// 0,0~1.1
 
