@@ -214,49 +214,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2166492274088901796, guid: 3d82eed04bdd6004da4e32f081d5cdb4, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2166492274277147780, guid: 3d82eed04bdd6004da4e32f081d5cdb4, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.37
-      objectReference: {fileID: 0}
-    - target: {fileID: 2166492274277147780, guid: 3d82eed04bdd6004da4e32f081d5cdb4, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.28
-      objectReference: {fileID: 0}
-    - target: {fileID: 2166492274277147780, guid: 3d82eed04bdd6004da4e32f081d5cdb4, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.98464066
-      objectReference: {fileID: 0}
-    - target: {fileID: 2166492274277147780, guid: 3d82eed04bdd6004da4e32f081d5cdb4, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2166492274277147780, guid: 3d82eed04bdd6004da4e32f081d5cdb4, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2166492274277147780, guid: 3d82eed04bdd6004da4e32f081d5cdb4, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.17459345
-      objectReference: {fileID: 0}
-    - target: {fileID: 2166492274277147780, guid: 3d82eed04bdd6004da4e32f081d5cdb4, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 20.11
-      objectReference: {fileID: 0}
     - target: {fileID: 2166492274631125312, guid: 3d82eed04bdd6004da4e32f081d5cdb4, type: 3}
       propertyPath: m_Name
       value: Cannnon
-      objectReference: {fileID: 0}
-    - target: {fileID: 2166492274631125313, guid: 3d82eed04bdd6004da4e32f081d5cdb4, type: 3}
-      propertyPath: _fireTime
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2166492274631125313, guid: 3d82eed04bdd6004da4e32f081d5cdb4, type: 3}
-      propertyPath: _cannnonBulletImpact
-      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 2166492274631125315, guid: 3d82eed04bdd6004da4e32f081d5cdb4, type: 3}
       propertyPath: m_RootOrder
@@ -302,12 +262,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2166492274631125316, guid: 3d82eed04bdd6004da4e32f081d5cdb4, type: 3}
-      propertyPath: m_Mass
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2166492274631125313, guid: 3d82eed04bdd6004da4e32f081d5cdb4, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3d82eed04bdd6004da4e32f081d5cdb4, type: 3}
 --- !u!1 &453203504
 GameObject:
