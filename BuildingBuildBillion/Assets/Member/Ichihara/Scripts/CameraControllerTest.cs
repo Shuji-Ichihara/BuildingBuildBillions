@@ -1,5 +1,4 @@
 ﻿using Cysharp.Threading.Tasks;
-using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
@@ -51,8 +50,8 @@ public class CameraControllerTest : SingletonMonoBehaviour<CameraControllerTest>
             // カメラがズームアウトするのに必要なビルの高さ
             float buildingTop = _camera.orthographicSize * GameManager.Instance.BuildingHeightAndScreenRatio;
             // ビルの高さが buildingTop 以上であればズームアウト
-            Debug.Log($"ズームアウト : {GetBuildingTop().y > buildingTop}, {GetBuildingTop()}, {zoom}");
-            Debug.Log($"ズームイン : {GetBuildingTop().y < buildingTop}, {GetBuildingTop()}, {zoom}");
+            //Debug.Log($"ズームアウト : {GetBuildingTop().y > buildingTop}, {GetBuildingTop()}, {zoom}");
+            //Debug.Log($"ズームイン : {GetBuildingTop().y < buildingTop}, {GetBuildingTop()}, {zoom}");
             if (GetBuildingTop().y > buildingTop)
             {
                 if (zoom < 0.0f) { zoom *= -1; }
@@ -103,7 +102,7 @@ public class CameraControllerTest : SingletonMonoBehaviour<CameraControllerTest>
     /// 積みあがっている建材オブジェクトで、一番 Y 座標が大きい建材オブジェクトを検索する
     /// </summary>
     /// <returns></returns>
-    private Vector3 GetBuildingTop(Vector3 vec3 = default)
+    private Vector3 GetBuildingTop(Vector3 buildingTop = default)
     {
         // 接地したオブジェクトを検索
         // 要変更
@@ -114,11 +113,11 @@ public class CameraControllerTest : SingletonMonoBehaviour<CameraControllerTest>
         {
             if (dummy1Position.y > dummy2Position.y)
             {
-                vec3 = dummy1Position;
+                buildingTop = dummy1Position;
             }
             else if (dummy1Position.y < dummy2Position.y)
             {
-                vec3 = dummy2Position;
+                buildingTop = dummy2Position;
             }
 
         }
@@ -127,6 +126,6 @@ public class CameraControllerTest : SingletonMonoBehaviour<CameraControllerTest>
             Debug.Log(mre + "無視していいよ");
             throw;
         }
-        return vec3;
+        return buildingTop;
     }
 }
