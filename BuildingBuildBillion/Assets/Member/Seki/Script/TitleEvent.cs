@@ -20,19 +20,20 @@ public class TitleEvent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         if(Input.GetKeyDown(KeyCode.C))
         {
             animator.SetBool("Anim", true);
-        }
+        }*/
     }
 
     void A()
-    {
+    {//コントローラーA押したときのヤツ
         SceneMove.instance.MainGame();
     }
 
-    void B() 
-    {
+    void B()
+    {//コントローラーB押したときのヤツ
         SceneMove.instance.Tutorial();
     }
 
