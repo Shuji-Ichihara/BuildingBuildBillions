@@ -525,11 +525,11 @@ PrefabInstance:
       objectReference: {fileID: 1721280706}
     - target: {fileID: 1275756992796047653, guid: 9de20941fdb3d1b4fa4952bc6796d7e3, type: 3}
       propertyPath: _moveCameraSpeed
-      value: 75
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 1275756992796047653, guid: 9de20941fdb3d1b4fa4952bc6796d7e3, type: 3}
       propertyPath: _zoomCameraSpeed
-      value: 60
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 1275756992796047654, guid: 9de20941fdb3d1b4fa4952bc6796d7e3, type: 3}
       propertyPath: _timeText
@@ -537,7 +537,7 @@ PrefabInstance:
       objectReference: {fileID: 351090091}
     - target: {fileID: 1275756992796047655, guid: 9de20941fdb3d1b4fa4952bc6796d7e3, type: 3}
       propertyPath: _setTime
-      value: 99
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 1275756992796047655, guid: 9de20941fdb3d1b4fa4952bc6796d7e3, type: 3}
       propertyPath: _spownBill
@@ -557,7 +557,7 @@ PrefabInstance:
       objectReference: {fileID: 1498903410}
     - target: {fileID: 1275756992796047655, guid: 9de20941fdb3d1b4fa4952bc6796d7e3, type: 3}
       propertyPath: _buildingHeightAndScreenRatio
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1275756992796047673, guid: 9de20941fdb3d1b4fa4952bc6796d7e3, type: 3}
       propertyPath: m_Name
@@ -1098,6 +1098,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1857826689}
   - component: {fileID: 1857826687}
+  - component: {fileID: 1857826690}
   m_Layer: 0
   m_Name: Floor
   m_TagString: stage
@@ -1146,3 +1147,15 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1857826690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1857826686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cde61137133db9740b10001c24f2a0bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
