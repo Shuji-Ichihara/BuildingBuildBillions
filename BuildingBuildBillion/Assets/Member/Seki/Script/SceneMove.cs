@@ -19,7 +19,6 @@ public class SceneMove : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
     public void Title()
     {
         SceneManager.LoadScene(_titleSceneName);
