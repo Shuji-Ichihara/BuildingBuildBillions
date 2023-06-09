@@ -52,7 +52,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         // _buildSpawnPoint の初期値を代入
         _defaultBuildSpawnPoint1 = _buildSpawnPoint1.transform.position;
         _defaultBuildSpawnPoint2 = _buildSpawnPoint2.transform.position;
-        CameraControllerTest.Instance.CallCalucrateCameraMovement();
+        //CameraControllerTest.Instance.CallCalucrateCameraMovement();
     }
 
     // Update is called once per frame
