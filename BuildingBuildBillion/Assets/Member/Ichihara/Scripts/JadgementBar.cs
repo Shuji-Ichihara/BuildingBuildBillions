@@ -10,7 +10,22 @@ public class JadgementBar : MonoBehaviour
     /// <param name="other">接触したオブジェクトのコライダー</param>
     private void OnCollisionEnter2D(Collision2D other)
     {
-        JadgementBarControllerTest.Instance.Jadge(other.gameObject.transform.position);
+        JadgementBarController.Instance.Jadge(other.gameObject.transform.position);
         //GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+        GameManager.Instance.IsPreviewedResult = true;
+        if(true == other.gameObject.CompareTag("Bill"))
+        {
+            UIManager.Instance.Player1ResultText.text
+                = UIManager.Instance.YouWon;
+            UIManager.Instance.Player2ResultText.text
+                = UIManager.Instance.YouLost;
+        }
+        else if(true == other.gameObject.CompareTag("Bill2"))
+        {
+            UIManager.Instance.Player1ResultText.text
+                = UIManager.Instance.YouLost;
+            UIManager.Instance.Player2ResultText.text
+                = UIManager.Instance.YouWon;
+        }
     }
 }
