@@ -56,6 +56,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     public string YouLost => _youLost;
     public TextMeshProUGUI Player1ResultText = null;
     public TextMeshProUGUI Player2ResultText = null;
+    public TextMeshProUGUI DrawText = null;
     // 
     [SerializeField]
     private string _pleasePushToAText = "Please push to A";
@@ -76,50 +77,59 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         var player2TextResult = GameObject.Find("Player2").GetComponent<TextMeshProUGUI>();
         player2TextResult.text = _player2Text;
         _pleasePushToA = GameObject.Find("PleasePushToA").GetComponent<TextMeshProUGUI>();
-        // ゲーム中に使用する UI キャンバスをアクティブ化
-        // 同時に、リザルトシーンのキャンバスを非アクティブ化
-        _gameUICanvas.gameObject.SetActive(true);
-        _resultSceneCanvas.gameObject.SetActive(false);
         // 次建材表示のバックグラウンドのカラー指定
         _player1NextBack = GameObject.Find("Player1NextBack").GetComponent<Image>();
         _player1NextBack.color = new Color32(0, 0, 0, 85);
         _player2NextBack = GameObject.Find("Player2NextBack").GetComponent<Image>();
         _player2NextBack.color = new Color32(0, 0, 0, 85);
+        // ゲーム中に使用するキャンバスを非アクティブ化
+        // 同時に、リザルトシーンのキャンバスを透明化
+        _gameUICanvas.gameObject.SetActive(false);
+        var resultSceneCanvasGroup = _resultSceneCanvas.GetComponent<CanvasGroup>();
+        resultSceneCanvasGroup.alpha = 0.0f;
         // 背景を黒の半透明にしておく
+        _waitingGameTimeText.color = Color.black;
         _backGroundImage.color = new Color32(0, 0, 0, 128);
-        _backGroundImage.enabled = true;
-        //
-        _waitingGameTimeText.enabled = true;
+        // DrawText の中身を空文字で初期化する
+        DrawText.text = "";
     }
+
+    private bool _isDoneOnce = false;
 
     // Update is called once per frame
     void Update()
     {
+        // ゲーム開始まで待機
         if (GameManager.Instance.WaitingGameTime > 0.0f)
         {
             _waitingGameTimeText.text = string.Format("{0:#}", GameManager.Instance.WaitingGameTime);
         }
-
-        if (IsStartedGameTime == false) { return; }
-        else 
+        if (false == IsStartedGameTime) { return; }
+        else
         {
             _timeText.text = string.Format("{0:#}", GameManager.Instance.CountDownGameTime);
             if (GameManager.Instance.CountDownGameTime > 0.0f)
             {
-                _player1NextBuildingMaterial.sprite = PreviewBuildingMaterial(GameManager.Instance.Obj);
-                _player2NextBuildingMaterial.sprite = PreviewBuildingMaterial(GameManager.Instance.Obj2);
+                _player1NextBuildingMaterial.sprite = PreviewBuildingSprite(GameManager.Instance.Obj);
+                _player2NextBuildingMaterial.sprite = PreviewBuildingSprite(GameManager.Instance.Obj2);
             }
             // 勝敗が確定したら、リザルトシーンを呼び出す。
-            if (true == GameManager.Instance.IsPreviewedResult
-                && true == _gameUICanvas.gameObject.activeSelf
-                && false == _resultSceneCanvas.gameObject.activeSelf)
+            if (true == GameManager.Instance.IsPreviewedResult)
             {
                 _gameUICanvas.gameObject.SetActive(false);
-                _resultSceneCanvas.gameObject.SetActive(true);
+                _waitingGameTimeText.color = Color.clear;
+                var resultSceneCanvasGroup = _resultSceneCanvas.GetComponent<CanvasGroup>();
+                resultSceneCanvasGroup.alpha = 1.0f;
                 // 表示テキストを初期化
                 _pleasePushToA.text = _pleasePushToAText;
+                if(false == _isDoneOnce)
+                {
+                    JadgementBarController.Instance.Jadge();
+                    Fade().Forget();
+                    _isDoneOnce = true;
+                }
             }
-        }        
+        }
     }
 
     /// <summary>
@@ -128,17 +138,55 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     /// <param name="obj">表示するオブジェクトの種類</param>
     /// <param name="sprite">表示するスプライト</param>
     /// <returns></returns>
-    private Sprite PreviewBuildingMaterial(in GameObject obj, Sprite sprite = default)
+    private Sprite PreviewBuildingSprite(in GameObject obj, Sprite sprite = default)
     {
         sprite = obj.GetComponent<SpriteRenderer>().sprite;
         return sprite;
     }
 
-    public async UniTask WaitingStartGame(CancellationToken token = default)
+    /// <summary>
+    /// ゲーム開始時の演出
+    /// </summary>
+    /// <param name="token"></param>
+    /// <returns></returns>
+    public async UniTask StartGameEffect(CancellationToken token = default)
     {
+        _waitingGameTimeText.fontSize = 300.0f;
         _waitingGameTimeText.text = "Let's build!!!";
         // 要変更
-        await UniTask.Delay(1500);
+        await UniTask.Delay(1500, false, PlayerLoopTiming.Update, token);
+        var waitingGameTimeTextParent = _waitingGameTimeText.GetComponentInParent<CanvasGroup>();
+        waitingGameTimeTextParent.ignoreParentGroups = false;
         IsStartedGameTime = true;
+        _gameUICanvas.gameObject.SetActive(true);
+    }
+
+    private async UniTask Fade(bool isFaded = false, CancellationToken token = default)
+    {
+        Color textColor = _pleasePushToA.color;
+        while(true)
+        {
+            if (false == isFaded)
+            {
+                textColor.a -= Time.deltaTime;
+                _pleasePushToA.color = new Color(textColor.r, textColor.g, textColor.b, textColor.a);
+                if (textColor.a < 0.0f)
+                {
+                    textColor.a = 0.0f;
+                    isFaded= true;
+                }
+            }
+            else if (true == isFaded)
+            {
+                textColor.a += Time.deltaTime;
+                _pleasePushToA.color = new Color(textColor.r, textColor.g, textColor.b, textColor.a);
+                if (textColor.a > 1.0f)
+                {
+                    textColor.a = 1.0f;
+                    isFaded = false;
+                }
+            }
+            await UniTask.Yield(token);
+        }
     }
 }
