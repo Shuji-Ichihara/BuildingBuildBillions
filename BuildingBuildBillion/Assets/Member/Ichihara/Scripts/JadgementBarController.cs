@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class JadgementBarController : SingletonMonoBehaviour<JadgementBarController>
 {
@@ -12,6 +13,8 @@ public class JadgementBarController : SingletonMonoBehaviour<JadgementBarControl
     private float _jadgementBarFallPointHeight = 0.0f;
     // アタッチされているオブジェクトの初期座標
     private Vector3 _defaultJadgementBarFallPosition = Vector3.zero;
+
+    public List<GameObject> Objects = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -45,7 +48,7 @@ public class JadgementBarController : SingletonMonoBehaviour<JadgementBarControl
                 _jadgementBar.GetComponent<Collider2D>().enabled = true;
                 GameManager.Instance.IsEndedGame = true;
             }
-            _rb2D.gravityScale = 1.0f;
+            _rb2D.gravityScale = 5.0f;
         }
     }
 
@@ -70,23 +73,75 @@ public class JadgementBarController : SingletonMonoBehaviour<JadgementBarControl
                                         ,0.0f);
     }
 
+    private bool _player1Tag = false;
+    private bool _player2Tag = false;
+
     /// <summary>
     /// 勝敗判定
     /// </summary>
-    /// <param name="vec2">接触したオブジェクトの 2D 座標</param>
-    public void Jadge(Vector2 vec2)
+    public void Jadge()
     {
+        foreach (GameObject obj in Objects)
+        {
+            _player1Tag = obj.CompareTag("bill");
+            _player2Tag = obj.CompareTag("bill2");
+        }
+
+        // 引き分け処理
+        if(Objects.Count >= 2)
+        {
+            UIManager.Instance.DrawText.fontSize = 180.0f;
+            UIManager.Instance.DrawText.text
+                = "Draw.\nThank you for Playing!";
+            UIManager.Instance.Player1ResultText.text
+                = "";
+            UIManager.Instance.Player2ResultText.text
+                = "";
+            Debug.Log($"Draw");
+        }
+        else if(true == _player1Tag && false == _player2Tag)
+        {
+            UIManager.Instance.Player1ResultText.text
+                = UIManager.Instance.YouWon;
+            UIManager.Instance.Player2ResultText.text
+                = UIManager.Instance.YouLost;
+            Debug.Log($"Player1 Win!!");
+        }
+        else if(false == _player1Tag && true == _player2Tag)
+        {
+            UIManager.Instance.Player1ResultText.text
+                = UIManager.Instance.YouLost;
+            UIManager.Instance.Player2ResultText.text
+                = UIManager.Instance.YouWon;
+            Debug.Log($"Player2 Win!!");
+        }
+        /*
         if (vec2.x < 0.0f)
         {
+            UIManager.Instance.Player1ResultText.text
+                = UIManager.Instance.YouWon;
+            UIManager.Instance.Player2ResultText.text
+                = UIManager.Instance.YouLost;
             Debug.Log($"Player1 Win!!");
         }
         else if (vec2.x > 0.0f)
         {
+            UIManager.Instance.Player1ResultText.text
+                = UIManager.Instance.YouLost;
+            UIManager.Instance.Player2ResultText.text
+                = UIManager.Instance.YouWon;
             Debug.Log($"Player2 Win!!");
         }
-        else // 引き分けの場合の処理
+        else// 引き分けの場合の処理
         {
+            UIManager.Instance.DrawText.fontSize = 180.0f;
+            UIManager.Instance.DrawText.text
+                = "Draw.\nThank you for Playing!";
+            UIManager.Instance.Player1ResultText.text
+                = "";
+            UIManager.Instance.Player2ResultText.text
+                = "";
             Debug.Log($"Draw");
-        }
+        }*/
     }
 }
