@@ -76,7 +76,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         _defaultBuildSpawnPoint1 = _buildSpawnPoint1.transform.position;
         _defaultBuildSpawnPoint2 = _buildSpawnPoint2.transform.position;
         //CameraControllerTest.Instance.CallCalucrateCameraMovement();
-        await CountDownToStartTheGame(_waitingGameTime);
+        await CountDownToStartTheGame();
     }
 
     /// <summary>
@@ -94,15 +94,15 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     /// <param name="CountDownTime">ゲーム開始までの待機時間</param>
     /// <param name="token">キャンセル処理用のトークン</param>
     /// <returns></returns>
-    private async UniTask CountDownToStartTheGame(float CountDownTime = 3.0f, CancellationToken token = default)
+    private async UniTask CountDownToStartTheGame(CancellationToken token = default)
     {
-        while (CountDownTime > 0.0f)
+        while (_waitingGameTime > 0.0f)
         {
-            CountDownTime -= Time.deltaTime;
+            _waitingGameTime -= Time.deltaTime;
             await UniTask.Yield(token);
         }
-        await UIManager.Instance.WaitingStartGame();
         // ここに開始時の演出を加える
+        await UIManager.Instance.WaitingStartGame();
         while (_countDownGameTime > 0.0f)
         {
             CountDown();
