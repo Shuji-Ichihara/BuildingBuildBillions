@@ -35,11 +35,14 @@ public class billcontroller : MonoBehaviour
     private bool billstop;
     Rigidbody2D rb;
     bool pad = false;
+    bool Rotatepermission = false;
 
     [SerializeField]
     float restTime = 0.25f;
     float restTime2 = 0.25f;
+    float RotaterestTime = 0.25f;
     float fromMoveHorizonal = 0.0f;
+    float fromRotate = 0.0f;
 
     //public Vector3 billControllerPosition { get; private set; }
 
@@ -70,6 +73,12 @@ public class billcontroller : MonoBehaviour
             this.GetComponent<PlayerInput>().enabled = false;
         }
         if (collision.gameObject.CompareTag("Bill"))
+        {
+
+            billstop = true;
+            this.GetComponent<PlayerInput>().enabled = false;
+        }
+        if (collision.gameObject.CompareTag("Bill2"))
         {
 
             billstop = true;
@@ -122,16 +131,27 @@ public class billcontroller : MonoBehaviour
         //        transform.position += new Vector3(0, _inputMove.y * 50, 0);
         //        break;
         //}
+        fromRotate += Time.deltaTime;
 
-        if (_isLeftPressed)
+        if (fromRotate >= RotaterestTime)
         {
-            Debug.Log("RightRotate");
-            transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), -Rotateangle);
+            Rotatepermission = true;
+            fromRotate = 0.0f;
         }
-        if (_isRightPressed)
+        if (Rotatepermission == true)
         {
-            Debug.Log("LeftRotate");
-            transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), Rotateangle);
+            if (_isLeftPressed)
+            {
+                Debug.Log("RightRotate");
+                transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), -Rotateangle);
+                Rotatepermission = false;
+            }
+            if (_isRightPressed)
+            {
+                Debug.Log("LeftRotate");
+                transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), Rotateangle);
+                Rotatepermission = false;
+            }
         }
 
         if (pad == true && _inputMove.x * _inputMove.x >= 0.25f)
