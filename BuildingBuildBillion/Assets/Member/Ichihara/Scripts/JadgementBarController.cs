@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class JadgementBarControllerTest : SingletonMonoBehaviour<JadgementBarControllerTest>
+public class JadgementBarController : SingletonMonoBehaviour<JadgementBarController>
 {
     [Header("勝敗判定")]
     // 勝敗判定バー
@@ -32,9 +32,9 @@ public class JadgementBarControllerTest : SingletonMonoBehaviour<JadgementBarCon
     private async void FixedUpdate()
     {
         // 変更の可能性有
-        if(GameManager.Instance.CountDownTime < 0.0f)
+        if(GameManager.Instance.CountDownGameTime < 0.0f)
         {
-            if(false == GameManager.Instance.IsEndGame)
+            if(false == GameManager.Instance.IsEndedGame)
             {
                 // カウントダウンが終了したら操作中のオブジェクトを破棄する
                 Destroy(GameManager.Instance.Obj);
@@ -43,7 +43,7 @@ public class JadgementBarControllerTest : SingletonMonoBehaviour<JadgementBarCon
                 // 勝敗判定に必要なので enabled を true にする
                 _jadgementBar.GetComponent<SpriteRenderer>().enabled = true;
                 _jadgementBar.GetComponent<Collider2D>().enabled = true;
-                GameManager.Instance.IsEndGame = true;
+                GameManager.Instance.IsEndedGame = true;
             }
             _rb2D.gravityScale = 1.0f;
         }
