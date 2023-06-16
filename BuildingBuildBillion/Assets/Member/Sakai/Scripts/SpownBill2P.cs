@@ -18,8 +18,8 @@ public class SpownBill2P : MonoBehaviour
 
     public void NewBill2P()
     {
-        if (GameManager.Instance.CountDownTime < 0.0f) { return; }
+        if (GameManager.Instance.CountDownGameTime < 0.0f) { return; }
         if (Bills2P.Length != 0)
-            obj = Instantiate(Bills2P[Random.Range(0, Bills2P.Length)], transform.position, Quaternion.identity);
+            GameManager.Instance.Obj2 = Instantiate(Bills2P[Random.Range(0, Bills2P.Length)], transform.position, Quaternion.identity);
     }
 }
