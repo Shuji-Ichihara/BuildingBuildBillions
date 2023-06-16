@@ -537,7 +537,7 @@ PrefabInstance:
       objectReference: {fileID: 351090091}
     - target: {fileID: 1275756992796047655, guid: 9de20941fdb3d1b4fa4952bc6796d7e3, type: 3}
       propertyPath: _setTime
-      value: 30
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1275756992796047655, guid: 9de20941fdb3d1b4fa4952bc6796d7e3, type: 3}
       propertyPath: _spownBill

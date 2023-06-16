@@ -130,7 +130,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 50
+  m_GravityScale: 100
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -148,13 +148,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bf0634fa8bb5be4ebe3f6ccb9a6228a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DownSpeed: 20
+  DownSpeed: 15
   previousTime: 0
   fallTime: 1
   Rotateangle: 90
+  Delete: {fileID: 0}
   jittai: 0
   rotationPoint: {x: 0, y: 0, z: 0}
   restTime: 0.2
+  ColStop: 0
 --- !u!58 &-8153811063297168897
 CircleCollider2D:
   m_ObjectHideFlags: 0

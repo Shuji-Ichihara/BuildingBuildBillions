@@ -266,7 +266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bf0634fa8bb5be4ebe3f6ccb9a6228a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DownSpeed: 20
+  DownSpeed: 15
   previousTime: 0
   fallTime: 1
   Rotateangle: 90
