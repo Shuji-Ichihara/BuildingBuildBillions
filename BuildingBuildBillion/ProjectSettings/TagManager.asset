@@ -4,7 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Materials
+  - stage
+  - Bill
+  - Bill2
   layers:
   - Default
   - TransparentFX
