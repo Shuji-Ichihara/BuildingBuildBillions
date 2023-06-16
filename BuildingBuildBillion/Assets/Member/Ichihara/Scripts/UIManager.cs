@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using Cysharp.Threading.Tasks;
+using System.Threading;
 
 public class UIManager : SingletonMonoBehaviour<UIManager>
 {
@@ -14,21 +16,24 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     private Canvas _resultSceneCanvas = null;
     // 背景パネル
     [SerializeField]
-    private Canvas _resultBackGroundCanvas = null;
+    private Image _backGroundImage = null;
 
+    // 各プレイヤーの名称
     [SerializeField]
     private string _player1Text = "Player 1";
     [SerializeField]
     private string _player2Text = "Player 2";
+
+    [SerializeField]
+    private TextMeshProUGUI _waitingGameTimeText = null;
+    [System.NonSerialized]
+    public bool IsStartedGameTime = false;
 
     #region ゲーム中のUI
     [Header("ゲーム中のUI")]
     // 制限時間を表示
     [SerializeField]
     private TextMeshProUGUI _timeText = null;
-    // プレイヤー番号を表示(ゲーム中)
-    private TextMeshProUGUI _player1Next = null;
-    private TextMeshProUGUI _player2Next = null;
     // 次の建材表示 (1P)
     [SerializeField]
     private Image _player1NextBuildingMaterial = null;
@@ -42,6 +47,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     #endregion
 
     #region リザルトシーンの UI
+    [Header("リザルトシーンのUI")]
     [SerializeField]
     private string _youWon = "You won !!";
     public string YouWon => _youWon;
@@ -59,11 +65,19 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     // Start is called before the first frame update
     void Start()
     {
-        // シーン上の TextMeshProUGUI を取得
-        _player1Next = GameObject.Find("Player1Next").GetComponent<TextMeshProUGUI>();
-        _player2Next = GameObject.Find("Player2Next").GetComponent<TextMeshProUGUI>();
+        // シーン上の TextMeshProUGUI を取得、初期化する
+        var player1NameNext = GameObject.Find("Player1Text").GetComponent<TextMeshProUGUI>();
+        player1NameNext.text = _player1Text;
+        var player2NameNext = GameObject.Find("Player2Text").GetComponent<TextMeshProUGUI>();
+        player2NameNext.text = _player2Text;
+        // リザルトシーンキャンバスのテキストもこの段階で取得、初期化する
+        var player1TextResult = GameObject.Find("Player1").GetComponent<TextMeshProUGUI>();
+        player1TextResult.text = _player1Text;
+        var player2TextResult = GameObject.Find("Player2").GetComponent<TextMeshProUGUI>();
+        player2TextResult.text = _player2Text;
         _pleasePushToA = GameObject.Find("PleasePushToA").GetComponent<TextMeshProUGUI>();
-        // 各キャンバスのアクティブ、非アクティブを操作
+        // ゲーム中に使用する UI キャンバスをアクティブ化
+        // 同時に、リザルトシーンのキャンバスを非アクティブ化
         _gameUICanvas.gameObject.SetActive(true);
         _resultSceneCanvas.gameObject.SetActive(false);
         // 次建材表示のバックグラウンドのカラー指定
@@ -71,52 +85,60 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         _player1NextBack.color = new Color32(0, 0, 0, 85);
         _player2NextBack = GameObject.Find("Player2NextBack").GetComponent<Image>();
         _player2NextBack.color = new Color32(0, 0, 0, 85);
+        // 背景を黒の半透明にしておく
+        _backGroundImage.color = new Color32(0, 0, 0, 128);
+        _backGroundImage.enabled = true;
+        //
+        _waitingGameTimeText.enabled = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        _timeText.text = string.Format("{0:#}", GameManager.Instance.CountDownTime);
-        if(GameManager.Instance.CountDownTime > 0.0f)
+        if (GameManager.Instance.WaitingGameTime > 0.0f)
         {
-            _player1NextBuildingMaterial.sprite = PreviewBuildingMaterial1P(GameManager.Instance.Obj);
-            _player2NextBuildingMaterial.sprite = PreviewBuildingMaterial2P(GameManager.Instance.Obj2);
+            _waitingGameTimeText.text = string.Format("{0:#}", GameManager.Instance.WaitingGameTime);
         }
-        // 勝敗が確定したら、リザルトシーンを呼び出す。
-        if (true == GameManager.Instance.IsPreviewResult
-            && true == _gameUICanvas.gameObject.activeSelf
-            && false == _resultSceneCanvas.gameObject.activeSelf)
+
+        if (IsStartedGameTime == false) { return; }
+        else 
         {
-            _gameUICanvas.gameObject.SetActive(false);
-            _resultSceneCanvas.gameObject.SetActive(true);
-            // 表示テキストを初期化
-            _player1Next.text = _player1Text;
-            _player2Next.text = _player2Text;
-            _pleasePushToA.text = _pleasePushToAText;
-        }
+            _timeText.text = string.Format("{0:#}", GameManager.Instance.CountDownGameTime);
+            if (GameManager.Instance.CountDownGameTime > 0.0f)
+            {
+                _player1NextBuildingMaterial.sprite = PreviewBuildingMaterial(GameManager.Instance.Obj);
+                _player2NextBuildingMaterial.sprite = PreviewBuildingMaterial(GameManager.Instance.Obj2);
+            }
+            // 勝敗が確定したら、リザルトシーンを呼び出す。
+            if (true == GameManager.Instance.IsPreviewedResult
+                && true == _gameUICanvas.gameObject.activeSelf
+                && false == _resultSceneCanvas.gameObject.activeSelf)
+            {
+                _gameUICanvas.gameObject.SetActive(false);
+                _resultSceneCanvas.gameObject.SetActive(true);
+                // 表示テキストを初期化
+                _pleasePushToA.text = _pleasePushToAText;
+            }
+        }        
     }
 
     /// <summary>
-    /// Obj のスプライトを取得
+    /// スプライトを取得
     /// </summary>
     /// <param name="obj">表示するオブジェクトの種類</param>
     /// <param name="sprite">表示するスプライト</param>
     /// <returns></returns>
-    private Sprite PreviewBuildingMaterial1P(in GameObject obj, Sprite sprite = default )
+    private Sprite PreviewBuildingMaterial(in GameObject obj, Sprite sprite = default)
     {
         sprite = obj.GetComponent<SpriteRenderer>().sprite;
         return sprite;
     }
 
-    /// <summary>
-    /// Obj2 のスプライトを取得
-    /// </summary>
-    /// <param name="obj">表示するオブジェクトの種類</param>
-    /// <param name="sprite">表示するスプライト</param>
-    /// <returns></returns>
-    private Sprite PreviewBuildingMaterial2P(in GameObject obj, Sprite sprite = default)
+    public async UniTask WaitingStartGame(CancellationToken token = default)
     {
-        sprite = obj.GetComponent<SpriteRenderer>().sprite;
-        return sprite;
+        _waitingGameTimeText.text = "Let's build!!!";
+        // 要変更
+        await UniTask.Delay(1500);
+        IsStartedGameTime = true;
     }
 }
