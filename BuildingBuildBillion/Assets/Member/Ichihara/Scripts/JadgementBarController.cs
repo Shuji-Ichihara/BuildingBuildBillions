@@ -13,8 +13,13 @@ public class JadgementBarController : SingletonMonoBehaviour<JadgementBarControl
     private float _jadgementBarFallPointHeight = 0.0f;
     // アタッチされているオブジェクトの初期座標
     private Vector3 _defaultJadgementBarFallPosition = Vector3.zero;
-
+    // JadgementBar に接触したオブジェクトを格納
+    [System.NonSerialized]
     public List<GameObject> Objects = new List<GameObject>();
+    [Space(3)]
+    // 重力の大きさを調整する
+    [SerializeField, Range(0.0f, 10.0f)]
+    private float _gravityScaleParameter = 5.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -35,9 +40,9 @@ public class JadgementBarController : SingletonMonoBehaviour<JadgementBarControl
     private async void FixedUpdate()
     {
         // 変更の可能性有
-        if(GameManager.Instance.CountDownGameTime < 0.0f)
+        if (GameManager.Instance.CountDownGameTime < 0.0f)
         {
-            if(false == GameManager.Instance.IsEndedGame)
+            if (false == GameManager.Instance.IsEndedGame)
             {
                 // カウントダウンが終了したら操作中のオブジェクトを破棄する
                 Destroy(GameManager.Instance.Obj);
@@ -48,7 +53,7 @@ public class JadgementBarController : SingletonMonoBehaviour<JadgementBarControl
                 _jadgementBar.GetComponent<Collider2D>().enabled = true;
                 GameManager.Instance.IsEndedGame = true;
             }
-            _rb2D.gravityScale = 5.0f;
+            _rb2D.gravityScale = _gravityScaleParameter;
         }
     }
 
@@ -67,10 +72,10 @@ public class JadgementBarController : SingletonMonoBehaviour<JadgementBarControl
             transform.position += Vector3.down * _jadgementBarFallPointHeight * Time.deltaTime;
         }
         transform.position = new Vector3(0.0f
-                                        ,Mathf.Clamp(transform.position.y
-                                                    ,_defaultJadgementBarFallPosition.y
-                                                    ,Screen.height * 1.5f + _jadgementBarFallPointHeight)
-                                        ,0.0f);
+                                        , Mathf.Clamp(transform.position.y
+                                                    , _defaultJadgementBarFallPosition.y
+                                                    , Screen.height * 1.5f + _jadgementBarFallPointHeight)
+                                        , 0.0f);
     }
 
     private bool _player1Tag = false;
@@ -79,16 +84,16 @@ public class JadgementBarController : SingletonMonoBehaviour<JadgementBarControl
     /// <summary>
     /// 勝敗判定
     /// </summary>
-    public void Jadge()
+    public bool Jadge(bool previewText = true)
     {
         foreach (GameObject obj in Objects)
         {
-            _player1Tag = obj.CompareTag("bill");
-            _player2Tag = obj.CompareTag("bill2");
+            _player1Tag = obj.CompareTag("Bill");
+            _player2Tag = obj.CompareTag("Bill2");
         }
 
         // 引き分け処理
-        if(Objects.Count >= 2)
+        if (Objects.Count >= 2 || (true == _player1Tag && true == _player2Tag))
         {
             UIManager.Instance.DrawText.fontSize = 180.0f;
             UIManager.Instance.DrawText.text
@@ -98,50 +103,24 @@ public class JadgementBarController : SingletonMonoBehaviour<JadgementBarControl
             UIManager.Instance.Player2ResultText.text
                 = "";
             Debug.Log($"Draw");
+            return !previewText;
         }
-        else if(true == _player1Tag && false == _player2Tag)
+        else if (true == _player1Tag && false == _player2Tag)
         {
             UIManager.Instance.Player1ResultText.text
                 = UIManager.Instance.YouWon;
             UIManager.Instance.Player2ResultText.text
                 = UIManager.Instance.YouLost;
-            Debug.Log($"Player1 Win!!");
+            Debug.Log($"Player1 Won!!");
         }
-        else if(false == _player1Tag && true == _player2Tag)
+        else if (false == _player1Tag && true == _player2Tag)
         {
             UIManager.Instance.Player1ResultText.text
                 = UIManager.Instance.YouLost;
             UIManager.Instance.Player2ResultText.text
                 = UIManager.Instance.YouWon;
-            Debug.Log($"Player2 Win!!");
+            Debug.Log($"Player2 Won!!");
         }
-        /*
-        if (vec2.x < 0.0f)
-        {
-            UIManager.Instance.Player1ResultText.text
-                = UIManager.Instance.YouWon;
-            UIManager.Instance.Player2ResultText.text
-                = UIManager.Instance.YouLost;
-            Debug.Log($"Player1 Win!!");
-        }
-        else if (vec2.x > 0.0f)
-        {
-            UIManager.Instance.Player1ResultText.text
-                = UIManager.Instance.YouLost;
-            UIManager.Instance.Player2ResultText.text
-                = UIManager.Instance.YouWon;
-            Debug.Log($"Player2 Win!!");
-        }
-        else// 引き分けの場合の処理
-        {
-            UIManager.Instance.DrawText.fontSize = 180.0f;
-            UIManager.Instance.DrawText.text
-                = "Draw.\nThank you for Playing!";
-            UIManager.Instance.Player1ResultText.text
-                = "";
-            UIManager.Instance.Player2ResultText.text
-                = "";
-            Debug.Log($"Draw");
-        }*/
+        return previewText;
     }
 }
