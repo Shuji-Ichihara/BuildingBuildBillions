@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5358453945087650415}
   - component: {fileID: -8153811063297168897}
   - component: {fileID: 5264240954566992666}
+  - component: {fileID: 7931406020125232761}
   m_Layer: 0
   m_Name: Ma_002_1P
   m_TagString: Bill
@@ -123,7 +124,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4356865857506395295}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -135,7 +136,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 3
+  m_Constraints: 0
 --- !u!114 &5358453945087650415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,7 +144,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4356865857506395295}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6bf0634fa8bb5be4ebe3f6ccb9a6228a, type: 3}
   m_Name: 
@@ -156,6 +157,7 @@ MonoBehaviour:
   jittai: 0
   rotationPoint: {x: 0, y: 0, z: 0}
   restTime: 0.2
+  ColPoint: 5
   ColStop: 0
 --- !u!58 &-8153811063297168897
 CircleCollider2D:
@@ -185,7 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 0a25ea9a76825a64eb19af11b2d9c744, type: 3}
+  m_Actions: {fileID: -944628639613478452, guid: 98724dfa57535eb47828452304154856, type: 3}
   m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
@@ -200,8 +202,8 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5358453945087650415}
-        m_TargetAssemblyTypeName: billcontroller, Assembly-CSharp
+      - m_Target: {fileID: 7931406020125232761}
+        m_TargetAssemblyTypeName: NewBillcon, Assembly-CSharp
         m_MethodName: OnHold
         m_Mode: 0
         m_Arguments:
@@ -212,52 +214,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 2d38dda0-5e1e-4dea-8224-8fbb8134c181
-    m_ActionName: Player/1P_Move[/XInputControllerWindows/dpad,/XInputControllerWindows1/dpad]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: b4f231ce-2f34-4f47-bc53-1270799a3b66
-    m_ActionName: UI/Navigate[/XInputControllerWindows/leftStick/up,/XInputControllerWindows1/leftStick/up,/XInputControllerWindows/rightStick/up,/XInputControllerWindows1/rightStick/up,/XInputControllerWindows/leftStick/down,/XInputControllerWindows1/leftStick/down,/XInputControllerWindows/rightStick/down,/XInputControllerWindows1/rightStick/down,/XInputControllerWindows/leftStick/left,/XInputControllerWindows1/leftStick/left,/XInputControllerWindows/rightStick/left,/XInputControllerWindows1/rightStick/left,/XInputControllerWindows/leftStick/right,/XInputControllerWindows1/leftStick/right,/XInputControllerWindows/rightStick/right,/XInputControllerWindows1/rightStick/right,/XInputControllerWindows/dpad,/XInputControllerWindows1/dpad,/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: b0ba1b3a-ee7d-4cdd-a212-967dbf0476b3
-    m_ActionName: UI/Submit[/Keyboard/enter,/XInputControllerWindows/buttonSouth,/XInputControllerWindows1/buttonSouth]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 1e07c395-69f0-4b3b-8421-6e14af02f26b
-    m_ActionName: UI/Cancel[/Keyboard/escape,/XInputControllerWindows/buttonEast,/XInputControllerWindows1/buttonEast]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 8781f3f2-0b2b-4bf0-8784-c23b28741bc6
-    m_ActionName: UI/Point[/Mouse/position]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 53873bcc-af21-430d-ada3-e410ac9a7e50
-    m_ActionName: UI/Click[/Mouse/leftButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: cbad6e0c-ede0-4c76-be37-8f285f81f736
-    m_ActionName: UI/ScrollWheel[/Mouse/scroll]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 456a90e0-fe29-42f8-aa54-8a3d79f0a361
-    m_ActionName: UI/MiddleClick[/Mouse/middleButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 8dfdc502-b9b8-459c-90ec-99dc3da63133
-    m_ActionName: UI/RightClick[/Mouse/rightButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 1f540d12-fbf0-4759-8104-00cb76b0a626
-    m_ActionName: UI/TrackedDevicePosition
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 6c5ff499-7ebc-4e8b-9e95-7c782432ba2f
-    m_ActionName: UI/TrackedDeviceOrientation
+    m_ActionId: 3663b707-1eb6-4bad-926e-07624b321ff0
+    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/XInputControllerWindows/dpad]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5358453945087650415}
-        m_TargetAssemblyTypeName: billcontroller, Assembly-CSharp
+      - m_Target: {fileID: 7931406020125232761}
+        m_TargetAssemblyTypeName: NewBillcon, Assembly-CSharp
         m_MethodName: _Rotate
         m_Mode: 0
         m_Arguments:
@@ -268,10 +230,87 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 9af0d44f-b6c6-4490-ab5d-a4d081381d38
-    m_ActionName: Player/Ro[/XInputControllerWindows1/leftShoulder,/XInputControllerWindows1/rightShoulder]
+    m_ActionId: 87e7c1a9-65cc-4c53-bf32-6a0c461e0ad1
+    m_ActionName: Player/Ro[/XInputControllerWindows/leftShoulder,/XInputControllerWindows/rightShoulder,/Keyboard/r,/Keyboard/t]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2c5ffce0-68c6-4b81-a9b4-540f96b776bf
+    m_ActionName: Player/Look[/XInputControllerWindows/rightStick,/Mouse/delta]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 87b4351a-9819-428c-8319-85336c5a0067
+    m_ActionName: Player/Fire[/XInputControllerWindows/rightTrigger,/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a5ccfafa-94a6-46f5-8400-3fa354030068
+    m_ActionName: UI/Navigate[/XInputControllerWindows/leftStick/up,/XInputControllerWindows/rightStick/up,/XInputControllerWindows/leftStick/down,/XInputControllerWindows/rightStick/down,/XInputControllerWindows/leftStick/left,/XInputControllerWindows/rightStick/left,/XInputControllerWindows/leftStick/right,/XInputControllerWindows/rightStick/right,/XInputControllerWindows/dpad,/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3c8358b2-bbb4-4192-8487-ba04b3442b1c
+    m_ActionName: UI/Submit[/Keyboard/enter,/XInputControllerWindows/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6e003eee-9996-4fe3-a0d1-21e6afe0b6db
+    m_ActionName: UI/Cancel[/Keyboard/escape,/XInputControllerWindows/buttonEast]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f2453299-9bc6-4a22-8b33-b9d13f681edf
+    m_ActionName: UI/Point[/Mouse/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2a32c547-2cb2-4d9e-8162-970e7d73033e
+    m_ActionName: UI/Click[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6b58f18a-0fc4-4be1-a912-920cbeb5431a
+    m_ActionName: UI/ScrollWheel[/Mouse/scroll]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: dbdeca07-3a2a-4af6-b79c-5eb124d50791
+    m_ActionName: UI/MiddleClick[/Mouse/middleButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c6c7f0a6-a2b0-420e-896b-d7e9f2992e0c
+    m_ActionName: UI/RightClick[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b41ca475-7410-4bc8-bb45-07174edd13f6
+    m_ActionName: UI/TrackedDevicePosition
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 59a3328c-87f8-459e-beef-5bdd86cb5964
+    m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 45790e52-07e9-4511-bf17-dbf6eee8096a
+    m_ActionName: 1P_Move/Move[/XInputControllerWindows/leftStick,/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow,/XInputControllerWindows/dpad]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Gamepad
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &7931406020125232761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4356865857506395295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15bdbf6d1f64f9d44bc81c60a54e9d0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DownSpeed: 15
+  previousTime: 0
+  fallTime: 1
+  Rotateangle: 90
+  Delete: {fileID: 0}
+  Player: 0
+  rotationPoint: {x: 0, y: 0, z: 0}
+  Stop: 0
+  restTime: 0.2
+  Right: 0
+  Left: 0
+  ColPoint: 50
+  ColStop: 0
