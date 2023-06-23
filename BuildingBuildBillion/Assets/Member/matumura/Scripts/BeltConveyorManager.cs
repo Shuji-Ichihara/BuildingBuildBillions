@@ -10,7 +10,7 @@ public class BeltConveyorManager : MonoBehaviour
 
 
 
-    public float speed = 3.0f;
+    public float speed = 3.0f;//速度調整兼　-1にすると左方向進行
     private float diffX = 0.0f;
     readonly List<GameObject> gameObjects = new();
 
@@ -20,10 +20,6 @@ public class BeltConveyorManager : MonoBehaviour
     {
         diffX = speed * Time.fixedDeltaTime;
     }
-
-
-
-
 
 
     private void FixedUpdate()

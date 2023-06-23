@@ -549,9 +549,21 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6644617886362527705, guid: 43bdb773fcc3b0943a4f1a3f297e2fc7, type: 3}
+      propertyPath: Bills2P.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6644617886362527705, guid: 43bdb773fcc3b0943a4f1a3f297e2fc7, type: 3}
       propertyPath: Bills2P.Array.data[0]
       value: 
       objectReference: {fileID: 4356865857506395295, guid: ea0cfd43c4c085e4b9bee93047647e06, type: 3}
+    - target: {fileID: 6644617886362527705, guid: 43bdb773fcc3b0943a4f1a3f297e2fc7, type: 3}
+      propertyPath: Bills2P.Array.data[2]
+      value: 
+      objectReference: {fileID: 4632328116425368548, guid: 468b6a3aaa429b3459e19fa8237b5c28, type: 3}
+    - target: {fileID: 6644617886362527705, guid: 43bdb773fcc3b0943a4f1a3f297e2fc7, type: 3}
+      propertyPath: Bills2P.Array.data[3]
+      value: 
+      objectReference: {fileID: 4632328116425368548, guid: 468b6a3aaa429b3459e19fa8237b5c28, type: 3}
     - target: {fileID: 6644617886362527706, guid: 43bdb773fcc3b0943a4f1a3f297e2fc7, type: 3}
       propertyPath: m_Name
       value: SpownBill2P
