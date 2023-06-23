@@ -30,11 +30,11 @@ public class NewBillcon : MonoBehaviour
     // ブロック回転
     public Vector3 rotationPoint;
     public bool Stop;
-
+    public float stoptime = 0;
     private Vector2 _inputMove = Vector2.zero;
     //private bool rightwall;
     //private bool leftwall;
-    private bool billstop;
+    public bool billstop;
     Rigidbody2D rb;
     bool pad = false;
     bool Rotatepermission = false;
@@ -51,17 +51,17 @@ public class NewBillcon : MonoBehaviour
     public float ColPoint = 50;
     public bool ColStop = false;
     private Vector3 screenPoint;
+    private Vector3 Billposi = new Vector3 (0, -50f,0);
+    GameObject Parent;
 
     //public Vector3 billControllerPosition { get; private set; }
 
     void Start()
     {
         rb = this.gameObject.GetComponent<Rigidbody2D>();
-        if (ColPoint == 50)
-        {
-            ColStop = true;
-        }
-        StartCoroutine(BlockStopOrDetection());
+        Parent = transform.parent.gameObject;
+
+
     }
 
     //void OnCollisionEnter2D(Collision2D collision)
@@ -78,37 +78,65 @@ public class NewBillcon : MonoBehaviour
     //        this.GetComponent<PlayerInput>().enabled = false;
     //    }
     //}
-    private void OnTriggerStay2D(Collider2D collision)
+    //private void OnTriggerStay2D(Collider2D collision)
+    //{
+    //    if (collision.gameObject.CompareTag("stage"))
+    //    {
+    //        Stop = true;
+    //        this.GetComponent<PlayerInput>().enabled = false;
+    //        rb.isKinematic = false;
+    //        Delete.enabled = false;
+    //    }
+    //    if (collision.gameObject.CompareTag("Bill"))
+    //    {
+    //        ColPoint = collision.gameObject.transform.position.y;
+    //        //billstop = true;
+    //        rb.isKinematic = false;
+    //        this.GetComponent<PlayerInput>().enabled = false;
+          
+    //        Delete.enabled = false;
+    //    }
+    //    if (collision.gameObject.CompareTag("Bill2"))
+    //    {
+    //        ColPoint = collision.gameObject.transform.position.y;
+    //        //billstop = true;
+    //        rb.isKinematic = false;
+    //        this.GetComponent<PlayerInput>().enabled = false;
+    //        Delete.enabled = false;
+    //    }
+    //}
+
+    void Update()
     {
-        if (collision.gameObject.CompareTag("stage"))
+       
+        stoptime += Time.deltaTime;
+        if (stoptime >= 5.0f || rb.isKinematic  == false)
         {
-            Stop = true;
+            checkstop();
+        }
+
+        if (Stop == true)
+        {
             this.GetComponent<PlayerInput>().enabled = false;
             rb.isKinematic = false;
             Delete.enabled = false;
         }
-        if (collision.gameObject.CompareTag("Bill"))
+        if (billstop == true)
         {
-            ColPoint = collision.gameObject.transform.position.x;
-            billstop = true;
-            if (ColStop == false)
-            {
-                this.GetComponent<PlayerInput>().enabled = false;
-            }
-            Delete.enabled = false;
-        }
-        if (collision.gameObject.CompareTag("Bill2"))
-        {
-
-            billstop = true;
+          
+            rb.isKinematic = false;
             this.GetComponent<PlayerInput>().enabled = false;
+
             Delete.enabled = false;
         }
-    }
-
-    void Update()
-    {
-
+        //if (collision.gameObject.CompareTag("Bill2"))
+        //{
+        //    ColPoint = collision.gameObject.transform.position.y;
+        //    //billstop = true;
+        //    rb.isKinematic = false;
+        //    this.GetComponent<PlayerInput>().enabled = false;
+        //    Delete.enabled = false;
+        //}
         switch (Player)
         {
             case PlayerNum.Player1:
@@ -166,6 +194,7 @@ public class NewBillcon : MonoBehaviour
                     Debug.Log("aaaaaaaa");
                     Vector2 Move = this.transform.position + moveDistance;
                     rb.MovePosition(Move);
+                        Parent.transform.position += moveDistance;
                 }
             if (Mathf.Ceil(_inputMove.x) == 1)
             {
@@ -174,22 +203,27 @@ public class NewBillcon : MonoBehaviour
                 Debug.Log("ooooooooo");
                 Vector2 Move = this.transform.position + moveDistance;
                 rb.MovePosition(Move);
-            }
+                        Parent.transform.position += moveDistance;
+                    }
         }
         pad = false;
             Left = false;
             Right = false;
+            stoptime = 0.0f;
+            Billposi += new Vector3(0, 0, 0);
         }
 
         if (Time.time - previousTime >= fallTime)
         {
-            transform.position += new Vector3(0, -50.0f, 0);
+            transform.position += Billposi;
             previousTime = Time.time;
+            stoptime = 0.0f;
 
         }
         if (Stop == true)
         {
             rb.constraints = RigidbodyConstraints2D.None;
+            transform.position = new Vector3(transform.position.x, transform.position.y, 0);
             //transform.position = new Vector3(transform.position.x, 1, 0);//座標を(0,1)に戻す
             this.enabled = false;
         }
@@ -273,33 +307,54 @@ public class NewBillcon : MonoBehaviour
         Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
         rb.constraints = RigidbodyConstraints2D.FreezeAll;
     }
+
     /// <summary>
     /// ああああああ
     /// </summary>
     /// <returns></returns>
-    private IEnumerator BlockStopOrDetection()
-    {
-        while (true)
-        {
-            Debug.Log("yoba");
-            //ブロックの過去のY座標を取得
-            //数秒停止
-            
-            //今の座標を取得」  
-            Vector3 posinow = this.transform.localPosition;　//今の座標
-            yield return new WaitForSeconds(1);
-            Vector3 posipast= this.transform.position; //過去座標
-            Debug.Log("hatu");
-            //今の座標と過去の座標を比較比較的大きくして
-            if(posinow.y == posipast.y)
-            {
-                Stop = true;
-            }
-            //スクリプトをエナブル
-            this.enabled = false;
-            yield return new WaitForSeconds(1);
-        }
+    //void FixedUpdate()
+    //{
+    //    while (true)
+    //    {
+    //        Debug.Log("yoba");
+    //        //ブロックの過去のY座標を取得
+    //        //数秒停止
 
+    //        //今の座標を取得」  
+    //        Vector3 posinow = this.transform.localPosition;　//今の座標
+    //        yield return new WaitForSeconds(2);
+    //        Vector3 posipast= this.transform.position; //過去座標
+    //        Debug.Log("hatu");
+    //        //今の座標と過去の座標を比較比較的大きくして
+    //        if(posinow.y == posipast.y)
+    //        {
+    //            billstop = true;
+    //        }
+    //        //スクリプトをエナブル
+    //        this.enabled = false;
+    //        yield return new WaitForSeconds(2);
+    //    }
+
+    //}
+    private void checkstop()
+    {
+        Debug.Log("yobare");
+        if (rb.IsSleeping())
+        {
+            Debug.Log("true");
+            billstop = true;
+            this.enabled = false;
+        }
+        else
+        {
+            Debug.Log("false");
+            return;
+        }
+    }
+
+    public static implicit operator NewBillcon(bool v)
+    {
+        throw new System.NotImplementedException();
     }
 }
 
