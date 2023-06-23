@@ -21,7 +21,10 @@ public class Cannon : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        _cannonTransform = this.transform;
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            _rg.isKinematic= false;
+        }
         if (_rg.IsSleeping())
         {
             return;
@@ -31,7 +34,6 @@ public class Cannon : MonoBehaviour
             _time -= Time.deltaTime;
             if (_time <= 0 && isOnece ==false)
             {
-                Debug.Log("hoge");
                 StartCoroutine(CannonFire());
                 isOnece = true;
             }
@@ -56,18 +58,12 @@ public class Cannon : MonoBehaviour
     /// </summary>
     public IEnumerator CannonFire()
     {
-        // ローカル座標を基準に、回転を取得
-        Vector3 localangle = _cannonTransform.localEulerAngles;
-        //ローカル座標を基準にして_rotValue分回転
-        //少し動かさないとrigidbodyのconstraintsが解除されても自由落下しないからごく少量動かすためにある。
-        localangle.z += 0.0001f;
-        _cannonTransform.localEulerAngles = localangle; // 回転角度を設定
-        _rg.constraints = RigidbodyConstraints2D.FreezeRotation;
-        yield return new WaitForSeconds(_fireTime);
-        GameObject clone = Instantiate(_cannonBullet, _cannonMuzzle.transform.position, this.transform.rotation);
-        clone.GetComponent<Rigidbody2D>().AddForce(_cannnonBulletImpact * _cannonMuzzle.transform.right, ForceMode2D.Impulse);
-        _rg.constraints = RigidbodyConstraints2D.None;
-        this.enabled = false;
+        _rg.constraints = RigidbodyConstraints2D.FreezeRotation; //contrainsのローテーション固定
+        yield return new WaitForSeconds(_fireTime);//指定した時間待つ
+        GameObject clone = Instantiate(_cannonBullet, _cannonMuzzle.transform.position, this.transform.rotation);//弾生成
+        clone.GetComponent<Rigidbody2D>().AddForce(_cannnonBulletImpact * _cannonMuzzle.transform.right, ForceMode2D.Impulse);//弾に衝撃を与えて発射
+        _rg.constraints = RigidbodyConstraints2D.None;//contrainsのチェックをすべて外す
+        this.enabled = false;   //スクリプトを非アクティブにする。
     }
 
 
