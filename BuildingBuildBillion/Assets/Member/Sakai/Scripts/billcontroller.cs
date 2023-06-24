@@ -82,7 +82,6 @@ public class billcontroller : MonoBehaviour
         {
             Stop = true;
             this.GetComponent<PlayerInput>().enabled = false;
-            Delete.enabled = false;
         }
         if (collision.gameObject.CompareTag("Bill"))
         {
@@ -92,14 +91,12 @@ public class billcontroller : MonoBehaviour
             {
                 this.GetComponent<PlayerInput>().enabled = false;
             }
-            Delete.enabled = false;
         }
         if (collision.gameObject.CompareTag("Bill2"))
         {
 
             billstop = true;
             this.GetComponent<PlayerInput>().enabled = false;
-            Delete.enabled = false;
         }
     }
 

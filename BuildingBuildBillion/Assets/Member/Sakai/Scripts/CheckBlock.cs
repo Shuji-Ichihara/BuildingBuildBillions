@@ -7,28 +7,26 @@ public class CheckBlock : MonoBehaviour
     NewBillcon bill;
     void Start()
     {
-        //bill = transform.GetChild(0).gameObject;/*.GetComponent<NewBillcon>().enabled = true;*/
-        bill = GetComponent<NewBillcon>();
-        Debug.Log(bill.name);
+        bill = GetComponentInParent<NewBillcon>();
     }
 
     private void Update()
     {
-        //bill.BlockMove();
+        gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Bill1"))
-        {
-
-            //bill.billstop = true;
-            //bill.gameObject.GetComponent<NewBillcon>().billstop = false;
-            bill.billstop = true;
-
-        }
         if (collision.gameObject.CompareTag("stage"))
         {
-           bill. Stop = true;
+            bill.Stop = true;
+        }
+        if (collision.gameObject.CompareTag("Bill"))
+        {
+            bill.billstop = true;
+        }
+        if (collision.gameObject.CompareTag("Bill2"))
+        {
+            bill.billstop = true;
         }
     }
 

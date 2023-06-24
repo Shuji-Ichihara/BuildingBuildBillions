@@ -51,15 +51,13 @@ public class NewBillcon : MonoBehaviour
     public float ColPoint = 50;
     public bool ColStop = false;
     private Vector3 screenPoint;
-    private Vector3 Billposi = new Vector3 (0, -50f,0);
-    GameObject Parent;
+    private Vector3 Billposi = new Vector3(0, -50f, 0);
 
     //public Vector3 billControllerPosition { get; private set; }
 
     void Start()
     {
         rb = this.gameObject.GetComponent<Rigidbody2D>();
-        Parent = transform.parent.gameObject;
 
 
     }
@@ -93,7 +91,7 @@ public class NewBillcon : MonoBehaviour
     //        //billstop = true;
     //        rb.isKinematic = false;
     //        this.GetComponent<PlayerInput>().enabled = false;
-          
+
     //        Delete.enabled = false;
     //    }
     //    if (collision.gameObject.CompareTag("Bill2"))
@@ -108,27 +106,35 @@ public class NewBillcon : MonoBehaviour
 
     void Update()
     {
-       
+
+        if (Stop == true || billstop == true)
+        {
+            Debug.Log(Stop);
+            Debug.Log(billstop);
+            this.GetComponent<PlayerInput>().enabled = false;
+            rb.isKinematic = false;
+        }
+
         stoptime += Time.deltaTime;
-        if (stoptime >= 5.0f || rb.isKinematic  == false)
-        {
-            checkstop();
-        }
+        //if (stoptime >= 5.0f || rb.isKinematic == false)
+        //{
+        //    checkstop();
+        //}
 
-        if (Stop == true)
-        {
-            this.GetComponent<PlayerInput>().enabled = false;
-            rb.isKinematic = false;
-            Delete.enabled = false;
-        }
-        if (billstop == true)
-        {
-          
-            rb.isKinematic = false;
-            this.GetComponent<PlayerInput>().enabled = false;
+        //if (Stop == true)
+        //{
+        //    this.GetComponent<PlayerInput>().enabled = false;
+        //    rb.isKinematic = false;
+        //    Delete.enabled = false;
+        //}
+        //if (billstop == true)
+        //{
 
-            Delete.enabled = false;
-        }
+        //    rb.isKinematic = false;
+        //    this.GetComponent<PlayerInput>().enabled = false;
+
+        //    Delete.enabled = false;
+        //}
         //if (collision.gameObject.CompareTag("Bill2"))
         //{
         //    ColPoint = collision.gameObject.transform.position.y;
@@ -187,30 +193,27 @@ public class NewBillcon : MonoBehaviour
                 if (Right || Left)
                 {
                     if (Mathf.Ceil(_inputMove.x) == -1)
-                {
-                    Debug.Log("RightLeft");
-                    _isHorizontalPressed = false;
-                    //transform.position += new Vector3(moveDistance, 0, 0);
-                    Debug.Log("aaaaaaaa");
-                    Vector2 Move = this.transform.position + moveDistance;
-                    rb.MovePosition(Move);
-                        Parent.transform.position += moveDistance;
-                }
-            if (Mathf.Ceil(_inputMove.x) == 1)
-            {
-                Debug.Log("RightLeft");
-                _isHorizontalPressed = false;
-                Debug.Log("ooooooooo");
-                Vector2 Move = this.transform.position + moveDistance;
-                rb.MovePosition(Move);
-                        Parent.transform.position += moveDistance;
+                    {
+                        Debug.Log("RightLeft");
+                        _isHorizontalPressed = false;
+                        //transform.position += new Vector3(moveDistance, 0, 0);
+                        Debug.Log("aaaaaaaa");
+                        Vector2 Move = this.transform.position + moveDistance;
+                        rb.MovePosition(Move);
                     }
-        }
-        pad = false;
+                    if (Mathf.Ceil(_inputMove.x) == 1)
+                    {
+                        Debug.Log("RightLeft");
+                        _isHorizontalPressed = false;
+                        Debug.Log("ooooooooo");
+                        Vector2 Move = this.transform.position + moveDistance;
+                        rb.MovePosition(Move);
+                    }
+                }
+            pad = false;
             Left = false;
             Right = false;
             stoptime = 0.0f;
-            Billposi += new Vector3(0, 0, 0);
         }
 
         if (Time.time - previousTime >= fallTime)
@@ -226,6 +229,7 @@ public class NewBillcon : MonoBehaviour
             transform.position = new Vector3(transform.position.x, transform.position.y, 0);
             //transform.position = new Vector3(transform.position.x, 1, 0);//座標を(0,1)に戻す
             this.enabled = false;
+            CreateNextBlock();
         }
         if (billstop == true)
         {
@@ -233,6 +237,7 @@ public class NewBillcon : MonoBehaviour
             transform.position = new Vector3(transform.position.x, transform.position.y, 0);//座標をその場にとどまる
 
             this.enabled = false;
+            CreateNextBlock();
         }
 
         fromMoveHorizonal += Time.deltaTime;
@@ -243,7 +248,9 @@ public class NewBillcon : MonoBehaviour
             fromMoveHorizonal = 0.0f;
         }
         if (Mathf.Ceil(_inputMove.y) == -1)
+        {
             transform.position += new Vector3(0, Mathf.Abs(_inputMove.y) * -DownSpeed, 0);
+        }
 
     }
 
@@ -255,7 +262,7 @@ public class NewBillcon : MonoBehaviour
         {
             case InputActionPhase.Performed:
 
-                if (y == "leftShoulder" || y=="r" || y == "n")
+                if (y == "leftShoulder" || y == "r" || y == "n")
                 {
                     _isLeftPressed = true;
                 }
@@ -277,8 +284,10 @@ public class NewBillcon : MonoBehaviour
         _isHorizontalPressed = true;
     }
 
-
-    void OnDisable()
+    /// <summary>
+    /// 次のブロックの生成ロジック
+    /// </summary>
+    void CreateNextBlock()
     {
         switch (Player)
         {
@@ -302,11 +311,6 @@ public class NewBillcon : MonoBehaviour
         }
     }
 
-    public void FreezeAllConstraints(GameObject obj)
-    {
-        Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
-        rb.constraints = RigidbodyConstraints2D.FreezeAll;
-    }
 
     /// <summary>
     /// ああああああ
@@ -336,25 +340,21 @@ public class NewBillcon : MonoBehaviour
     //    }
 
     //}
-    private void checkstop()
-    {
-        Debug.Log("yobare");
-        if (rb.IsSleeping())
-        {
-            Debug.Log("true");
-            billstop = true;
-            this.enabled = false;
-        }
-        else
-        {
-            Debug.Log("false");
-            return;
-        }
-    }
+    //private void checkstop()
+    //{
+    //    Debug.Log("yobare");
+    //    if (rb.IsSleeping())
+    //    {
+    //        Debug.Log("true");
+    //        billstop = true;
+    //        this.enabled = false;
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("false");
+    //        return;
+    //    }
+    //}
 
-    public static implicit operator NewBillcon(bool v)
-    {
-        throw new System.NotImplementedException();
-    }
 }
 
