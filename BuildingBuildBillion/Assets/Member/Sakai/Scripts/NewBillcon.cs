@@ -146,13 +146,13 @@ public class NewBillcon : MonoBehaviour
         switch (Player)
         {
             case PlayerNum.Player1:
-                if (screenPoint.x >= 0f && screenPoint.x <= 0.45f)
+                if (screenPoint.x >= 0.02f && screenPoint.x <= 0.45f)
                 {
                     Left = true;
                 }
                 break;
             case PlayerNum.Player2:
-                if (screenPoint.x >= 0.55f && screenPoint.x <= 1.0f)
+                if (screenPoint.x >= 0.55f && screenPoint.x <= 0.95f)
                 {
                     Right = true;
                 }
