@@ -117,7 +117,7 @@ public class billcontroller : MonoBehaviour
 
             var screenPoint2P = Camera.main.WorldToViewportPoint(this.transform.position + new Vector3(moveDistance, 0, 0));// 0,0~1.1
 
-            if (CameraController.Instance.Camera.orthographicSize < 1080.0f * 1.5f)
+            if (CameraController.Instance.Camera.m_Lens.OrthographicSize < 1080.0f * 1.5f)
             {
                 if (screenPoint2P.x >= 0.2f && screenPoint2P.x <= 0.45f)
                     transform.position += new Vector3(moveDistance, 0, 0);
