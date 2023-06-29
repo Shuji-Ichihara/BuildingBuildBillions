@@ -78,32 +78,34 @@ public class JadgementBarController : SingletonMonoBehaviour<JadgementBarControl
                                         , 0.0f);
     }
 
-    private bool _player1Tag = false;
-    private bool _player2Tag = false;
-
     /// <summary>
     /// 勝敗判定
     /// </summary>
-    public bool Jadge(bool previewText = true)
+    public bool Jadge()
     {
+        bool _player1Tag = false;
+        bool _player2Tag = false;
+
         foreach (GameObject obj in Objects)
         {
             _player1Tag = obj.CompareTag("Bill");
             _player2Tag = obj.CompareTag("Bill2");
         }
 
+        bool isPreviewDraw = false;
         // 引き分け処理
         if (Objects.Count >= 2 || (true == _player1Tag && true == _player2Tag))
         {
             UIManager.Instance.DrawText.fontSize = 180.0f;
             UIManager.Instance.DrawText.text
                 = "Draw.\nThank you for Playing!";
-            UIManager.Instance.Player1ResultText.text
-                = "";
-            UIManager.Instance.Player2ResultText.text
-                = "";
+            //UIManager.Instance.Player1ResultText.text
+            //    = "";
+            //UIManager.Instance.Player2ResultText.text
+            //    = "";
             Debug.Log($"Draw");
-            return !previewText;
+            isPreviewDraw = true;
+            return isPreviewDraw;
         }
         else if (true == _player1Tag && false == _player2Tag)
         {
@@ -121,6 +123,6 @@ public class JadgementBarController : SingletonMonoBehaviour<JadgementBarControl
                 = UIManager.Instance.YouWon;
             Debug.Log($"Player2 Won!!");
         }
-        return previewText;
+        return isPreviewDraw;
     }
 }
