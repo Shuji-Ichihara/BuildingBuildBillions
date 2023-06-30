@@ -99,7 +99,10 @@ public class billcontroller : MonoBehaviour
             this.GetComponent<PlayerInput>().enabled = false;
         }
     }
-
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        
+    }
     void Update()
     {
 

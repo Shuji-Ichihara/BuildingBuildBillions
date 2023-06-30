@@ -5,15 +5,19 @@ using UnityEngine;
 public class CheckBlock : MonoBehaviour
 {
     NewBillcon bill;
+
     void Start()
     {
         bill = GetComponentInParent<NewBillcon>();
+
+
     }
 
     private void Update()
     {
         gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
     }
+
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("stage"))

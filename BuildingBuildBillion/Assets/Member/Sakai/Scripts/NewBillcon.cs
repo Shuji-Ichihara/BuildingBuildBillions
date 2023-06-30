@@ -13,8 +13,11 @@ public class NewBillcon : MonoBehaviour
     public float fallTime = 1f;
     private bool _isHorizontalPressed = false;
     [SerializeField]
-    float Rotateangle = 90;
-
+    public float Rotateangle = 90;
+    [SerializeField]
+    public GameObject col;
+    [SerializeField]
+    public GameObject col2;
     public enum PlayerNum
     {
         Player1 = 0,
@@ -24,9 +27,9 @@ public class NewBillcon : MonoBehaviour
     Collider2D Delete;
     public PlayerNum Player;
 
-    private bool _isRightPressed = false;
-    private bool _isLeftPressed = false;
-    private bool _isHozirontalPressed = false;
+    public bool _isRightPressed = false;
+    public bool _isLeftPressed = false;
+    public bool _isHozirontalPressed = false;
     // ÉuÉçÉbÉNâÒì]
     public Vector3 rotationPoint;
     public bool Stop;
@@ -37,14 +40,14 @@ public class NewBillcon : MonoBehaviour
     public bool billstop;
     Rigidbody2D rb;
     bool pad = false;
-    bool Rotatepermission = false;
+    public bool Rotatepermission = false;
 
     [SerializeField]
     float restTime = 0.25f;
     float restTime2 = 0.25f;
-    float RotaterestTime = 0.25f;
+   public float RotaterestTime = 0.5f;
     float fromMoveHorizonal = 0.0f;
-    float fromRotate = 0.0f;
+    public float fromRotate = 0.0f;
 
     public bool Right = false;
     public bool Left = false;
@@ -53,13 +56,17 @@ public class NewBillcon : MonoBehaviour
     private Vector3 screenPoint;
     private Vector3 Billposi = new Vector3(0, -50f, 0);
 
+    public bool test = false;
+
     //public Vector3 billControllerPosition { get; private set; }
 
     void Start()
     {
         rb = this.gameObject.GetComponent<Rigidbody2D>();
-
-
+        rb.bodyType = RigidbodyType2D.Dynamic;
+        col.SetActive(true);
+        col2.SetActive(false);
+        this.transform.gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
     }
 
     //void OnCollisionEnter2D(Collision2D collision)
@@ -103,7 +110,7 @@ public class NewBillcon : MonoBehaviour
     //        Delete.enabled = false;
     //    }
     //}
-
+   
     void Update()
     {
 
@@ -112,7 +119,8 @@ public class NewBillcon : MonoBehaviour
             Debug.Log(Stop);
             Debug.Log(billstop);
             this.GetComponent<PlayerInput>().enabled = false;
-            rb.isKinematic = false;
+            this.transform.gameObject.GetComponent<Rigidbody2D>().gravityScale = 400;
+            //rb.isKinematic = false;
         }
 
         stoptime += Time.deltaTime;
@@ -170,16 +178,49 @@ public class NewBillcon : MonoBehaviour
         {
             if (_isLeftPressed)
             {
-                Debug.Log("RightRotate");
+                test = true;
                 transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), -Rotateangle);
-                Rotatepermission = false;
+            
+          
+                    if (col.activeSelf == false)
+                    {
+                        Debug.Log("haitteruuuuuu");
+                    col.SetActive(true);
+                col2.SetActive(false);
+                    }
+                    else if (col.activeSelf == true)
+                    {
+                        Debug.Log("haitteru");
+                       col.SetActive(false);
+                  col2.SetActive(true);
+                    }
+             
+
+           
+                test = false;
             }
             if (_isRightPressed)
             {
-                Debug.Log("LeftRotate");
+                test = true;
                 transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), Rotateangle);
-                Rotatepermission = false;
+              
+                if (col.activeSelf == true)
+                {
+                    Debug.Log("haitteruuuuuu");
+                    col.SetActive(false);
+                    col2.SetActive(true);
+                }
+                else if (col.activeSelf == false)
+                {
+                    Debug.Log("haitteru");
+                    col.SetActive(true);
+                    col2.SetActive(false);
+                }
+
+         
+                test = false;
             }
+            Rotatepermission = false;
         }
 
         if (pad == true && _inputMove.x * _inputMove.x >= 0.25f)
@@ -194,18 +235,14 @@ public class NewBillcon : MonoBehaviour
                 {
                     if (Mathf.Ceil(_inputMove.x) == -1)
                     {
-                        Debug.Log("RightLeft");
                         _isHorizontalPressed = false;
                         //transform.position += new Vector3(moveDistance, 0, 0);
-                        Debug.Log("aaaaaaaa");
                         Vector2 Move = this.transform.position + moveDistance;
                         rb.MovePosition(Move);
                     }
                     if (Mathf.Ceil(_inputMove.x) == 1)
                     {
-                        Debug.Log("RightLeft");
                         _isHorizontalPressed = false;
-                        Debug.Log("ooooooooo");
                         Vector2 Move = this.transform.position + moveDistance;
                         rb.MovePosition(Move);
                     }
