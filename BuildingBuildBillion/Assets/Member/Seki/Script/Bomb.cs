@@ -46,7 +46,7 @@ public class Bomb : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D col)
-    {
+    {//コライだー通り抜けたら飛ばす
         //ver2
         Vector3 hit;
         hit = col.ClosestPoint(this.transform.position);//trigger衝突位置
@@ -61,6 +61,8 @@ public class Bomb : MonoBehaviour
 
     IEnumerator BombCor() 
     {
+        _bombCollider.enabled = false;
+        _bombCollider.enabled = true;
         _bombCollider.isTrigger = true;
         float count = 0;
         float time = 1f / bombSpeed;
