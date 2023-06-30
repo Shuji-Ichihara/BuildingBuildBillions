@@ -10,8 +10,12 @@ public class Bomb : MonoBehaviour
     Rigidbody2D _rb;
     Animator _animator;
 
-    [SerializeField]
-    private int bombRadius, bombSpeed,power=0;
+    [SerializeField, Header("‚ " + "‚¢" + "‚¤")]
+    private int bombRadius = 0;
+    [SerializeField, Header("‚ " + "‚¢" + "‚¤")]
+    private int bombSpeed = 0;
+    [SerializeField,Header("‚ "+"‚¢"+"‚¤")]
+    private int power=0;
     // Start is called before the first frame update
     void Start()
     {
