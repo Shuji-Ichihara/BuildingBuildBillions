@@ -103,7 +103,6 @@ public class JadgementBarController : SingletonMonoBehaviour<JadgementBarControl
             //    = "";
             //UIManager.Instance.Player2ResultText.text
             //    = "";
-            Debug.Log($"Draw");
             isPreviewDraw = true;
             return isPreviewDraw;
         }
@@ -113,7 +112,6 @@ public class JadgementBarController : SingletonMonoBehaviour<JadgementBarControl
                 = UIManager.Instance.YouWon;
             UIManager.Instance.Player2ResultText.text
                 = UIManager.Instance.YouLost;
-            Debug.Log($"Player1 Won!!");
         }
         else if (false == _player1Tag && true == _player2Tag)
         {
@@ -121,7 +119,6 @@ public class JadgementBarController : SingletonMonoBehaviour<JadgementBarControl
                 = UIManager.Instance.YouLost;
             UIManager.Instance.Player2ResultText.text
                 = UIManager.Instance.YouWon;
-            Debug.Log($"Player2 Won!!");
         }
         return isPreviewDraw;
     }
