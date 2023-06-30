@@ -29,13 +29,13 @@ public class Bomb : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.A))
         {
-            Debug.Log(this.transform.localPosition);
+            //Debug.Log(this.transform.localPosition);
             //BombEvent();
         }
     }
 
     void BombEvent()
-    {
+    {//‚±‚±‚Å”š”­
         StartCoroutine(BombCor());
         //_bombCollider.radius = 5;
         GetComponent<SpriteRenderer>().enabled = false;
