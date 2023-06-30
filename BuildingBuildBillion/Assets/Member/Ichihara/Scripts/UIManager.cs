@@ -106,27 +106,27 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
                 _player1NextBuildingMaterial.sprite = PreviewBuildingSprite(GameManager.Instance.Obj);
                 _player2NextBuildingMaterial.sprite = PreviewBuildingSprite(GameManager.Instance.Obj2);
             }
-            // 勝敗が確定したら、リザルトシーンを呼び出す。
-            if (true == GameManager.Instance.IsPreviewedResult)
+            else if (GameManager.Instance.CountDownGameTime < 0.0f)
             {
                 _gameUICanvas.gameObject.SetActive(false);
                 _waitingGameTimeText.color = Color.clear;
+            }
+            // 勝敗が確定したら、リザルトシーンを呼び出す。
+            if (true == GameManager.Instance.IsPreviewedResult && false == _isDoneOnce)
+            {
                 var resultSceneCanvasGroup = _resultSceneCanvas.GetComponent<CanvasGroup>();
                 resultSceneCanvasGroup.alpha = 1.0f;
-                if (false == _isDoneOnce)
-                {
-                    await FadeInImage(3.0f, 0.8f);
-                    JadgementBarController.Instance.Jadge();
-                    // テキストを代入
-                    //var resultPlayer1Text = GameObject.Find("Player1").GetComponent<TextMeshProUGUI>();
-                    //resultPlayer1Text.text = _player1Text;
-                    //var resultPlayer2Text = GameObject.Find("Player2").GetComponent<TextMeshProUGUI>();
-                    //resultPlayer2Text.text = _player2Text;
-                    _pleasePushToA = GameObject.Find("PleasePushToA").GetComponent<TextMeshProUGUI>();
-                    _pleasePushToA.text = _pleasePushToAText;
-                    FadeText().Forget();
-                    _isDoneOnce = true;
-                }
+                await FadeInImage(3.0f, 0.8f);
+                JadgementBarController.Instance.Jadge();
+                // テキストを代入
+                //var resultPlayer1Text = GameObject.Find("Player1").GetComponent<TextMeshProUGUI>();
+                //resultPlayer1Text.text = _player1Text;
+                //var resultPlayer2Text = GameObject.Find("Player2").GetComponent<TextMeshProUGUI>();
+                //resultPlayer2Text.text = _player2Text;
+                _pleasePushToA = GameObject.Find("PleasePushToA").GetComponent<TextMeshProUGUI>();
+                _pleasePushToA.text = _pleasePushToAText;
+                FadeText().Forget();
+                _isDoneOnce = true;
             }
         }
     }
