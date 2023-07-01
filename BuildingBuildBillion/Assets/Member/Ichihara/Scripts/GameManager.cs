@@ -91,7 +91,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     /// <summary>
     /// ゲームを開始するまでのカウントダウン処理
     /// </summary>
-    /// <param name="CountDownTime">ゲーム開始までの待機時間</param>
     /// <param name="token">キャンセル処理用のトークン</param>
     /// <returns></returns>
     private async UniTask CountDownToStartTheGame(CancellationToken token = default)
@@ -99,6 +98,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         while (_waitingGameTime > 0.0f)
         {
             _waitingGameTime -= Time.deltaTime;
+            UIManager.Instance.FadeOutImage(3.0f).Forget();
             await UniTask.Yield(token);
         }
         // ここに開始時の演出を加える
@@ -153,30 +153,21 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     /// <summary>
     /// 建材がスポーンするポイントを移動させる
     /// </summary>
-    public void MoveBuildingSpawnPoint()
+    public void MoveBuildingSpawnPoint(float zoom)
     {
-        _buildSpawnPoint1.transform.position = new Vector3(_buildSpawnPoint1.transform.position.x
-                                                         , CameraController.Instance.Camera.orthographicSize
-                                                         + CameraController.Instance.Camera.transform.position.y
-                                                         , 0.0f);
-        _buildSpawnPoint2.transform.position = new Vector3(_buildSpawnPoint2.transform.position.x
-                                                         , CameraController.Instance.Camera.orthographicSize
-                                                         + CameraController.Instance.Camera.transform.position.y
-                                                         , 0.0f);
+        _buildSpawnPoint1.transform.position += Vector3.up * zoom;
+        _buildSpawnPoint2.transform.position += Vector3.up * zoom;
+
         // 各スポーンポイントの移動限界値を設定
         _buildSpawnPoint1.transform.position = new Vector3(_buildSpawnPoint1.transform.position.x
                                                          , Mathf.Clamp(_buildSpawnPoint1.transform.position.y
                                                                      , _defaultBuildSpawnPoint1.y
-                                                                     , Screen.height
-                                                                     + CameraController.Instance.Camera.transform.position.y)
+                                                                     , Screen.height * 1.5f)
                                                          , 0.0f);
         _buildSpawnPoint2.transform.position = new Vector3(_buildSpawnPoint2.transform.position.x
                                                          , Mathf.Clamp(_buildSpawnPoint2.transform.position.y
                                                                      , _defaultBuildSpawnPoint2.y
-                                                                     , Screen.height
-                                                                     + CameraController.Instance.Camera.transform.position.y)
+                                                                     , Screen.height * 1.5f)
                                                          , 0.0f);
     }
-
-
 }
