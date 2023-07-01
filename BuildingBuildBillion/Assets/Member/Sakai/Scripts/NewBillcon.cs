@@ -49,8 +49,8 @@ public class NewBillcon : MonoBehaviour
     float fromMoveHorizonal = 0.0f;
     public float fromRotate = 0.0f;
 
-    public bool Right = true;
-    public bool Left = true;
+    public bool Right;
+    public bool Left;
     public float ColPoint = 50;
     public bool ColStop = false;
     private Vector3 screenPoint;
@@ -62,6 +62,8 @@ public class NewBillcon : MonoBehaviour
  
     void Start()
     {
+        Right = true;
+        Left = true;
         rb = this.gameObject.GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Dynamic;
         col.SetActive(true);
@@ -116,14 +118,17 @@ public class NewBillcon : MonoBehaviour
         // Œ»Ý‚ÌÀ•W‚ðŽæ“¾‚µ‚ÄƒŠƒXƒg‚É’Ç‰Á
         Vector3 currentPosition = transform.position;
         pastPositions.Add(currentPosition);
-        int framesToGoBack = 1;
+        int framesToGoBack = 15;
+      
 
         if (Right == false || Left == false)
         {
+
             ReturnToPastPosition(framesToGoBack);
+
         }
 
-        int maxPositions = 10;
+        int maxPositions = 15;
         if (pastPositions.Count > maxPositions)
         {
             pastPositions.RemoveAt(0);
@@ -131,8 +136,8 @@ public class NewBillcon : MonoBehaviour
 
         if (Stop == true || billstop == true)
         {
-            Debug.Log(Stop);
-            Debug.Log(billstop);
+            //Debug.Log(Stop);
+            //Debug.Log(billstop);
             this.GetComponent<PlayerInput>().enabled = false;
             this.transform.gameObject.GetComponent<Rigidbody2D>().gravityScale = 400;
             //rb.isKinematic = false;
@@ -173,11 +178,19 @@ public class NewBillcon : MonoBehaviour
                 {
                     Left = true;
                 }
+                else 
+                {
+                    Left = false;
+                }
                 break;
             case PlayerNum.Player2:
                 if (screenPoint.x >= 0.55f && screenPoint.x <= 0.95f)
                 {
                     Right = true;
+                }
+                else
+                {
+                    Right = false;
                 }
 
                 break;
@@ -241,12 +254,13 @@ public class NewBillcon : MonoBehaviour
 
         if (pad == true && _inputMove.x * _inputMove.x >= 0.25f)
         {
-            Vector3 moveDistance = new Vector3(1000.0f, 0, 0);
+            Vector2 moveDistance = new Vector2(50.0f, 0);
             if (_inputMove.x < 0) moveDistance *= -1;
 
-            screenPoint = Camera.main.WorldToViewportPoint(this.transform.position /*+ new Vector3(moveDistance.x, 0, 0)*/);// 0,0~1.1
+            screenPoint = Camera.main.WorldToViewportPoint(this.transform.position + new Vector3(moveDistance.x, 0, 0));// 0,0~1.1
 
             if (CameraControllerTest.Instance.Camera.orthographicSize < 1080.0f * 1.5f)
+            {
                 if (Right || Left)
                 {
                     if (Mathf.Ceil(_inputMove.x) == -1)
@@ -255,28 +269,30 @@ public class NewBillcon : MonoBehaviour
                         //transform.position += new Vector3(moveDistance, 0, 0);
                         //Vector2 Move = this.transform.position + moveDistance;
                         //rb.MovePosition(Move);
-                        rb.velocity = moveDistance;
+                        rb.velocity += moveDistance * 20;
                     }
                     if (Mathf.Ceil(_inputMove.x) == 1)
                     {
                         _isHorizontalPressed = false;
                         //Vector2 Move = this.transform.position + moveDistance;
                         //rb.MovePosition(Move);
-                        rb.velocity = moveDistance;
+                        rb.velocity += moveDistance * 20;
                     }
                 }
-            pad = false;
-            Left = false;
-            Right = false;
-            stoptime = 0.0f;
+                pad = false;
+                Left = false;
+                Right = false;
+                stoptime = 0.0f;
+            }
         }
 
         if (Time.time - previousTime >= fallTime)
         {
+            
             transform.position += Billposi;
             previousTime = Time.time;
             stoptime = 0.0f;
-
+           
         }
         if (Stop == true)
         {
@@ -296,7 +312,7 @@ public class NewBillcon : MonoBehaviour
         }
 
         fromMoveHorizonal += Time.deltaTime;
-
+      
         if (fromMoveHorizonal >= restTime)
         {
             pad = true;
@@ -304,15 +320,17 @@ public class NewBillcon : MonoBehaviour
         }
         if (Mathf.Ceil(_inputMove.y) == -1)
         {
-            transform.position += new Vector3(0, Mathf.Abs(_inputMove.y) * -DownSpeed, 0);
+           
+            rb.velocity += new Vector2(0, Mathf.Abs(_inputMove.y) * -DownSpeed * 20);
         }
+       
 
     }
 
     public void _Rotate(InputAction.CallbackContext context)
     {
         var y = context.control.name;
-        Debug.Log(y);
+        //Debug.Log(y);
         switch (context.phase)
         {
             case InputActionPhase.Performed:
@@ -335,7 +353,7 @@ public class NewBillcon : MonoBehaviour
     public void OnHold(InputAction.CallbackContext context)
     {
         _inputMove = context.ReadValue<Vector2>();
-        Debug.Log(_inputMove);
+        //Debug.Log(_inputMove);
         _isHorizontalPressed = true;
     }
 
@@ -373,6 +391,11 @@ public class NewBillcon : MonoBehaviour
         {
             Vector3 targetPosition = pastPositions[targetIndex];
             this.transform.position = targetPosition;
+
+
+            Right = true;
+            Left = true;
+            
         }
     }
     /// <summary>
