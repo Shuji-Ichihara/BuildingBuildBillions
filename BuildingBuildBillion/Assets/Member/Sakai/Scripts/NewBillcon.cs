@@ -49,17 +49,17 @@ public class NewBillcon : MonoBehaviour
     float fromMoveHorizonal = 0.0f;
     public float fromRotate = 0.0f;
 
-    public bool Right = false;
-    public bool Left = false;
+    public bool Right = true;
+    public bool Left = true;
     public float ColPoint = 50;
     public bool ColStop = false;
     private Vector3 screenPoint;
     private Vector3 Billposi = new Vector3(0, -50f, 0);
-
+    List<Vector3> pastPositions = new List<Vector3>();
     public bool test = false;
 
     //public Vector3 billControllerPosition { get; private set; }
-
+ 
     void Start()
     {
         rb = this.gameObject.GetComponent<Rigidbody2D>();
@@ -68,7 +68,7 @@ public class NewBillcon : MonoBehaviour
         col2.SetActive(false);
         this.transform.gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
     }
-
+  
     //void OnCollisionEnter2D(Collision2D collision)
     //{
     //    if (collision.gameObject.CompareTag("stage"))
@@ -110,9 +110,24 @@ public class NewBillcon : MonoBehaviour
     //        Delete.enabled = false;
     //    }
     //}
-   
+
     void Update()
     {
+        // Œ»Ý‚ÌÀ•W‚ðŽæ“¾‚µ‚ÄƒŠƒXƒg‚É’Ç‰Á
+        Vector3 currentPosition = transform.position;
+        pastPositions.Add(currentPosition);
+        int framesToGoBack = 1;
+
+        if (Right == false || Left == false)
+        {
+            ReturnToPastPosition(framesToGoBack);
+        }
+
+        int maxPositions = 10;
+        if (pastPositions.Count > maxPositions)
+        {
+            pastPositions.RemoveAt(0);
+        }
 
         if (Stop == true || billstop == true)
         {
@@ -167,6 +182,7 @@ public class NewBillcon : MonoBehaviour
 
                 break;
         }
+     
         fromRotate += Time.deltaTime;
 
         if (fromRotate >= RotaterestTime)
@@ -225,10 +241,10 @@ public class NewBillcon : MonoBehaviour
 
         if (pad == true && _inputMove.x * _inputMove.x >= 0.25f)
         {
-            Vector3 moveDistance = new Vector3(50, 1, 1);
+            Vector3 moveDistance = new Vector3(1000.0f, 0, 0);
             if (_inputMove.x < 0) moveDistance *= -1;
 
-            screenPoint = Camera.main.WorldToViewportPoint(this.transform.position + new Vector3(moveDistance.x, 0, 0));// 0,0~1.1
+            screenPoint = Camera.main.WorldToViewportPoint(this.transform.position /*+ new Vector3(moveDistance.x, 0, 0)*/);// 0,0~1.1
 
             if (CameraControllerTest.Instance.Camera.orthographicSize < 1080.0f * 1.5f)
                 if (Right || Left)
@@ -237,14 +253,16 @@ public class NewBillcon : MonoBehaviour
                     {
                         _isHorizontalPressed = false;
                         //transform.position += new Vector3(moveDistance, 0, 0);
-                        Vector2 Move = this.transform.position + moveDistance;
-                        rb.MovePosition(Move);
+                        //Vector2 Move = this.transform.position + moveDistance;
+                        //rb.MovePosition(Move);
+                        rb.velocity = moveDistance;
                     }
                     if (Mathf.Ceil(_inputMove.x) == 1)
                     {
                         _isHorizontalPressed = false;
-                        Vector2 Move = this.transform.position + moveDistance;
-                        rb.MovePosition(Move);
+                        //Vector2 Move = this.transform.position + moveDistance;
+                        //rb.MovePosition(Move);
+                        rb.velocity = moveDistance;
                     }
                 }
             pad = false;
@@ -348,7 +366,15 @@ public class NewBillcon : MonoBehaviour
         }
     }
 
-
+    void ReturnToPastPosition(int frameCount)
+    {
+        int targetIndex = pastPositions.Count - 1 - frameCount;
+        if (targetIndex >= 0 && targetIndex < pastPositions.Count)
+        {
+            Vector3 targetPosition = pastPositions[targetIndex];
+            this.transform.position = targetPosition;
+        }
+    }
     /// <summary>
     /// ‚ ‚ ‚ ‚ ‚ ‚ 
     /// </summary>

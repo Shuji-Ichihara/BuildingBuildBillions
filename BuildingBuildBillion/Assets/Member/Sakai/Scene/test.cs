@@ -9,26 +9,20 @@ public class test : MonoBehaviour
     [SerializeField]
     public GameObject col2;
     // Start is called before the first frame update
+    public Rigidbody2D rb;
+
     void Start()
     {
-        col.SetActive(true);
-        col2.SetActive(false);
+        // Rigidbodyコンポーネントを取得する
+        rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        if (Input.GetKey(KeyCode.K))
+        //  Upキーで前に進む
+        if (Input.GetKey("up"))
         {
-            Debug.Log("haitteruuuuuu");
-            col.SetActive(false);
-           col2.SetActive(true);
-        }
-        else if (Input.GetKey(KeyCode.L))
-        {
-            Debug.Log("haitteru");
-          col.SetActive(true);
-            col2.SetActive(false);
+            rb.AddForce(transform.right * 10.0f, ForceMode2D.Force);
         }
     }
 }
