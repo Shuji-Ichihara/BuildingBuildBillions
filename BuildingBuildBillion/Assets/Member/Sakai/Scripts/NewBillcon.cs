@@ -49,8 +49,8 @@ public class NewBillcon : MonoBehaviour
     float fromMoveHorizonal = 0.0f;
     public float fromRotate = 0.0f;
 
-    public bool Right;
-    public bool Left;
+    public bool Right = true;
+    public bool Left = true;
     public float ColPoint = 50;
     public bool ColStop = false;
     private Vector3 screenPoint;
@@ -62,8 +62,7 @@ public class NewBillcon : MonoBehaviour
  
     void Start()
     {
-        Right = true;
-        Left = true;
+      
         rb = this.gameObject.GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Dynamic;
         col.SetActive(true);
@@ -115,10 +114,19 @@ public class NewBillcon : MonoBehaviour
 
     void Update()
     {
+        if (_inputMove.x == 0 && _inputMove.y == 0)
+        {
+
+            Left = true;
+            Right = true;
+        }
+
+
+
         // Œ»Ý‚ÌÀ•W‚ðŽæ“¾‚µ‚ÄƒŠƒXƒg‚É’Ç‰Á
         Vector3 currentPosition = transform.position;
         pastPositions.Add(currentPosition);
-        int framesToGoBack = 15;
+        int framesToGoBack = 10;
       
 
         if (Right == false || Left == false)
@@ -133,7 +141,7 @@ public class NewBillcon : MonoBehaviour
         {
             pastPositions.RemoveAt(0);
         }
-
+      
         if (Stop == true || billstop == true)
         {
             //Debug.Log(Stop);
@@ -174,21 +182,53 @@ public class NewBillcon : MonoBehaviour
         switch (Player)
         {
             case PlayerNum.Player1:
-                if (screenPoint.x >= 0.02f && screenPoint.x <= 0.45f)
+                if (screenPoint.x <= 0.02f || screenPoint.x >= 0.45f)
                 {
+
+                    Left = false;
+                    Debug.Log(Left);
+                }
+                else if (screenPoint.x >= 0.02f && screenPoint.x <= 0.45f)
+                {
+                   
+                  if (_inputMove.y == 0 && _inputMove.x != 0)
+                    {
+
+                        Left = true;
+
+                    }
+                   else if (_inputMove.y != 0 && _inputMove.x != 0)
+                    {
+
+                        Left = true;
+
+                    }
+                   else if (_inputMove.x == 0 && _inputMove.y != 0)
+                    {
+                       
+                        Left = true;
+
+                    }
+                   else if (_inputMove.x == 0 && _inputMove.y == 0)
+                    {
+
+                        Left = true;
+
+                    }
                     Left = true;
                 }
-                else 
-                {
-                    Left = false;
-                }
+              
                 break;
             case PlayerNum.Player2:
                 if (screenPoint.x >= 0.55f && screenPoint.x <= 0.95f)
                 {
+                    if (_inputMove.y == 0 && _inputMove.x != 0)
+                    {
+                        Right = true;
+                    }
                     Right = true;
                 }
-                else
+                if (screenPoint.x <= 0.55f || screenPoint.x >= 0.95f)
                 {
                     Right = false;
                 }
@@ -279,6 +319,7 @@ public class NewBillcon : MonoBehaviour
                         rb.velocity += moveDistance * 20;
                     }
                 }
+
                 pad = false;
                 Left = false;
                 Right = false;
@@ -292,6 +333,8 @@ public class NewBillcon : MonoBehaviour
             transform.position += Billposi;
             previousTime = Time.time;
             stoptime = 0.0f;
+            Right = true;
+            Left = true;
            
         }
         if (Stop == true)
@@ -322,6 +365,9 @@ public class NewBillcon : MonoBehaviour
         {
            
             rb.velocity += new Vector2(0, Mathf.Abs(_inputMove.y) * -DownSpeed * 20);
+            Right = true;
+            Left = true;
+         
         }
        
 
@@ -386,7 +432,7 @@ public class NewBillcon : MonoBehaviour
 
     void ReturnToPastPosition(int frameCount)
     {
-        int targetIndex = pastPositions.Count - 1 - frameCount;
+        int targetIndex = pastPositions.Count /*- 1*/ - frameCount;
         if (targetIndex >= 0 && targetIndex < pastPositions.Count)
         {
             Vector3 targetPosition = pastPositions[targetIndex];
