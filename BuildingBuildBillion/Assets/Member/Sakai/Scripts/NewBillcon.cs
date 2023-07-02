@@ -130,6 +130,8 @@ public class NewBillcon : MonoBehaviour
         {
 
             ReturnToPastPosition(framesToGoBack);
+            Right = true;
+            Left = true;
 
         }
 
@@ -181,8 +183,7 @@ public class NewBillcon : MonoBehaviour
             case PlayerNum.Player1:
                 if (screenPoint.x <= 0.04f || screenPoint.x >= 0.45f)
                 {
-                    float currentPosition = this.transform.position.x;
-                    pastPositions.Add(currentPosition);
+                  
                    
                     Left = false;
                     rb.velocity = Vector2.zero;
@@ -190,26 +191,27 @@ public class NewBillcon : MonoBehaviour
                 }
                 else if (screenPoint.x >= 0.04f && screenPoint.x <= 0.45f)
                 {
-
+                    float currentPosition = this.transform.position.x;
+                    pastPositions.Add(currentPosition);
                     if (_inputMove.y == 0 && _inputMove.x != 0)
                     {
 
                         Left = true;
 
                     }
-                    else if (_inputMove.y != 0 && _inputMove.x != 0)
+                    if (_inputMove.y != 0 && _inputMove.x != 0)
                     {
 
                         Left = true;
 
                     }
-                    else if (_inputMove.x == 0 && _inputMove.y != 0)
+                    if (_inputMove.x == 0 && _inputMove.y != 0)
                     {
 
                         Left = true;
 
                     }
-                    else if (_inputMove.x == 0 && _inputMove.y == 0)
+                    if (_inputMove.x == 0 && _inputMove.y == 0)
                     {
 
                         Left = true;
@@ -222,35 +224,35 @@ public class NewBillcon : MonoBehaviour
             case PlayerNum.Player2:
                 if (screenPoint.x <= 0.55f || screenPoint.x >= 0.95f)
                 {
-                    float currentPosition = this.transform.position.x;
-                    pastPositions.Add(currentPosition);
+                   
 
                     Right = false;
                     rb.velocity = Vector2.zero;
-                    Debug.Log(Right);
+                  
                 }
                 else if (screenPoint.x >= 0.55f && screenPoint.x <= 0.95f)
                 {
-
+                    float currentPosition = this.transform.position.x;
+                    pastPositions.Add(currentPosition);
                     if (_inputMove.y == 0 && _inputMove.x != 0)
                     {
 
                         Right = true;
 
                     }
-                    else if (_inputMove.y != 0 && _inputMove.x != 0)
+                    if (_inputMove.y != 0 && _inputMove.x != 0)
                     {
 
                         Right = true;
 
                     }
-                    else if (_inputMove.x == 0 && _inputMove.y != 0)
+                     if (_inputMove.x == 0 && _inputMove.y != 0)
                     {
 
                         Right = true;
 
                     }
-                    else if (_inputMove.x == 0 && _inputMove.y == 0)
+                     if (_inputMove.x == 0 && _inputMove.y == 0)
                     {
 
                         Right = true;
