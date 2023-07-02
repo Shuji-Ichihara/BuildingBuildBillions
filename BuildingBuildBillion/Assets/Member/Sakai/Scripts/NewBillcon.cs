@@ -45,7 +45,7 @@ public class NewBillcon : MonoBehaviour
     [SerializeField]
     float restTime = 0.25f;
     float restTime2 = 0.25f;
-   public float RotaterestTime = 0.5f;
+    public float RotaterestTime = 0.5f;
     float fromMoveHorizonal = 0.0f;
     public float fromRotate = 0.0f;
 
@@ -59,17 +59,17 @@ public class NewBillcon : MonoBehaviour
     public bool test = false;
 
     //public Vector3 billControllerPosition { get; private set; }
- 
+
     void Start()
     {
-      
+
         rb = this.gameObject.GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Dynamic;
         col.SetActive(true);
         col2.SetActive(false);
         this.transform.gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
     }
-  
+
     //void OnCollisionEnter2D(Collision2D collision)
     //{
     //    if (collision.gameObject.CompareTag("stage"))
@@ -116,7 +116,6 @@ public class NewBillcon : MonoBehaviour
     {
         if (_inputMove.x == 0 && _inputMove.y == 0)
         {
-
             Left = true;
             Right = true;
         }
@@ -127,7 +126,7 @@ public class NewBillcon : MonoBehaviour
         Vector3 currentPosition = transform.position;
         pastPositions.Add(currentPosition);
         int framesToGoBack = 10;
-      
+
 
         if (Right == false || Left == false)
         {
@@ -141,7 +140,7 @@ public class NewBillcon : MonoBehaviour
         {
             pastPositions.RemoveAt(0);
         }
-      
+
         if (Stop == true || billstop == true)
         {
             //Debug.Log(Stop);
@@ -190,26 +189,26 @@ public class NewBillcon : MonoBehaviour
                 }
                 else if (screenPoint.x >= 0.02f && screenPoint.x <= 0.45f)
                 {
-                   
-                  if (_inputMove.y == 0 && _inputMove.x != 0)
+
+                    if (_inputMove.y == 0 && _inputMove.x != 0)
                     {
 
                         Left = true;
 
                     }
-                   else if (_inputMove.y != 0 && _inputMove.x != 0)
+                    else if (_inputMove.y != 0 && _inputMove.x != 0)
                     {
 
                         Left = true;
 
                     }
-                   else if (_inputMove.x == 0 && _inputMove.y != 0)
+                    else if (_inputMove.x == 0 && _inputMove.y != 0)
                     {
-                       
+
                         Left = true;
 
                     }
-                   else if (_inputMove.x == 0 && _inputMove.y == 0)
+                    else if (_inputMove.x == 0 && _inputMove.y == 0)
                     {
 
                         Left = true;
@@ -217,7 +216,7 @@ public class NewBillcon : MonoBehaviour
                     }
                     Left = true;
                 }
-              
+
                 break;
             case PlayerNum.Player2:
                 if (screenPoint.x >= 0.55f && screenPoint.x <= 0.95f)
@@ -235,7 +234,7 @@ public class NewBillcon : MonoBehaviour
 
                 break;
         }
-     
+
         fromRotate += Time.deltaTime;
 
         if (fromRotate >= RotaterestTime)
@@ -249,30 +248,30 @@ public class NewBillcon : MonoBehaviour
             {
                 test = true;
                 transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), -Rotateangle);
-            
-          
-                    if (col.activeSelf == false)
-                    {
-                        Debug.Log("haitteruuuuuu");
-                    col.SetActive(true);
-                col2.SetActive(false);
-                    }
-                    else if (col.activeSelf == true)
-                    {
-                        Debug.Log("haitteru");
-                       col.SetActive(false);
-                  col2.SetActive(true);
-                    }
-             
 
-           
+
+                if (col.activeSelf == false)
+                {
+                    Debug.Log("haitteruuuuuu");
+                    col.SetActive(true);
+                    col2.SetActive(false);
+                }
+                else if (col.activeSelf == true)
+                {
+                    Debug.Log("haitteru");
+                    col.SetActive(false);
+                    col2.SetActive(true);
+                }
+
+
+
                 test = false;
             }
             if (_isRightPressed)
             {
                 test = true;
                 transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), Rotateangle);
-              
+
                 if (col.activeSelf == true)
                 {
                     Debug.Log("haitteruuuuuu");
@@ -286,7 +285,7 @@ public class NewBillcon : MonoBehaviour
                     col2.SetActive(false);
                 }
 
-         
+
                 test = false;
             }
             Rotatepermission = false;
@@ -321,21 +320,21 @@ public class NewBillcon : MonoBehaviour
                 }
 
                 pad = false;
-                Left = false;
-                Right = false;
+                //Left = false;
+                //Right = false;
                 stoptime = 0.0f;
             }
         }
 
         if (Time.time - previousTime >= fallTime)
         {
-            
+
             transform.position += Billposi;
             previousTime = Time.time;
             stoptime = 0.0f;
             Right = true;
             Left = true;
-           
+
         }
         if (Stop == true)
         {
@@ -355,7 +354,7 @@ public class NewBillcon : MonoBehaviour
         }
 
         fromMoveHorizonal += Time.deltaTime;
-      
+
         if (fromMoveHorizonal >= restTime)
         {
             pad = true;
@@ -363,13 +362,13 @@ public class NewBillcon : MonoBehaviour
         }
         if (Mathf.Ceil(_inputMove.y) == -1)
         {
-           
+
             rb.velocity += new Vector2(0, Mathf.Abs(_inputMove.y) * -DownSpeed * 20);
             Right = true;
             Left = true;
-         
+
         }
-       
+
 
     }
 
@@ -441,7 +440,7 @@ public class NewBillcon : MonoBehaviour
 
             Right = true;
             Left = true;
-            
+
         }
     }
     /// <summary>
