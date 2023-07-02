@@ -55,7 +55,7 @@ public class NewBillcon : MonoBehaviour
     public bool ColStop = false;
     private Vector3 screenPoint;
     private Vector3 Billposi = new Vector3(0, -50f, 0);
-    List<Vector3> pastPositions = new List<Vector3>();
+    List<float> pastPositions = new List<float>();
     public bool test = false;
 
     //public Vector3 billControllerPosition { get; private set; }
@@ -123,9 +123,7 @@ public class NewBillcon : MonoBehaviour
 
 
         // åªç›ÇÃç¿ïWÇéÊìæÇµÇƒÉäÉXÉgÇ…í«â¡
-        Vector3 currentPosition = transform.position;
-        pastPositions.Add(currentPosition);
-        int framesToGoBack = 10;
+        int framesToGoBack = 1;
 
 
         if (Right == false || Left == false)
@@ -181,13 +179,16 @@ public class NewBillcon : MonoBehaviour
         switch (Player)
         {
             case PlayerNum.Player1:
-                if (screenPoint.x <= 0.02f || screenPoint.x >= 0.45f)
+                if (screenPoint.x <= 0.04f || screenPoint.x >= 0.45f)
                 {
-
+                    float currentPosition = this.transform.position.x;
+                    pastPositions.Add(currentPosition);
+                   
                     Left = false;
+                    rb.velocity = Vector2.zero;
                     Debug.Log(Left);
                 }
-                else if (screenPoint.x >= 0.02f && screenPoint.x <= 0.45f)
+                else if (screenPoint.x >= 0.04f && screenPoint.x <= 0.45f)
                 {
 
                     if (_inputMove.y == 0 && _inputMove.x != 0)
@@ -219,17 +220,43 @@ public class NewBillcon : MonoBehaviour
 
                 break;
             case PlayerNum.Player2:
-                if (screenPoint.x >= 0.55f && screenPoint.x <= 0.95f)
-                {
-                    if (_inputMove.y == 0 && _inputMove.x != 0)
-                    {
-                        Right = true;
-                    }
-                    Right = true;
-                }
                 if (screenPoint.x <= 0.55f || screenPoint.x >= 0.95f)
                 {
+                    float currentPosition = this.transform.position.x;
+                    pastPositions.Add(currentPosition);
+
                     Right = false;
+                    rb.velocity = Vector2.zero;
+                    Debug.Log(Right);
+                }
+                else if (screenPoint.x >= 0.55f && screenPoint.x <= 0.95f)
+                {
+
+                    if (_inputMove.y == 0 && _inputMove.x != 0)
+                    {
+
+                        Right = true;
+
+                    }
+                    else if (_inputMove.y != 0 && _inputMove.x != 0)
+                    {
+
+                        Right = true;
+
+                    }
+                    else if (_inputMove.x == 0 && _inputMove.y != 0)
+                    {
+
+                        Right = true;
+
+                    }
+                    else if (_inputMove.x == 0 && _inputMove.y == 0)
+                    {
+
+                        Right = true;
+
+                    }
+                    Right = true;
                 }
 
                 break;
@@ -366,7 +393,6 @@ public class NewBillcon : MonoBehaviour
             rb.velocity += new Vector2(0, Mathf.Abs(_inputMove.y) * -DownSpeed * 20);
             Right = true;
             Left = true;
-
         }
 
 
@@ -434,10 +460,10 @@ public class NewBillcon : MonoBehaviour
         int targetIndex = pastPositions.Count /*- 1*/ - frameCount;
         if (targetIndex >= 0 && targetIndex < pastPositions.Count)
         {
-            Vector3 targetPosition = pastPositions[targetIndex];
-            this.transform.position = targetPosition;
+            float targetPosition = pastPositions[targetIndex];
+            this.transform.position = new Vector2( targetPosition,this.transform.position.y);
 
-
+            rb.velocity = Vector2.zero;
             Right = true;
             Left = true;
 
