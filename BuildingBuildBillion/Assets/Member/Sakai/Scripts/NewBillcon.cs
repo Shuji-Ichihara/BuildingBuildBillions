@@ -57,12 +57,12 @@ public class NewBillcon : MonoBehaviour
     private Vector3 Billposi = new Vector3(0, -50f, 0);
     List<float> pastPositions = new List<float>();
     public bool test = false;
-
+   public Vector2 moveDistance = new Vector2(50.0f, 0);
     //public Vector3 billControllerPosition { get; private set; }
 
     void Start()
     {
-
+       
         rb = this.gameObject.GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Dynamic;
         col.SetActive(true);
@@ -114,6 +114,7 @@ public class NewBillcon : MonoBehaviour
 
     void Update()
     {
+        screenPoint = Camera.main.WorldToViewportPoint(this.transform.position + new Vector3(moveDistance.x, 0, 0));// 0,0~1.1
         if (_inputMove.x == 0 && _inputMove.y == 0)
         {
             Left = true;
@@ -322,10 +323,13 @@ public class NewBillcon : MonoBehaviour
 
         if (pad == true && _inputMove.x * _inputMove.x >= 0.25f)
         {
-            Vector2 moveDistance = new Vector2(50.0f, 0);
-            if (_inputMove.x < 0) moveDistance *= -1;
 
-            screenPoint = Camera.main.WorldToViewportPoint(this.transform.position + new Vector3(moveDistance.x, 0, 0));// 0,0~1.1
+            //if (_inputMove.x < 0)
+            //{
+            //    moveDistance *= -1;
+            //}
+
+
 
             if (CameraControllerTest.Instance.Camera.orthographicSize < 1080.0f * 1.5f)
             {
@@ -337,7 +341,7 @@ public class NewBillcon : MonoBehaviour
                         //transform.position += new Vector3(moveDistance, 0, 0);
                         //Vector2 Move = this.transform.position + moveDistance;
                         //rb.MovePosition(Move);
-                        rb.velocity += moveDistance * 20;
+                        rb.velocity -= moveDistance * 20;
                     }
                     if (Mathf.Ceil(_inputMove.x) == 1)
                     {
