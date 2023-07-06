@@ -443,6 +443,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3035006443894946442, guid: e2fd76f9a2d706549ada359f3a642337, type: 3}
+      propertyPath: Bills.Array.data[0]
+      value: 
+      objectReference: {fileID: 4632328116425368548, guid: 0b1a06d2776d3a847bb53442270cfab9, type: 3}
     - target: {fileID: 3035006443894946443, guid: e2fd76f9a2d706549ada359f3a642337, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -544,6 +548,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6644617886362527705, guid: 43bdb773fcc3b0943a4f1a3f297e2fc7, type: 3}
+      propertyPath: Bills2P.Array.data[0]
+      value: 
+      objectReference: {fileID: 4356865857506395295, guid: ea0cfd43c4c085e4b9bee93047647e06, type: 3}
     - target: {fileID: 6644617886362527706, guid: 43bdb773fcc3b0943a4f1a3f297e2fc7, type: 3}
       propertyPath: m_Name
       value: SpownBill2P

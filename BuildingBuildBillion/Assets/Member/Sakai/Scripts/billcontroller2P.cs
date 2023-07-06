@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
 public class billcontroller2P : MonoBehaviour
 {
     public float previousTime;
@@ -20,7 +21,7 @@ public class billcontroller2P : MonoBehaviour
     bool pad = false;
 
     [SerializeField]
-    float restTime = 0.25f;
+    float restTime = 0.15f;
     float fromMoveHorizonal = 0.0f;
 
     //public Vector3 billController2PPosition { get; private set; }
@@ -55,7 +56,6 @@ public class billcontroller2P : MonoBehaviour
             billstop = true;
         }
     }
-
     void FixedUpdate()
     {
         if (Time.time - previousTime >= fallTime)
