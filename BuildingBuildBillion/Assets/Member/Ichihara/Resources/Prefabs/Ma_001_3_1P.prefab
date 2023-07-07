@@ -171,7 +171,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2802399254260151252}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 197, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 20, y: 20, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -389,7 +389,7 @@ MonoBehaviour:
     m_ActionId: 45790e52-07e9-4511-bf17-dbf6eee8096a
     m_ActionName: 1P_Move/Move[/XInputControllerWindows/leftStick,/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow,/XInputControllerWindows/dpad]
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: Keyboard&Mouse
+  m_DefaultControlScheme: Gamepad
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
@@ -405,28 +405,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15bdbf6d1f64f9d44bc81c60a54e9d0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DownSpeed: 15
-  previousTime: 0
-  fallTime: 1
-  Rotateangle: 90
-  col: {fileID: 2228780873720440308}
-  col2: {fileID: 652442458824834833}
-  Delete: {fileID: 0}
+  _downSpeed: 10
+  _rotateAngle: 90
+  _col: {fileID: 2228780873720440308}
+  _col2: {fileID: 652442458824834833}
   Player: 0
-  _isRightPressed: 0
-  _isLeftPressed: 0
-  _isHozirontalPressed: 0
-  rotationPoint: {x: 0, y: 0, z: 0}
+  _restTime: 0.25
+  _pastPositions: []
+  myEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  BuildingStop: 0
   Stop: 0
-  stoptime: 0
-  billstop: 0
-  Rotatepermission: 0
-  restTime: 0.2
-  RotaterestTime: 0.25
-  fromRotate: 0
-  Right: 0
-  Left: 0
-  ColPoint: 50
-  ColStop: 0
-  test: 0
-  moveDistance: {x: 50, y: 0}
