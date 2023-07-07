@@ -246,7 +246,7 @@ public class NewBuildingcon : MonoBehaviour
         {
 
 
-            if (CameraControllerTest.Instance.Camera.orthographicSize < 1080.0f * 1.5f)
+            if (CameraController.Instance.Camera.m_Lens.OrthographicSize < 1080.0f * 1.5f)
             {
                 if (_right || _left)
                 {
