@@ -1,5 +1,6 @@
 ﻿using Cinemachine;
 using Cysharp.Threading.Tasks;
+using System;
 using System.Threading;
 using UnityEngine;
 
@@ -20,12 +21,15 @@ public class CameraController : SingletonMonoBehaviour<CameraController>
     [SerializeField]
     private GameObject _empty = null;
     private Vector3 _defaultPosition = Vector3.zero;
+    
+    private Func<GameObject, GameObject, float> _getObjectTop;
 
     // Start is called before the first frame update
     void Start()
     {
         _camera.m_Lens.OrthographicSize = 540.0f;
         _defaultPosition = _empty.transform.position;
+        _getObjectTop = GetObjectTop;
     }
 
     /// <summary>
@@ -73,9 +77,31 @@ public class CameraController : SingletonMonoBehaviour<CameraController>
             await MoveCamera(zoom, moveVector, isMovedCameraSwtich, token);
             // カメラの OrthgraphicSize の限界値を定義
             _camera.m_Lens.OrthographicSize = Mathf.Clamp(_camera.m_Lens.OrthographicSize
-                                                     , 540.0f
-                                                     , Screen.height);
+                                                     , Screen.height / 2.0f
+                                                     , Screen.height); ;
+            await UniTask.Yield(token);
         }
+
+    }
+
+    /// <summary>
+    /// 現在操作しているオブジェクトの座標を比較
+    /// </summary>
+    /// <param name="obj">Player1 が操作しているオブジェクト</param>
+    /// <param name="obj2">Player2 が操作しているオブジェクト</param>
+    /// <returns></returns>
+    private float GetObjectTop(GameObject obj, GameObject obj2)
+    {
+        float top = 0.0f;
+        if (obj.transform.position.y > obj2.transform.position.y)
+        {
+            top = obj.transform.position.y;
+        }
+        else if (obj.transform.position.y < obj2.transform.position.y)
+        {
+            top = obj2.transform.position.y;
+        }
+        return top;
     }
 
     /// <summary>
@@ -90,13 +116,18 @@ public class CameraController : SingletonMonoBehaviour<CameraController>
     {
         // 変更の可能性有
         await UniTask.WaitForFixedUpdate(token);
+        // カメラのズーム、移動を止める処理
+        float top = _getObjectTop(GameManager.Instance.Obj, GameManager.Instance.Obj2);
+        if (_empty.transform.position.y - top
+            > _camera.m_Lens.OrthographicSize * GameManager.Instance.BuildingHeightAndScreenRatio / 2.0f) { return; }
         _empty.transform.position += new Vector3(0.0f, zoom, 0.0f);
         _empty.transform.position = new Vector3(_empty.transform.position.x
                                               , Mathf.Clamp(_empty.transform.position.y
                                                           , _defaultPosition.y
                                                           , Screen.height * 1.5f - (Screen.height / 2.0f - _defaultPosition.y))
                                               , 0.0f);
-        _camera.transform.position += vector * _moveCameraSpeed * zoom;
+        // カメラの Y 座標の移動
+        _camera.transform.position += vector * _moveCameraSpeed;
         JadgementBarController.Instance.MoveJadgementBarFallPoint(movedSwitch);
         GameManager.Instance.MoveBuildingSpawnPoint(zoom);
         // カメラの Y 座標の移動限界を定義
