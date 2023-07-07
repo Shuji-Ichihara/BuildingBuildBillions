@@ -156,7 +156,6 @@ GameObject:
   - component: {fileID: 9219266272503271502}
   - component: {fileID: -8153811063297168897}
   - component: {fileID: 5249087020731422277}
-  - component: {fileID: 4133666758272091127}
   - component: {fileID: 6689021729462517443}
   m_Layer: 0
   m_Name: Ma_002_2P
@@ -268,7 +267,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4356865857506395295}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -403,32 +402,10 @@ MonoBehaviour:
     m_ActionId: d5d1515b-197e-4cf0-a61d-3f4641d93c39
     m_ActionName: UI/TrackedDeviceOrientation
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: Keyboard&Mouse
+  m_DefaultControlScheme: Gamepad
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &4133666758272091127
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4356865857506395295}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bf0634fa8bb5be4ebe3f6ccb9a6228a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DownSpeed: 15
-  previousTime: 0
-  fallTime: 1
-  Rotateangle: 90
-  Delete: {fileID: 0}
-  jittai: 1
-  rotationPoint: {x: 0, y: 0, z: 0}
-  restTime: 0.25
-  ColPoint: 5
-  ColStop: 0
 --- !u!114 &6689021729462517443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -441,27 +418,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15bdbf6d1f64f9d44bc81c60a54e9d0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DownSpeed: 15
-  previousTime: 0
-  fallTime: 1
-  Rotateangle: 90
-  col: {fileID: 1302796589763629647}
-  col2: {fileID: 3044437166493361469}
-  Delete: {fileID: 0}
+  _downSpeed: 50
+  _rotateAngle: 90
+  _col: {fileID: 1302796589763629647}
+  _col2: {fileID: 3044437166493361469}
   Player: 1
-  _isRightPressed: 0
-  _isLeftPressed: 0
-  _isHozirontalPressed: 0
-  rotationPoint: {x: 0, y: 0, z: 0}
+  _restTime: 0.25
+  _pastPositions: []
+  myEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  BuildingStop: 0
   Stop: 0
-  stoptime: 0
-  billstop: 0
-  Rotatepermission: 0
-  restTime: 0.2
-  RotaterestTime: 0.25
-  fromRotate: 0
-  Right: 0
-  Left: 0
-  ColPoint: 50
-  ColStop: 0
-  test: 0
