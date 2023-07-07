@@ -103,6 +103,8 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         }
         // ここに開始時の演出を加える
         await UIManager.Instance.StartGameEffect();
+        SpownBill.NewBill();
+        SpownBill2P.NewBill2P();
         while (_countDownGameTime > 0.0f)
         {
             CountDown();
