@@ -55,6 +55,9 @@ public class NewBuildingcon : MonoBehaviour
     private Vector2 _moveDistance = new Vector2(50.0f, 0);
 
     [SerializeField] private UnityEvent myEvent = new UnityEvent();
+    public Sprite[] sprites; // スプライトの配列
+
+    private SpriteRenderer spriteRenderer;
 
     public bool BuildingStop;
     public bool Stop;
@@ -69,6 +72,9 @@ public class NewBuildingcon : MonoBehaviour
         _col.SetActive(true);
         _col2.SetActive(false);
         this.transform.gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        // 最初にスプライトをランダムに選択する
+        ChangeSpriteRandomly();
     }
 
   
@@ -388,7 +394,15 @@ public class NewBuildingcon : MonoBehaviour
 
             rb.velocity = Vector2.zero;
         }
+       
     }
-   
+    private void ChangeSpriteRandomly()
+    {
+        // スプライトの配列からランダムにスプライトを選択する
+        Sprite randomSprite = sprites[UnityEngine.Random.Range(0, sprites.Length)];
+
+        // スプライトを変更する
+        spriteRenderer.sprite = randomSprite;
+    }
 }
 
