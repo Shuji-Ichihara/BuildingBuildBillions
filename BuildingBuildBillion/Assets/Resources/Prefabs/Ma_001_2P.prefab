@@ -315,7 +315,7 @@ MonoBehaviour:
     m_ActionId: d5d1515b-197e-4cf0-a61d-3f4641d93c39
     m_ActionName: UI/TrackedDeviceOrientation
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: Keyboard&Mouse
+  m_DefaultControlScheme: Gamepad
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
@@ -377,6 +377,7 @@ MonoBehaviour:
   ColPoint: 50
   ColStop: 0
   test: 0
+  moveDistance: {x: 50, y: 0}
 --- !u!1 &8904412200752290603
 GameObject:
   m_ObjectHideFlags: 0

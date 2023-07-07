@@ -1,8 +1,10 @@
 using Cysharp.Threading.Tasks;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class NewBillcon : MonoBehaviour
@@ -11,7 +13,6 @@ public class NewBillcon : MonoBehaviour
     public float previousTime;
     // ÉuÉçÉbÉNÇÃóéÇøÇÈéûä‘
     public float fallTime = 1f;
-    private bool _isHorizontalPressed = false;
     [SerializeField]
     public float Rotateangle = 90;
     [SerializeField]
@@ -44,7 +45,6 @@ public class NewBillcon : MonoBehaviour
 
     [SerializeField]
     float restTime = 0.25f;
-    float restTime2 = 0.25f;
     public float RotaterestTime = 0.5f;
     float fromMoveHorizonal = 0.0f;
     public float fromRotate = 0.0f;
@@ -55,10 +55,17 @@ public class NewBillcon : MonoBehaviour
     public bool ColStop = false;
     private Vector3 screenPoint;
     private Vector3 Billposi = new Vector3(0, -50f, 0);
+    [SerializeField]
     List<float> pastPositions = new List<float>();
     public bool test = false;
    public Vector2 moveDistance = new Vector2(50.0f, 0);
+
+    [SerializeField] private UnityEvent myEvent = new UnityEvent();
+
+
+
     //public Vector3 billControllerPosition { get; private set; }
+
 
     void Start()
     {
@@ -223,7 +230,7 @@ public class NewBillcon : MonoBehaviour
 
                 break;
             case PlayerNum.Player2:
-                if (screenPoint.x <= 0.55f || screenPoint.x >= 0.95f)
+                if (screenPoint.x <= 0.55f || screenPoint.x >= 1.0f)
                 {
                    
 
@@ -231,7 +238,7 @@ public class NewBillcon : MonoBehaviour
                     rb.velocity = Vector2.zero;
                   
                 }
-                else if (screenPoint.x >= 0.55f && screenPoint.x <= 0.95f)
+                else if (screenPoint.x >= 0.55f && screenPoint.x <= 1.0f)
                 {
                     float currentPosition = this.transform.position.x;
                     pastPositions.Add(currentPosition);
@@ -337,7 +344,6 @@ public class NewBillcon : MonoBehaviour
                 {
                     if (Mathf.Ceil(_inputMove.x) == -1)
                     {
-                        _isHorizontalPressed = false;
                         //transform.position += new Vector3(moveDistance, 0, 0);
                         //Vector2 Move = this.transform.position + moveDistance;
                         //rb.MovePosition(Move);
@@ -345,7 +351,6 @@ public class NewBillcon : MonoBehaviour
                     }
                     if (Mathf.Ceil(_inputMove.x) == 1)
                     {
-                        _isHorizontalPressed = false;
                         //Vector2 Move = this.transform.position + moveDistance;
                         //rb.MovePosition(Move);
                         rb.velocity += moveDistance * 20;
@@ -371,6 +376,8 @@ public class NewBillcon : MonoBehaviour
         }
         if (Stop == true)
         {
+            //myEventÇ…ìoò^Ç≥ÇÍÇƒÇ¢ÇÈä÷êîÇé¿çs
+            myEvent.Invoke();
             rb.constraints = RigidbodyConstraints2D.None;
             transform.position = new Vector3(transform.position.x, transform.position.y, 0);
             //transform.position = new Vector3(transform.position.x, 1, 0);//ç¿ïWÇ(0,1)Ç…ñﬂÇ∑
@@ -379,6 +386,8 @@ public class NewBillcon : MonoBehaviour
         }
         if (billstop == true)
         {
+            //myEventÇ…ìoò^Ç≥ÇÍÇƒÇ¢ÇÈä÷êîÇé¿çs
+            myEvent.Invoke();
             rb.constraints = RigidbodyConstraints2D.None;
             transform.position = new Vector3(transform.position.x, transform.position.y, 0);//ç¿ïWÇÇªÇÃèÍÇ…Ç∆Ç«Ç‹ÇÈ
 
@@ -431,7 +440,7 @@ public class NewBillcon : MonoBehaviour
     {
         _inputMove = context.ReadValue<Vector2>();
         //Debug.Log(_inputMove);
-        _isHorizontalPressed = true;
+
     }
 
     /// <summary>

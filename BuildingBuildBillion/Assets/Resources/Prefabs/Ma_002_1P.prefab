@@ -264,7 +264,7 @@ MonoBehaviour:
     m_ActionId: 45790e52-07e9-4511-bf17-dbf6eee8096a
     m_ActionName: 1P_Move/Move[/XInputControllerWindows/leftStick,/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow,/XInputControllerWindows/dpad]
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: Keyboard&Mouse
+  m_DefaultControlScheme: Gamepad
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
@@ -304,6 +304,7 @@ MonoBehaviour:
   ColPoint: 50
   ColStop: 0
   test: 0
+  moveDistance: {x: 50, y: 0}
 --- !u!1 &7844628521474024556
 GameObject:
   m_ObjectHideFlags: 0
