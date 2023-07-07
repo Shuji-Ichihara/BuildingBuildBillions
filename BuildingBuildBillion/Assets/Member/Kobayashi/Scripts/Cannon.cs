@@ -12,7 +12,7 @@ public class Cannon : MonoBehaviour
     private Transform _cannonTransform;
     private Rigidbody2D _rg;
     private float _time = 1f;
-    private bool isOnece = false;
+    private bool _isOnece = false;
 
     private void Start()
     {
@@ -32,31 +32,25 @@ public class Cannon : MonoBehaviour
         else
         {
             _time -= Time.deltaTime;
-            if (_time <= 0 && isOnece ==false)
+            if (_time <= 0 && _isOnece ==false)
             {
                 StartCoroutine(CannonFire());
-                isOnece = true;
+                _isOnece = true;
             }
         }
     }
-
     /// <summary>
-    /// 大砲の回転メソッド
-    /// 引数:float RotValue
-    /// 右回転の時は引数にマイナスをつけてください。
+    /// イベント登録用関数
     /// </summary>
-    public void CannonRotation(float RotValue)
+    public void EventRegistration()
     {
-        // ローカル座標を基準に、回転を取得
-        Vector3 localangle = _cannonTransform.localEulerAngles;
-        //ローカル座標を基準にして_rotValue分回転
-        localangle.z += RotValue;
-        _cannonTransform.localEulerAngles = localangle; // 回転角度を設定
+        StartCoroutine(CannonFire());
     }
+
     /// <summary>
     /// 大砲の攻撃メソッド
     /// </summary>
-    public IEnumerator CannonFire()
+    private IEnumerator CannonFire()
     {
         _rg.constraints = RigidbodyConstraints2D.FreezeRotation; //contrainsのローテーション固定
         yield return new WaitForSeconds(_fireTime);//指定した時間待つ
@@ -65,6 +59,4 @@ public class Cannon : MonoBehaviour
         _rg.constraints = RigidbodyConstraints2D.None;//contrainsのチェックをすべて外す
         this.enabled = false;   //スクリプトを非アクティブにする。
     }
-
-
 }
