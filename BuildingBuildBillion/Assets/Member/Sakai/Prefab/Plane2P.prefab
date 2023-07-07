@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 2080114815620060851}
   - component: {fileID: 217066399062873346}
   m_Layer: 0
-  m_Name: Square
+  m_Name: Plane2P
   m_TagString: Bill2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,8 +31,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4632328116425368548}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.61, y: 8.43, z: 0.021968653}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 100, y: 100, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -152,7 +152,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 0.75
 --- !u!114 &8844578038013634164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,22 +221,6 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8844578038013634164}
-        m_TargetAssemblyTypeName: billcontroller2P, Assembly-CSharp
-        m_MethodName: BillMovememt
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 2704154d-1a4d-44e7-b33d-d1483ba5c593
-    m_ActionName: Player/2P_Move[/XInputControllerWindows/dpad]
-  - m_PersistentCalls:
       m_Calls: []
     m_ActionId: e6140cc5-1ec3-470e-836b-277894ae6ecb
     m_ActionName: UI/Navigate[/XInputControllerWindows/leftStick/up,/XInputControllerWindows/rightStick/up,/XInputControllerWindows/leftStick/down,/XInputControllerWindows/rightStick/down,/XInputControllerWindows/leftStick/left,/XInputControllerWindows/rightStick/left,/XInputControllerWindows/leftStick/right,/XInputControllerWindows/rightStick/right,/XInputControllerWindows/dpad,/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
@@ -278,36 +262,44 @@ MonoBehaviour:
     m_ActionName: UI/TrackedDeviceOrientation
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8844578038013634164}
-        m_TargetAssemblyTypeName: billcontroller2P, Assembly-CSharp
-        m_MethodName: L_Rotation
+      - m_Target: {fileID: 4632328116425368548}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: bba67dcb-98f0-4254-90a3-80a65b645cab
+    m_ActionId: 89ce2c23-9557-44b0-a90b-f5b7cc1aa755
+    m_ActionName: Player/2P_Move[/XInputControllerWindows/dpad]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 57ce02d5-7a2c-4dbc-ba53-41a6ddff38b0
     m_ActionName: Player/LeftRotaion[/XInputControllerWindows/leftShoulder]
   - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 52d05491-bc15-4177-876e-9acd355e53d6
+    m_ActionName: Player/RightRotation[/XInputControllerWindows/rightShoulder]
+  - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8844578038013634164}
-        m_TargetAssemblyTypeName: billcontroller2P, Assembly-CSharp
-        m_MethodName: R_Rotation
+      - m_Target: {fileID: 4632328116425368548}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: d8a59b1d-4e8a-4c17-ab88-a55a0d582ec1
-    m_ActionName: Player/RightRotation[/XInputControllerWindows/rightShoulder]
+    m_ActionId: 2e866515-d957-4ad2-a38b-402c64cb9a31
+    m_ActionName: Player/Ro[/XInputControllerWindows/leftShoulder,/XInputControllerWindows/rightShoulder]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Gamepad
   m_DefaultActionMap: Player

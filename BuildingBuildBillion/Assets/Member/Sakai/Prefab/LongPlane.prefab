@@ -12,14 +12,13 @@ GameObject:
   - component: {fileID: 4356865857506395293}
   - component: {fileID: 6005958509353397183}
   - component: {fileID: 9219266272503271502}
+  - component: {fileID: 5358453945087650415}
   - component: {fileID: -8153811063297168897}
-  - component: {fileID: 8501258969731008481}
-  - component: {fileID: 7860414794703704113}
-  - component: {fileID: 5249087020731422277}
-  - component: {fileID: 4046112919665870695}
+  - component: {fileID: 169506540509253298}
+  - component: {fileID: 5264240954566992666}
   m_Layer: 0
-  m_Name: Ma_002_2_2P
-  m_TagString: Bill2
+  m_Name: LongPlane
+  m_TagString: Bill
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 4356865857506395295}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 20, y: 20, z: 1}
+  m_LocalScale: {x: 200, y: 100, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -80,7 +79,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 10a53198d0977e14e8d94ad33aaa7f8c, type: 3}
+  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -108,14 +107,14 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 7, y: 5}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 6.75, y: 4.2}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!50 &9219266272503271502
 Rigidbody2D:
@@ -138,23 +137,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 3
---- !u!58 &-8153811063297168897
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4356865857506395295}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 3.98
---- !u!114 &8501258969731008481
+--- !u!114 &5358453945087650415
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -163,21 +146,38 @@ MonoBehaviour:
   m_GameObject: {fileID: 4356865857506395295}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fd73af6b7354ce4cbf7b8ba478d5acf, type: 3}
+  m_Script: {fileID: 11500000, guid: 6bf0634fa8bb5be4ebe3f6ccb9a6228a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   previousTime: 0
   fallTime: 1
+  Rotateangle: 0
   rotationPoint: {x: 0, y: 0, z: 0}
-  restTime: 0.25
---- !u!61 &7860414794703704113
-BoxCollider2D:
+  restTime: 0.2
+--- !u!58 &-8153811063297168897
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4356865857506395295}
   m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.59
+--- !u!61 &169506540509253298
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4356865857506395295}
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -187,16 +187,16 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 7, y: 5}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 7.0875, y: 4.41}
+  m_Size: {x: 1.05, y: 1.05}
   m_EdgeRadius: 0
---- !u!114 &5249087020731422277
+--- !u!114 &5264240954566992666
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -208,7 +208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 8dd5c202e68871249bfb25f2f9a8dced, type: 3}
+  m_Actions: {fileID: -944628639613478452, guid: 0a25ea9a76825a64eb19af11b2d9c744, type: 3}
   m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
@@ -223,9 +223,9 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8501258969731008481}
-        m_TargetAssemblyTypeName: billcontroller2P, Assembly-CSharp
-        m_MethodName: BillMovememt
+      - m_Target: {fileID: 4356865857506395295}
+        m_TargetAssemblyTypeName: billcontroller, Assembly-CSharp
+        m_MethodName: 
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -235,52 +235,52 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 2704154d-1a4d-44e7-b33d-d1483ba5c593
-    m_ActionName: Player/2P_Move[/XInputControllerWindows/dpad]
+    m_ActionId: 2d38dda0-5e1e-4dea-8224-8fbb8134c181
+    m_ActionName: Player/1P_Move[/XInputControllerWindows/dpad,/XInputControllerWindows1/dpad]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: e6140cc5-1ec3-470e-836b-277894ae6ecb
-    m_ActionName: UI/Navigate[/XInputControllerWindows/leftStick/up,/XInputControllerWindows/rightStick/up,/XInputControllerWindows/leftStick/down,/XInputControllerWindows/rightStick/down,/XInputControllerWindows/leftStick/left,/XInputControllerWindows/rightStick/left,/XInputControllerWindows/leftStick/right,/XInputControllerWindows/rightStick/right,/XInputControllerWindows/dpad,/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+    m_ActionId: b4f231ce-2f34-4f47-bc53-1270799a3b66
+    m_ActionName: UI/Navigate[/XInputControllerWindows/leftStick/up,/XInputControllerWindows1/leftStick/up,/XInputControllerWindows/rightStick/up,/XInputControllerWindows1/rightStick/up,/XInputControllerWindows/leftStick/down,/XInputControllerWindows1/leftStick/down,/XInputControllerWindows/rightStick/down,/XInputControllerWindows1/rightStick/down,/XInputControllerWindows/leftStick/left,/XInputControllerWindows1/leftStick/left,/XInputControllerWindows/rightStick/left,/XInputControllerWindows1/rightStick/left,/XInputControllerWindows/leftStick/right,/XInputControllerWindows1/leftStick/right,/XInputControllerWindows/rightStick/right,/XInputControllerWindows1/rightStick/right,/XInputControllerWindows/dpad,/XInputControllerWindows1/dpad,/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 4a33a13a-ccf4-4b43-8764-54d7185dcc03
-    m_ActionName: UI/Submit[/Keyboard/enter,/XInputControllerWindows/buttonSouth]
+    m_ActionId: b0ba1b3a-ee7d-4cdd-a212-967dbf0476b3
+    m_ActionName: UI/Submit[/Keyboard/enter,/XInputControllerWindows/buttonSouth,/XInputControllerWindows1/buttonSouth]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: a2b878fd-33f9-4c69-a70c-6ef98822578c
-    m_ActionName: UI/Cancel[/Keyboard/escape,/XInputControllerWindows/buttonEast]
+    m_ActionId: 1e07c395-69f0-4b3b-8421-6e14af02f26b
+    m_ActionName: UI/Cancel[/Keyboard/escape,/XInputControllerWindows/buttonEast,/XInputControllerWindows1/buttonEast]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 567d02c9-4ff5-4447-8c54-911441951de2
+    m_ActionId: 8781f3f2-0b2b-4bf0-8784-c23b28741bc6
     m_ActionName: UI/Point[/Mouse/position]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 08d14d4f-62bc-4303-96ab-85311944e922
+    m_ActionId: 53873bcc-af21-430d-ada3-e410ac9a7e50
     m_ActionName: UI/Click[/Mouse/leftButton]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 5a8db049-1c43-46f7-b064-e7b8795596bd
+    m_ActionId: cbad6e0c-ede0-4c76-be37-8f285f81f736
     m_ActionName: UI/ScrollWheel[/Mouse/scroll]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 120255e4-8675-49c1-aba1-813c1c0b3e73
+    m_ActionId: 456a90e0-fe29-42f8-aa54-8a3d79f0a361
     m_ActionName: UI/MiddleClick[/Mouse/middleButton]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 455f4307-5e85-423f-ab56-f8e09affbbf5
+    m_ActionId: 8dfdc502-b9b8-459c-90ec-99dc3da63133
     m_ActionName: UI/RightClick[/Mouse/rightButton]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 13d04901-6434-4f70-a96b-47b63765882a
+    m_ActionId: 1f540d12-fbf0-4759-8104-00cb76b0a626
     m_ActionName: UI/TrackedDevicePosition
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: d096673f-be60-4d36-86f0-83d10bf2c97a
+    m_ActionId: 6c5ff499-7ebc-4e8b-9e95-7c782432ba2f
     m_ActionName: UI/TrackedDeviceOrientation
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8501258969731008481}
-        m_TargetAssemblyTypeName: billcontroller2P, Assembly-CSharp
+      - m_Target: {fileID: 5358453945087650415}
+        m_TargetAssemblyTypeName: billcontroller, Assembly-CSharp
         m_MethodName: L_Rotation
         m_Mode: 1
         m_Arguments:
@@ -291,12 +291,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: bba67dcb-98f0-4254-90a3-80a65b645cab
+    m_ActionId: 0b47bd94-41c5-47a8-ae38-05dcda3db69f
     m_ActionName: Player/LeftRotaion[/XInputControllerWindows/leftShoulder]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8501258969731008481}
-        m_TargetAssemblyTypeName: billcontroller2P, Assembly-CSharp
+      - m_Target: {fileID: 5358453945087650415}
+        m_TargetAssemblyTypeName: billcontroller, Assembly-CSharp
         m_MethodName: R_Rotation
         m_Mode: 1
         m_Arguments:
@@ -307,26 +307,26 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: d8a59b1d-4e8a-4c17-ab88-a55a0d582ec1
+    m_ActionId: adf7001d-38b9-468d-a6df-dcfa37f8da0f
     m_ActionName: Player/RightRotation[/XInputControllerWindows/rightShoulder]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5358453945087650415}
+        m_TargetAssemblyTypeName: billcontroller, Assembly-CSharp
+        m_MethodName: _Rotate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 9af0d44f-b6c6-4490-ab5d-a4d081381d38
+    m_ActionName: Player/Ro[/XInputControllerWindows/leftShoulder,/XInputControllerWindows/rightShoulder]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Gamepad
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!70 &4046112919665870695
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4356865857506395295}
-  m_Enabled: 0
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 8, y: 5.5}
-  m_Direction: 1
