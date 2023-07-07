@@ -51,8 +51,8 @@ public class CameraControllerTest : SingletonMonoBehaviour<CameraControllerTest>
             // カメラがズームアウトするのに必要なビルの高さ
             float buildingTop = _camera.orthographicSize * GameManager.Instance.BuildingHeightAndScreenRatio;
             // ビルの高さが buildingTop 以上であればズームアウト
-            Debug.Log($"ズームアウト : {GetBuildingTop().y > buildingTop}, {GetBuildingTop()}, {zoom}");
-            Debug.Log($"ズームイン : {GetBuildingTop().y < buildingTop}, {GetBuildingTop()}, {zoom}");
+            //Debug.Log($"ズームアウト : {GetBuildingTop().y > buildingTop}, {GetBuildingTop()}, {zoom}");
+            //Debug.Log($"ズームイン : {GetBuildingTop().y < buildingTop}, {GetBuildingTop()}, {zoom}");
             if (GetBuildingTop().y > buildingTop)
             {
                 if (zoom < 0.0f) { zoom *= -1; }

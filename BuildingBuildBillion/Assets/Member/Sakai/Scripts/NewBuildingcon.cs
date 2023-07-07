@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-public class NewBillcon : MonoBehaviour
+public class NewBuildingcon : MonoBehaviour
 {
     [SerializeField] private float _downSpeed = 10;
     private float _previousTime;
@@ -87,9 +87,7 @@ public class NewBillcon : MonoBehaviour
         {
 
             ReturnToPastPosition(framesToGoBack);
-            _right = true;
-            _left = true;
-
+            return;
         }
 
         int maxPositions = 15;
@@ -116,7 +114,6 @@ public class NewBillcon : MonoBehaviour
                    
                     _left = false;
                     rb.velocity = Vector2.zero;
-                    Debug.Log(_left);
                 }
                 else if (_screenPoint.x >= 0.04f && _screenPoint.x <= 0.45f)
                 {
@@ -210,13 +207,11 @@ public class NewBillcon : MonoBehaviour
 
                 if (_col.activeSelf == false)
                 {
-                    Debug.Log("haitteruuuuuu");
                     _col.SetActive(true);
                     _col2.SetActive(false);
                 }
                 else if (_col.activeSelf == true)
                 {
-                    Debug.Log("haitteru");
                     _col.SetActive(false);
                     _col2.SetActive(true);
                 }
@@ -232,13 +227,11 @@ public class NewBillcon : MonoBehaviour
 
                 if (_col.activeSelf == true)
                 {
-                    Debug.Log("haitteruuuuuu");
                     _col.SetActive(false);
                     _col2.SetActive(true);
                 }
                 else if (_col.activeSelf == false)
                 {
-                    Debug.Log("haitteru");
                     _col.SetActive(true);
                     _col2.SetActive(false);
                 }
@@ -290,8 +283,11 @@ public class NewBillcon : MonoBehaviour
         }
         if (Stop == true)
         {
+          if(myEvent != null)
+            {
             //myEvent‚É“o˜^‚³‚ê‚Ä‚¢‚éŠÖ”‚ðŽÀs
             myEvent.Invoke();
+            }
             rb.constraints = RigidbodyConstraints2D.None;
             transform.position = new Vector3(transform.position.x, transform.position.y, 0);
             //transform.position = new Vector3(transform.position.x, 1, 0);//À•W‚ð(0,1)‚É–ß‚·
@@ -300,8 +296,11 @@ public class NewBillcon : MonoBehaviour
         }
         if (BuildingStop == true)
         {
+            if(myEvent != null)
+            {
             //myEvent‚É“o˜^‚³‚ê‚Ä‚¢‚éŠÖ”‚ðŽÀs
             myEvent.Invoke();
+            }
             rb.constraints = RigidbodyConstraints2D.None;
             transform.position = new Vector3(transform.position.x, transform.position.y, 0);//À•W‚ð‚»‚Ìê‚É‚Æ‚Ç‚Ü‚é
 
@@ -319,7 +318,7 @@ public class NewBillcon : MonoBehaviour
         if (Mathf.Ceil(_inputMove.y) == -1)
         {
 
-            rb.velocity += new Vector2(0, Mathf.Abs(_inputMove.y) * -_downSpeed * 20);
+            rb.velocity += new Vector2(0, Mathf.Abs(_inputMove.y) * -_downSpeed * 10);
             _right = true;
             _left = true;
         }
@@ -388,9 +387,6 @@ public class NewBillcon : MonoBehaviour
             this.transform.position = new Vector2( targetPosition,this.transform.position.y);
 
             rb.velocity = Vector2.zero;
-            _right = true;
-            _left = true;
-
         }
     }
    

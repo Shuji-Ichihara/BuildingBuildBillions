@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class CheckBlock : MonoBehaviour
 {
-    NewBillcon bill;
+    NewBuildingcon bill;
 
     void Start()
     {
-        bill = GetComponentInParent<NewBillcon>();
+        bill = GetComponentInParent<NewBuildingcon>();
 
 
     }

@@ -100,8 +100,8 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         foreach (GameObject obj in objects)
         {
             if (obj == null) { break; }
-            var component1 = obj.GetComponent<NewBillcon>();
-            var component2 = obj.GetComponent<NewBillcon>();
+            var component1 = obj.GetComponent<NewBuildingcon>();
+            var component2 = obj.GetComponent<NewBuildingcon>();
             //if (component1 != null)
             //{
             //    NewBillcon billController = obj.GetComponent<NewBillcon>();
