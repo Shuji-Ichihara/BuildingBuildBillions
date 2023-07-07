@@ -26,11 +26,11 @@ public class CheckBlock : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Bill"))
         {
-            bill.billstop = true;
+            bill.BuildingStop = true;
         }
         if (collision.gameObject.CompareTag("Bill2"))
         {
-            bill.billstop = true;
+            bill.BuildingStop = true;
         }
     }
 

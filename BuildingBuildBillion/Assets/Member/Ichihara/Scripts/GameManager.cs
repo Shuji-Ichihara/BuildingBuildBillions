@@ -100,18 +100,18 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         foreach (GameObject obj in objects)
         {
             if (obj == null) { break; }
-            var component1 = obj.GetComponent<billcontroller>();
-            var component2 = obj.GetComponent<billcontroller2P>();
-            if (component1 != null)
-            {
-                billcontroller billController = obj.GetComponent<billcontroller>();
-                billController.FreezeAllConstraints(obj);
-            }
-            else if (component2 != null)
-            {
-                billcontroller2P billController2P = obj.GetComponent<billcontroller2P>();
-                billController2P.FreezeAllConstraints(obj);
-            }
+            var component1 = obj.GetComponent<NewBillcon>();
+            var component2 = obj.GetComponent<NewBillcon>();
+            //if (component1 != null)
+            //{
+            //    NewBillcon billController = obj.GetComponent<NewBillcon>();
+            //    NewBillcon.FreezeAllConstraints(obj);
+            //}
+            //else if (component2 != null)
+            //{
+            //  NewBillcon billController2P = obj.GetComponent<NewBillcon>();
+            //    NewBillcon.FreezeAllConstraints(obj);
+            //}
             await UniTask.Yield(token);
         }
     }
