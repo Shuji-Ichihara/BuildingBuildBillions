@@ -296,16 +296,16 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3035006443894946442, guid: e2fd76f9a2d706549ada359f3a642337, type: 3}
       propertyPath: Bills.Array.size
-      value: 6
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3035006443894946442, guid: e2fd76f9a2d706549ada359f3a642337, type: 3}
       propertyPath: Bills.Array.data[0]
       value: 
-      objectReference: {fileID: 2802399254260151252, guid: 4af39f10c5f23f046a9e2eb792bc69e4, type: 3}
+      objectReference: {fileID: 2802399254260151252, guid: 42dc5eeb65d212640aa17117243f86c1, type: 3}
     - target: {fileID: 3035006443894946442, guid: e2fd76f9a2d706549ada359f3a642337, type: 3}
       propertyPath: Bills.Array.data[1]
       value: 
-      objectReference: {fileID: 2802399254260151252, guid: 7f6552f21a3154046b8990f7de37d407, type: 3}
+      objectReference: {fileID: 4356865857506395295, guid: 51313add21296dc45a39cd8e6a466359, type: 3}
     - target: {fileID: 3035006443894946442, guid: e2fd76f9a2d706549ada359f3a642337, type: 3}
       propertyPath: Bills.Array.data[2]
       value: 
@@ -2645,16 +2645,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6644617886362527705, guid: 43bdb773fcc3b0943a4f1a3f297e2fc7, type: 3}
       propertyPath: Bills2P.Array.size
-      value: 6
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6644617886362527705, guid: 43bdb773fcc3b0943a4f1a3f297e2fc7, type: 3}
       propertyPath: Bills2P.Array.data[0]
       value: 
-      objectReference: {fileID: 2802399254260151252, guid: 054eb60d55de7384ba64dd9ee155c6f4, type: 3}
+      objectReference: {fileID: 4632328116425368548, guid: 5285fec224e4dff4396cf989ff7a0de8, type: 3}
     - target: {fileID: 6644617886362527705, guid: 43bdb773fcc3b0943a4f1a3f297e2fc7, type: 3}
       propertyPath: Bills2P.Array.data[1]
       value: 
-      objectReference: {fileID: 2802399254260151252, guid: cf06fb14d9e59604ab6e1401522c39a6, type: 3}
+      objectReference: {fileID: 4356865857506395295, guid: 9ada6eed4979cd84e9698a6c63bbda40, type: 3}
     - target: {fileID: 6644617886362527705, guid: 43bdb773fcc3b0943a4f1a3f297e2fc7, type: 3}
       propertyPath: Bills2P.Array.data[2]
       value: 
