@@ -5,15 +5,7 @@ using UnityEngine;
 public class SpownBill2P : MonoBehaviour
 {
     public GameObject[] Bills2P;
-    private GameObject obj = null;
-    public GameObject Obj => obj;
     public Vector3 BuildingPosition { get; set; }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        NewBill2P();
-    }
 
 
     public void NewBill2P()

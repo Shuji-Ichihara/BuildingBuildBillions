@@ -5,12 +5,6 @@ public class SpownBill : MonoBehaviour
     public GameObject[] Bills;
     public Vector3 BuildingPosition { get; set; }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        NewBill();
-    }
-
     public void NewBill()
     {
         if (GameManager.Instance.CountDownGameTime < 0.0f) { return; }
