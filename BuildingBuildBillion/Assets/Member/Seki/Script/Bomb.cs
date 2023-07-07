@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Bomb : MonoBehaviour
+public class Bomb : NewBuildingcon
 {
 
     CircleCollider2D _bombCollider;
