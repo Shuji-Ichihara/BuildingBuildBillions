@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Bomb : MonoBehaviour
+public class Bomb : NewBuildingcon
 {
 
     CircleCollider2D _bombCollider;
     Rigidbody2D _rb;
     Animator _animator;
 
-    [SerializeField]
-    private int bombRadius, bombSpeed,power=0;
+    [SerializeField, Header("ボムの爆発の範囲")]
+    private int bombRadius = 0;
+    [SerializeField, Header("ボムの爆発の広がるスピード")]
+    private int bombSpeed = 0;
+    [SerializeField,Header("ボムの吹っ飛ばすパワー")]
+    private int power=0;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,13 +29,13 @@ public class Bomb : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.A))
         {
-            Debug.Log(this.transform.localPosition);
+            //Debug.Log(this.transform.localPosition);
             //BombEvent();
         }
     }
 
     void BombEvent()
-    {
+    {//ここで爆発
         StartCoroutine(BombCor());
         //_bombCollider.radius = 5;
         GetComponent<SpriteRenderer>().enabled = false;
@@ -46,21 +50,23 @@ public class Bomb : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D col)
-    {
+    {//コライだー通り抜けたら飛ばす
         //ver2
         Vector3 hit;
         hit = col.ClosestPoint(this.transform.position);//trigger衝突位置
 
 
         hit = transform.InverseTransformPoint(hit);//触れたオブジェクトのローカル座標
-        Debug.Log(hit);
+        //Debug.Log(hit);
         //Debug.LogError(Mathf.Atan2(hit.y,hit.x)*Mathf.Rad2Deg);//角度だよ
 
-        col.gameObject.GetComponent<Rigidbody2D>().AddForce(hit*power, ForceMode2D.Impulse);
+        col.gameObject.GetComponent<Rigidbody2D>().AddForce(hit*power, ForceMode2D.Impulse);//吹っ飛ばす
     }
 
     IEnumerator BombCor() 
     {
+        _bombCollider.enabled = false;
+        _bombCollider.enabled = true;
         _bombCollider.isTrigger = true;
         float count = 0;
         float time = 1f / bombSpeed;
