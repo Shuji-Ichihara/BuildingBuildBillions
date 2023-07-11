@@ -1,0 +1,62 @@
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+
+public class Cannon : MonoBehaviour
+{
+    [SerializeField, Header("発射までにかかる時間")] private float _fireTime = 1; //発射にかかる秒数
+    [SerializeField, Header("弾発射のインパクト")] private float _cannnonBulletImpact;   //弾のスピード
+    [SerializeField] private GameObject _cannonBullet;
+    [SerializeField] private GameObject _cannonMuzzle;
+    private Transform _cannonTransform;
+    private Rigidbody2D _rg;
+    private float _time = 1f;
+    private bool _isOnece = false;
+
+    private void Start()
+    {
+        _rg = this.gameObject.GetComponent<Rigidbody2D>();
+
+    }
+    private void FixedUpdate()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            _rg.isKinematic= false;
+        }
+        if (_rg.IsSleeping())
+        {
+            return;
+        }
+        else
+        {
+            _time -= Time.deltaTime;
+            if (_time <= 0 && _isOnece ==false)
+            {
+                StartCoroutine(CannonFire());
+                _isOnece = true;
+            }
+        }
+    }
+    /// <summary>
+    /// イベント登録用関数
+    /// </summary>
+    public void EventRegistration()
+    {
+        StartCoroutine(CannonFire());
+    }
+
+    /// <summary>
+    /// 大砲の攻撃メソッド
+    /// </summary>
+    private IEnumerator CannonFire()
+    {
+        _rg.constraints = RigidbodyConstraints2D.FreezeRotation; //contrainsのローテーション固定
+        yield return new WaitForSeconds(_fireTime);//指定した時間待つ
+        GameObject clone = Instantiate(_cannonBullet, _cannonMuzzle.transform.position, this.transform.rotation);//弾生成
+        clone.GetComponent<Rigidbody2D>().AddForce(_cannnonBulletImpact * _cannonMuzzle.transform.right, ForceMode2D.Impulse);//弾に衝撃を与えて発射
+        _rg.constraints = RigidbodyConstraints2D.None;//contrainsのチェックをすべて外す
+        this.enabled = false;   //スクリプトを非アクティブにする。
+    }
+}
