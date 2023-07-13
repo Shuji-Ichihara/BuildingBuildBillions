@@ -10,7 +10,7 @@ public class Floor : MonoBehaviour
     {
         if (false == _isContactObject && other.gameObject.CompareTag("Bill") || other.gameObject.CompareTag("Bill2"))
         {
-            Debug.Log("aaaa");
+            //Debug.Log("aaaa");
             CameraControllerTest.Instance.CallCalucrateCameraMovement();
             _isContactObject = true;
         }
