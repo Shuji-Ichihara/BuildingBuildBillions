@@ -237,7 +237,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3099227314737464093}
         m_TargetAssemblyTypeName: NewBuildingcon, Assembly-CSharp
-        m_MethodName: OnHold
+        m_MethodName: BuildingMove
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -261,7 +261,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3099227314737464093}
         m_TargetAssemblyTypeName: NewBuildingcon, Assembly-CSharp
-        m_MethodName: _Rotate
+        m_MethodName: BuildingRotation
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -335,6 +335,7 @@ MonoBehaviour:
   _col: {fileID: 2310897853163959741}
   _col2: {fileID: 8904412200752290603}
   Player: 1
+  Block: 0
   _restTime: 0.25
   _pastPositions: []
   myEvent:

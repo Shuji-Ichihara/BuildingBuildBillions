@@ -10,11 +10,11 @@ using UnityEngine.InputSystem;
 public class NewBuildingcon : MonoBehaviour
 {
     [SerializeField] private float _downSpeed = 10;
-    private float _previousTime;
+    private float _previousTime = 0;
     // ブロックの落ちる時間
     private float _fallTime = 1f;
     [SerializeField]
-    private float _rotateAngle = 90;
+    private float _rotateAngle;
     [SerializeField]
     private GameObject _col;
     [SerializeField]
@@ -24,18 +24,21 @@ public class NewBuildingcon : MonoBehaviour
         Player1 = 0,
         Player2 = 1
     }
+    private enum BlockStae
+    {
+        Normal,
+        Canon
+    }
     [SerializeField]
- 
     private PlayerNum Player;
+    [SerializeField] private BlockStae Block;
 
     private bool _isRightPressed = false;
     private bool _isLeftPressed = false;
     // ブロック回転
-    private Vector3 _rotationPoint;  
+    private Vector3 _rotationPoint;
     private Vector2 _inputMove = Vector2.zero;
-    //private bool rightwall;
-    //private bool leftwall;
-   
+
     Rigidbody2D rb;
     private bool _pad = false;
     private bool _rotatePermission = false;
@@ -66,7 +69,7 @@ public class NewBuildingcon : MonoBehaviour
 
     void Start()
     {
-       
+        rb.gravityScale = 500;
         rb = this.gameObject.GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Dynamic;
         _col.SetActive(true);
@@ -75,11 +78,28 @@ public class NewBuildingcon : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         // 最初にスプライトをランダムに選択する
         ChangeSpriteRandomly();
+        switch (Block)
+        {
+            case BlockStae.Normal:
+                _rotateAngle = 90;
+                break;
+            case BlockStae.Canon:
+                _rotateAngle = 5;
+                break;
+        }
     }
 
-  
     void Update()
     {
+        _previousTime += Time.deltaTime;
+        if (_previousTime >= _fallTime)
+        {
+
+            transform.position += _buildingPosi;
+            _previousTime = 0;
+
+        }
+
         _screenPoint = Camera.main.WorldToViewportPoint(this.transform.position + new Vector3(_moveDistance.x, 0, 0));// 0,0~1.1
         if (_inputMove.x == 0 && _inputMove.y == 0)
         {
@@ -110,14 +130,14 @@ public class NewBuildingcon : MonoBehaviour
             this.transform.gameObject.GetComponent<Rigidbody2D>().gravityScale = 400;
             //rb.isKinematic = false;
         }
-        
+
         switch (Player)
         {
             case PlayerNum.Player1:
                 if (_screenPoint.x <= 0.04f || _screenPoint.x >= 0.45f)
                 {
-                  
-                   
+
+
                     _left = false;
                     rb.velocity = Vector2.zero;
                 }
@@ -156,11 +176,11 @@ public class NewBuildingcon : MonoBehaviour
             case PlayerNum.Player2:
                 if (_screenPoint.x <= 0.55f || _screenPoint.x >= 1.0f)
                 {
-                   
+
 
                     _right = false;
                     rb.velocity = Vector2.zero;
-                  
+
                 }
                 else if (_screenPoint.x >= 0.55f && _screenPoint.x <= 1.0f)
                 {
@@ -178,13 +198,13 @@ public class NewBuildingcon : MonoBehaviour
                         _right = true;
 
                     }
-                     if (_inputMove.x == 0 && _inputMove.y != 0)
+                    if (_inputMove.x == 0 && _inputMove.y != 0)
                     {
 
                         _right = true;
 
                     }
-                     if (_inputMove.x == 0 && _inputMove.y == 0)
+                    if (_inputMove.x == 0 && _inputMove.y == 0)
                     {
 
                         _right = true;
@@ -196,20 +216,20 @@ public class NewBuildingcon : MonoBehaviour
                 break;
         }
 
-        _fromRotate += Time.deltaTime;
+        //_fromRotate += Time.deltaTime;
 
-        if (_fromRotate >= _rotateRestTime)
+        //if (_fromRotate >= _rotateRestTime)
+        //{
+        //    _rotatePermission = true;
+        //    _fromRotate = 0.0f;
+        //}
+        //if (_rotatePermission == true)
+        //{
+        if (_isLeftPressed)
         {
-            _rotatePermission = true;
-            _fromRotate = 0.0f;
-        }
-        if (_rotatePermission == true)
-        {
-            if (_isLeftPressed)
+            if (_rotatePermission == false || Block == BlockStae.Canon)
             {
-                
                 transform.RotateAround(transform.TransformPoint(_rotationPoint), new Vector3(0, 0, 1), -_rotateAngle);
-
 
                 if (_col.activeSelf == false)
                 {
@@ -221,14 +241,14 @@ public class NewBuildingcon : MonoBehaviour
                     _col.SetActive(false);
                     _col2.SetActive(true);
                 }
-
-
-
-               
+                _rotatePermission = true;
             }
-            if (_isRightPressed)
+
+        }
+        if (_isRightPressed)
+        {
+            if (_rotatePermission == false || Block == BlockStae.Canon)
             {
-               
                 transform.RotateAround(transform.TransformPoint(_rotationPoint), new Vector3(0, 0, 1), _rotateAngle);
 
                 if (_col.activeSelf == true)
@@ -241,11 +261,8 @@ public class NewBuildingcon : MonoBehaviour
                     _col.SetActive(true);
                     _col2.SetActive(false);
                 }
-
-
-                
+                _rotatePermission = true;
             }
-            _rotatePermission = false;
         }
 
         if (_pad == true && _inputMove.x * _inputMove.x >= 0.25f)
@@ -272,27 +289,17 @@ public class NewBuildingcon : MonoBehaviour
                 }
 
                 _pad = false;
-      
-              
+
+
             }
         }
 
-        if (Time.time - _previousTime >= _fallTime)
-        {
-
-            transform.position += _buildingPosi;
-            _previousTime = Time.time;
-          
-            _right = true;
-            _left = true;
-
-        }
         if (Stop == true)
         {
-          if(myEvent != null)
+            if (myEvent != null)
             {
-            //myEventに登録されている関数を実行
-            myEvent.Invoke();
+                //myEventに登録されている関数を実行
+                myEvent.Invoke();
             }
             rb.constraints = RigidbodyConstraints2D.None;
             transform.position = new Vector3(transform.position.x, transform.position.y, 0);
@@ -302,10 +309,10 @@ public class NewBuildingcon : MonoBehaviour
         }
         if (BuildingStop == true)
         {
-            if(myEvent != null)
+            if (myEvent != null)
             {
-            //myEventに登録されている関数を実行
-            myEvent.Invoke();
+                //myEventに登録されている関数を実行
+                myEvent.Invoke();
             }
             rb.constraints = RigidbodyConstraints2D.None;
             transform.position = new Vector3(transform.position.x, transform.position.y, 0);//座標をその場にとどまる
@@ -324,15 +331,13 @@ public class NewBuildingcon : MonoBehaviour
         if (Mathf.Ceil(_inputMove.y) == -1)
         {
 
-            rb.velocity += new Vector2(0, Mathf.Abs(_inputMove.y) * -_downSpeed * 10);
-            _right = true;
-            _left = true;
+            rb.velocity += new Vector2(0, Mathf.Abs(_inputMove.y) * -_downSpeed * 5);
         }
 
 
     }
 
-    public void _Rotate(InputAction.CallbackContext context)
+    public void BuildingRotation(InputAction.CallbackContext context)
     {
         var y = context.control.name;
         //Debug.Log(y);
@@ -342,6 +347,7 @@ public class NewBuildingcon : MonoBehaviour
 
                 if (y == "leftShoulder" || y == "r" || y == "n")
                 {
+
                     _isLeftPressed = true;
                 }
                 if (y == "rightShoulder" || y == "t" || y == "m")
@@ -352,10 +358,11 @@ public class NewBuildingcon : MonoBehaviour
             case InputActionPhase.Canceled:
                 _isLeftPressed = false;
                 _isRightPressed = false;
+                _rotatePermission = false;
                 break;
         }
     }
-    public void OnHold(InputAction.CallbackContext context)
+    public void BuildingMove(InputAction.CallbackContext context)
     {
         _inputMove = context.ReadValue<Vector2>();
         //Debug.Log(_inputMove);
@@ -390,11 +397,10 @@ public class NewBuildingcon : MonoBehaviour
         if (targetIndex >= 0 && targetIndex < _pastPositions.Count)
         {
             float targetPosition = _pastPositions[targetIndex];
-            this.transform.position = new Vector2( targetPosition,this.transform.position.y);
-
+            this.transform.position = new Vector2(targetPosition, this.transform.position.y);
             rb.velocity = Vector2.zero;
         }
-       
+
     }
     private void ChangeSpriteRandomly()
     {
@@ -405,4 +411,3 @@ public class NewBuildingcon : MonoBehaviour
         spriteRenderer.sprite = randomSprite;
     }
 }
-
