@@ -9,7 +9,8 @@ public class Bomb : MonoBehaviour
     CircleCollider2D _bombCollider;
     Rigidbody2D _rb;
     Animator _animator;
-
+    [SerializeField]
+    GameObject colObj;
     [SerializeField, Header("ボムの爆発の範囲")]
     private int bombRadius = 0;
     [SerializeField, Header("ボムの爆発の広がるスピード")]
@@ -19,7 +20,7 @@ public class Bomb : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _bombCollider = GetComponent<CircleCollider2D>();
+        _bombCollider =colObj.GetComponent<CircleCollider2D>();
         _rb = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
     }
