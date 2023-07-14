@@ -7,7 +7,11 @@ public class FadeEvent : MonoBehaviour
 
     [SerializeField]
     private GameObject _fadeObj;
-    private SpriteRenderer _spriteRenderer;
+    [SerializeField]
+    SpriteRenderer _spriteRenderer;
+
+    public delegate void FadeEventDelegate();
+    public FadeEventDelegate fadeEventDelegate;
 
     float r, g, b, a = 0;
     [SerializeField]
@@ -32,13 +36,13 @@ public class FadeEvent : MonoBehaviour
         }
     }
 
-    void FadeOut()
+    public void FadeOut()
     {
         a = 0;
         StartCoroutine(FadeOutCor());
     }
 
-    void FadeIn()
+    public void FadeIn()
     {
         a = 1;
         StartCoroutine(FadeInCor());
@@ -51,7 +55,9 @@ public class FadeEvent : MonoBehaviour
             SetColor();
             yield return null;
         }
-        SceneMove.instance.MainGame();
+        fadeEventDelegate();
+        FadeIn();
+        //SceneMove.instance.MainGame();
     }
     IEnumerator FadeInCor()
     {

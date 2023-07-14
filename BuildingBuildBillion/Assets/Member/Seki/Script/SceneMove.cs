@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,6 +7,8 @@ public class SceneMove : MonoBehaviour
     public static SceneMove instance;
     [SerializeField]
     private string _titleSceneName,_tutorialScene, _mainGameSceneName, _resultSceneName;
+
+    FadeEvent _fadeEvent;
 
     private void Awake()
     {
@@ -18,6 +21,13 @@ public class SceneMove : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        if(_fadeEvent==null)
+        {
+            _fadeEvent = GetComponent<FadeEvent>();
+        }
+        Debug.Log("ÇﬁÅ[ÉîåƒÇŒÇÍ");
+        _fadeEvent.FadeIn();
     }
 
     private void Update()
@@ -29,17 +39,45 @@ public class SceneMove : MonoBehaviour
     }
     public void Title()
     {
-        SceneManager.LoadScene(_titleSceneName);
+        _fadeEvent.fadeEventDelegate += TitleMove;
+        FadeOut();
     }
     public void Tutorial()
     {
-        SceneManager.LoadScene(_tutorialScene);
+        _fadeEvent.fadeEventDelegate -= TutorialMove;   
+        FadeOut();
     }
     public void MainGame()
     {
-        SceneManager.LoadScene(_mainGameSceneName);
+        _fadeEvent.fadeEventDelegate += MainGameMove;
+        FadeOut();
     }
     public void Result()
+    {
+        _fadeEvent.fadeEventDelegate = ResultMove;
+       FadeOut();
+    }
+
+    void FadeOut() 
+    {
+        _fadeEvent.FadeOut();
+    }
+
+    void TitleMove()
+    {
+        SceneManager.LoadScene(_titleSceneName);
+    }
+
+    void TutorialMove()
+    {
+        SceneManager.LoadScene(_tutorialScene);
+    }
+
+    void MainGameMove()
+    {
+        SceneManager.LoadScene(_mainGameSceneName);
+    }
+    void ResultMove()
     {
         SceneManager.LoadScene(_resultSceneName);
     }
