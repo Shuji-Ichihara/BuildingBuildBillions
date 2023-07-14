@@ -39,15 +39,12 @@ public class NewBuildingcon : MonoBehaviour
     private Vector3 _rotationPoint;
     private Vector2 _inputMove = Vector2.zero;
 
-    Rigidbody2D rb;
     private bool _pad = false;
     private bool _rotatePermission = false;
 
     [SerializeField]
     private float _restTime = 0.25f;
-    private float _rotateRestTime = 0.5f;
     private float _fromMoveHorizonal = 0.0f;
-    private float _fromRotate = 0.0f;
 
     private bool _right = true;
     private bool _left = true;
@@ -64,20 +61,29 @@ public class NewBuildingcon : MonoBehaviour
 
     public bool BuildingStop;
     public bool Stop;
+    public Rigidbody2D rb;
     //public Vector3 billControllerPosition { get; private set; }
 
 
-    void Start()
+    public void Start()
     {
-        rb.gravityScale = 500;
+        //rb.gravityScale = 500;
+
         rb = this.gameObject.GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Dynamic;
-        _col.SetActive(true);
-        _col2.SetActive(false);
+        if (_col != null && _col2 != null)
+        {
+            _col.SetActive(true);
+            _col2.SetActive(false);
+
+        }
         this.transform.gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
         spriteRenderer = GetComponent<SpriteRenderer>();
         // 最初にスプライトをランダムに選択する
-        ChangeSpriteRandomly();
+        if (sprites.Length > 0)
+        {
+            ChangeSpriteRandomly();
+        }
         switch (Block)
         {
             case BlockStae.Normal:
@@ -91,6 +97,7 @@ public class NewBuildingcon : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(rb);
         _previousTime += Time.deltaTime;
         if (_previousTime >= _fallTime)
         {
@@ -231,12 +238,12 @@ public class NewBuildingcon : MonoBehaviour
             {
                 transform.RotateAround(transform.TransformPoint(_rotationPoint), new Vector3(0, 0, 1), -_rotateAngle);
 
-                if (_col.activeSelf == false)
+                if (_col.activeSelf == false && _col != null)
                 {
                     _col.SetActive(true);
                     _col2.SetActive(false);
                 }
-                else if (_col.activeSelf == true)
+                else if (_col.activeSelf == true && _col != null)
                 {
                     _col.SetActive(false);
                     _col2.SetActive(true);
@@ -251,12 +258,12 @@ public class NewBuildingcon : MonoBehaviour
             {
                 transform.RotateAround(transform.TransformPoint(_rotationPoint), new Vector3(0, 0, 1), _rotateAngle);
 
-                if (_col.activeSelf == true)
+                if (_col.activeSelf == true && _col !=null)
                 {
                     _col.SetActive(false);
                     _col2.SetActive(true);
                 }
-                else if (_col.activeSelf == false)
+                else if (_col.activeSelf == false && _col != null)
                 {
                     _col.SetActive(true);
                     _col2.SetActive(false);
@@ -369,6 +376,8 @@ public class NewBuildingcon : MonoBehaviour
 
     }
 
+    static SpownBill cacheSpownBill;
+    static SpownBill2P cachespownBill2P;
     /// <summary>
     /// 次のブロックの生成ロジック
     /// </summary>
@@ -378,14 +387,16 @@ public class NewBuildingcon : MonoBehaviour
         {
             case PlayerNum.Player1:
                 this.GetComponent<PlayerInput>().enabled = false;
-                FindObjectOfType<SpownBill>().NewBill();//新しいビルをリスポーン
-                                                        // このオブジェクトが無効化される時に、自身の座標を格納
+                if (cacheSpownBill == null) cacheSpownBill = FindObjectOfType<SpownBill>();
+                cacheSpownBill.NewBill();//新しいビルをリスポーン
+                                         // このオブジェクトが無効化される時に、自身の座標を格納
                 GameManager.Instance.SpownBill.BuildingPosition = transform.position;
                 break;
             case PlayerNum.Player2:
                 this.GetComponent<PlayerInput>().enabled = false;
-                FindObjectOfType<SpownBill2P>().NewBill2P();//新しいビルをリスポーン
-                                                            // このオブジェクトが無効化される時に、自身の座標を格納
+                if (cachespownBill2P == null) cachespownBill2P = FindObjectOfType<SpownBill2P>();
+                cachespownBill2P.NewBill2P();//新しいビルをリスポーン
+                                         // このオブジェクトが無効化される時に、自身の座標を格納
                 GameManager.Instance.SpownBill.BuildingPosition = transform.position;
                 break;
         }
@@ -406,8 +417,8 @@ public class NewBuildingcon : MonoBehaviour
     {
         // スプライトの配列からランダムにスプライトを選択する
         Sprite randomSprite = sprites[UnityEngine.Random.Range(0, sprites.Length)];
-
         // スプライトを変更する
         spriteRenderer.sprite = randomSprite;
+
     }
 }

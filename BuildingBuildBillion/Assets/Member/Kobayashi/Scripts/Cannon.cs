@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Cannon : NewBuildingcon
+public class Cannon : MonoBehaviour
 {
     [SerializeField, Header("発射までにかかる時間")] private float _fireTime = 1; //発射にかかる秒数
     [SerializeField, Header("弾発射のインパクト")] private float _cannnonBulletImpact;   //弾のスピード
     [SerializeField] private GameObject _cannonBullet;
     [SerializeField] private GameObject _cannonMuzzle;
-    private Transform _cannonTransform;
     private Rigidbody2D _rg;
 
     private void Start()
