@@ -1196,7 +1196,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _titleSceneName: TitleScene
   _tutorialScene: 
-  _mainGameSceneName: SekiScene
+  _mainGameSceneName: GameSceneTest
   _resultSceneName: 
 --- !u!4 &959170684
 Transform:
@@ -1227,6 +1227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _fadeObj: {fileID: 563456335}
+  _spriteRenderer: {fileID: 0}
   _fadeTime: 1
 --- !u!1 &988762898
 GameObject:
