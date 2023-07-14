@@ -31,11 +31,13 @@ public class TitleEvent : MonoBehaviour
     void PushA()
     {//コントローラーA押したときのヤツ
         //SceneMove.instance.MainGame();
+
+        //ボタンプッシュ効果音はココ!!
         startAnimator.SetInteger("ButtonINT", 1);
     }
 
     void PullA()
-    {//コントローラーA押したときのヤツ
+    {//コントローラーA離したときのヤツ
         SceneMove.instance.MainGame();
         startAnimator.SetInteger("ButtonINT", 0);
     }
