@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Bomb : NewBuildingcon
+public class Bomb : MonoBehaviour
 {
 
     CircleCollider2D _bombCollider;
     Rigidbody2D _rb;
     Animator _animator;
-
+    [SerializeField]
+    GameObject colObj;
     [SerializeField, Header("ボムの爆発の範囲")]
     private int bombRadius = 0;
     [SerializeField, Header("ボムの爆発の広がるスピード")]
@@ -19,7 +20,7 @@ public class Bomb : NewBuildingcon
     // Start is called before the first frame update
     void Start()
     {
-        _bombCollider = GetComponent<CircleCollider2D>();
+        _bombCollider =colObj.GetComponent<CircleCollider2D>();
         _rb = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
     }
@@ -27,11 +28,12 @@ public class Bomb : NewBuildingcon
     // Update is called once per frame
     void Update()
     {
+        /*
         if(Input.GetKeyDown(KeyCode.A))
         {
             //Debug.Log(this.transform.localPosition);
             //BombEvent();
-        }
+        }*/
     }
 
     void BombEvent()
@@ -45,9 +47,15 @@ public class Bomb : NewBuildingcon
     private void OnCollisionEnter2D(Collision2D collision)
     {
         
-        _animator.SetBool("BombBool", true);
+        //_animator.SetBool("BombBool", true);
         
     }
+    
+    public void AnimStart()
+    {
+        _animator.SetBool("BombBool", true);
+    }
+
 
     private void OnTriggerEnter2D(Collider2D col)
     {//コライだー通り抜けたら飛ばす
@@ -60,11 +68,14 @@ public class Bomb : NewBuildingcon
         //Debug.Log(hit);
         //Debug.LogError(Mathf.Atan2(hit.y,hit.x)*Mathf.Rad2Deg);//角度だよ
 
-        col.gameObject.GetComponent<Rigidbody2D>().AddForce(hit*power, ForceMode2D.Impulse);//吹っ飛ばす
+        col.gameObject.GetComponent<Rigidbody2D>().AddForce(hit*power, ForceMode2D.Impulse);
+        //吹っ飛ばす
     }
 
     IEnumerator BombCor() 
     {
+        //爆発効果音入れるならココ!!
+
         _bombCollider.enabled = false;
         _bombCollider.enabled = true;
         _bombCollider.isTrigger = true;
