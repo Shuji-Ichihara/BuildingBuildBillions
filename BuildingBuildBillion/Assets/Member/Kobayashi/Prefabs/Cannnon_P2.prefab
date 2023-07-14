@@ -248,7 +248,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 500
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -292,6 +292,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 879c89c4554477b4e9321f6478a83071, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _downSpeed: 10
+  _rotateAngle: 0
+  _col: {fileID: 6912896558422480769}
+  _col2: {fileID: 6912896558422480769}
+  Player: 1
+  Block: 1
+  _restTime: 0.25
+  _pastPositions: []
+  myEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2060356631334193869}
+        m_TargetAssemblyTypeName: Cannon, Assembly-CSharp
+        m_MethodName: EventRegistration
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  sprites: []
+  BuildingStop: 0
+  Stop: 0
+  rb: {fileID: 0}
   _fireTime: 1
   _cannnonBulletImpact: 20
   _cannonBullet: {fileID: 4029430022120792514, guid: 8f7d2572878bb404091ed33a2289e63f, type: 3}
