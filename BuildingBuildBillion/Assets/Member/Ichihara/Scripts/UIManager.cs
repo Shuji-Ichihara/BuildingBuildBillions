@@ -6,6 +6,16 @@ using UnityEngine.UI;
 using Cysharp.Threading.Tasks;
 using System.Threading;
 
+/// <summary>
+/// 建材オブジェクトのスプライト画像とそれに対応するサムネイル画像
+/// </summary>
+[System.Serializable]
+public struct Thumbnail
+{
+    public Sprite BuildingSprite;
+    public Sprite ThumbnailImage;
+}
+
 public class UIManager : SingletonMonoBehaviour<UIManager>
 {
     // ゲーム中の UI を表示するキャンバス
@@ -28,12 +38,13 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     // 制限時間を表示
     [SerializeField]
     private TextMeshProUGUI _timeText = null;
+    // 次建材表示のサムネイル画像
+    [SerializeField]
+    private List<Thumbnail> _thumbnailImages = new List<Thumbnail>();
     // 次の建材表示 (1P)
-    [SerializeField]
-    private Image _player1NextBuildingMaterial = null;
+    public Image Player1NextBuildingMaterial = null;
     // 次の建材表示 (2P)
-    [SerializeField]
-    private Image _player2NextBuildingMaterial = null;
+    public Image Player2NextBuildingMaterial = null;
     // 次の建材表示の背景
     private Image _player1NextBack = null;
     private Image _player2NextBack = null;
@@ -63,11 +74,6 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     // Start is called before the first frame update
     void Start()
     {
-        //// リザルトシーンのテキストを空文字で初期化
-        //var resultPlayer1Text = GameObject.Find("Player1").GetComponent<TextMeshProUGUI>();
-        //resultPlayer1Text.text = "";
-        //var resultPlayer2Text = GameObject.Find("Player2").GetComponent<TextMeshProUGUI>();
-        //resultPlayer2Text.text = "";
         Player1ResultText.text = "";
         Player2ResultText.text = "";
         _pleasePushToA = GameObject.Find("PleasePushToA").GetComponent<TextMeshProUGUI>();
@@ -101,28 +107,18 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         else
         {
             _timeText.text = string.Format("{0:#}", GameManager.Instance.CountDownGameTime);
-            if (GameManager.Instance.CountDownGameTime > 0.0f)
-            {
-                _player1NextBuildingMaterial.sprite = PreviewBuildingSprite(GameManager.Instance.Obj);
-                _player2NextBuildingMaterial.sprite = PreviewBuildingSprite(GameManager.Instance.Obj2);
-            }
-            else if (GameManager.Instance.CountDownGameTime < 0.0f)
+            if (GameManager.Instance.CountDownGameTime < 0.0f)
             {
                 _gameUICanvas.gameObject.SetActive(false);
                 _waitingGameTimeText.color = Color.clear;
             }
-            // 勝敗が確定したら、リザルトシーンを呼び出す。
+            // 勝敗が確定したら、リザルトシーンのキャンバスを呼び出す。
             if (true == GameManager.Instance.IsPreviewedResult && false == _isDoneOnce)
             {
                 var resultSceneCanvasGroup = _resultSceneCanvas.GetComponent<CanvasGroup>();
                 resultSceneCanvasGroup.alpha = 1.0f;
                 await FadeInImage(3.0f, 0.8f);
                 JadgementBarController.Instance.Jadge();
-                // テキストを代入
-                //var resultPlayer1Text = GameObject.Find("Player1").GetComponent<TextMeshProUGUI>();
-                //resultPlayer1Text.text = _player1Text;
-                //var resultPlayer2Text = GameObject.Find("Player2").GetComponent<TextMeshProUGUI>();
-                //resultPlayer2Text.text = _player2Text;
                 _pleasePushToA = GameObject.Find("PleasePushToA").GetComponent<TextMeshProUGUI>();
                 _pleasePushToA.text = _pleasePushToAText;
                 FadeText().Forget();
@@ -132,15 +128,32 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     }
 
     /// <summary>
-    /// スプライトを取得
+    /// スプライトを取得し、次建材を表示する
     /// </summary>
     /// <param name="obj">表示するオブジェクトの種類</param>
-    /// <param name="sprite">表示するスプライト</param>
     /// <returns></returns>
-    private Sprite PreviewBuildingSprite(in GameObject obj)
+    public Sprite PreviewBuildingSprite(in GameObject obj)
     {
-        var sprite = obj.GetComponent<SpriteRenderer>().sprite;
-        return sprite;
+        Sprite buildingSprite;
+        try
+        {
+            buildingSprite = obj.GetComponent<SpriteRenderer>().sprite;
+        }
+        catch(MissingComponentException mce)
+        {
+            buildingSprite = obj.GetComponentInChildren<SpriteRenderer>().sprite;
+        }
+        Sprite thumbnail = null;
+
+        for (int i = 0; i < _thumbnailImages.Count; i++)
+        {
+            if (buildingSprite == _thumbnailImages[i].BuildingSprite || buildingSprite == _thumbnailImages[i].BuildingSprite)
+            {
+                thumbnail = _thumbnailImages[i].ThumbnailImage;
+                break;
+            }
+        }
+        return thumbnail;
     }
 
     /// <summary>
