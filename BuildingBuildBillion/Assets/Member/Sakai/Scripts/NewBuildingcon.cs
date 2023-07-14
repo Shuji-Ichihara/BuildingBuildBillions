@@ -69,7 +69,7 @@ public class NewBuildingcon : MonoBehaviour
 
     void Start()
     {
-
+        rb.gravityScale = 500;
         rb = this.gameObject.GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Dynamic;
         _col.SetActive(true);
