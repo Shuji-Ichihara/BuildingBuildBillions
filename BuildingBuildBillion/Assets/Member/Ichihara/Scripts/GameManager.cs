@@ -4,16 +4,6 @@ using UnityEngine;
 
 public class GameManager : SingletonMonoBehaviour<GameManager>
 {
-    // コントローラに引き渡す用の emun 変数
-    public enum BuildingMaterialStatus
-    {
-        Normal1,
-        Normal2,
-        Cannon,
-        ConveyorBelt,
-        Crane,
-    }
-
     #region 制限時間
     [Header("制限時間")]
     // ゲームの制限時間
@@ -103,6 +93,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         }
         // ここに開始時の演出を加える
         await UIManager.Instance.StartGameEffect();
+        SoundManager.Instance.PlayBGM(BGMSoundData.BGM.Game);
         SpownBill.NewBill();
         SpownBill2P.NewBill2P();
         while (_countDownGameTime > 0.0f)
@@ -125,19 +116,21 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
             if (obj == null) { break; }
             var component1 = obj.GetComponent<NewBuildingcon>();
             var component2 = obj.GetComponent<NewBuildingcon>();
-            //if (component1 != null)
-            //{
-            //    NewBillcon billController = obj.GetComponent<NewBillcon>();
-            //    NewBillcon.FreezeAllConstraints(obj);
-            //}
-            //else if (component2 != null)
-            //{
-            //  NewBillcon billController2P = obj.GetComponent<NewBillcon>();
-            //    NewBillcon.FreezeAllConstraints(obj);
-            //}
+            if (component1 != null)
+            {
+                NewBuildingcon newBuildingCon = obj.GetComponent<NewBuildingcon>();
+                newBuildingCon.FreezeAllConstrains(obj);
+            }
+            else if (component2 != null)
+            {
+                NewBuildingcon newBuildingcon = obj.GetComponent<NewBuildingcon>();
+                newBuildingcon.FreezeAllConstrains(obj);
+            }
             await UniTask.Yield(token);
         }
     }
+
+    
 
     /// <summary>
     /// ゲーム終了時の処理
