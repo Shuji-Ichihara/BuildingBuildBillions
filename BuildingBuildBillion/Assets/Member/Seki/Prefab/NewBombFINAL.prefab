@@ -225,8 +225,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _downSpeed: 10
   _rotateAngle: 90
-  _col: {fileID: 0}
-  _col2: {fileID: 0}
+  _col: {fileID: 5409081793170664847}
+  _col2: {fileID: 3288148453815528634}
   Player: 0
   _restTime: 0.25
   _pastPositions: []
