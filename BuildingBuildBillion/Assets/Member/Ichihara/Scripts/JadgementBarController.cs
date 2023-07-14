@@ -99,10 +99,6 @@ public class JadgementBarController : SingletonMonoBehaviour<JadgementBarControl
             UIManager.Instance.DrawText.fontSize = 180.0f;
             UIManager.Instance.DrawText.text
                 = "Draw.\nThank you for Playing!";
-            //UIManager.Instance.Player1ResultText.text
-            //    = "";
-            //UIManager.Instance.Player2ResultText.text
-            //    = "";
             isPreviewDraw = true;
             return isPreviewDraw;
         }
