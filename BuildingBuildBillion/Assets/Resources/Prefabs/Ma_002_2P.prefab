@@ -307,8 +307,8 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6689021729462517443}
-        m_TargetAssemblyTypeName: NewBillcon, Assembly-CSharp
-        m_MethodName: OnHold
+        m_TargetAssemblyTypeName: NewBuildingcon, Assembly-CSharp
+        m_MethodName: BuildingMove
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -331,8 +331,8 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6689021729462517443}
-        m_TargetAssemblyTypeName: NewBillcon, Assembly-CSharp
-        m_MethodName: _Rotate
+        m_TargetAssemblyTypeName: NewBuildingcon, Assembly-CSharp
+        m_MethodName: BuildingRotation
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -406,6 +406,7 @@ MonoBehaviour:
   _col: {fileID: 1302796589763629647}
   _col2: {fileID: 3044437166493361469}
   Player: 1
+  Block: 0
   _restTime: 0.25
   _pastPositions: []
   myEvent:

@@ -9,35 +9,12 @@ public class Cannon : MonoBehaviour
     [SerializeField, Header("弾発射のインパクト")] private float _cannnonBulletImpact;   //弾のスピード
     [SerializeField] private GameObject _cannonBullet;
     [SerializeField] private GameObject _cannonMuzzle;
-    private Transform _cannonTransform;
     private Rigidbody2D _rg;
-    private float _time = 1f;
-    private bool _isOnece = false;
 
     private void Start()
     {
         _rg = this.gameObject.GetComponent<Rigidbody2D>();
 
-    }
-    private void FixedUpdate()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            _rg.isKinematic= false;
-        }
-        if (_rg.IsSleeping())
-        {
-            return;
-        }
-        else
-        {
-            _time -= Time.deltaTime;
-            if (_time <= 0 && _isOnece ==false)
-            {
-                StartCoroutine(CannonFire());
-                _isOnece = true;
-            }
-        }
     }
     /// <summary>
     /// イベント登録用関数
