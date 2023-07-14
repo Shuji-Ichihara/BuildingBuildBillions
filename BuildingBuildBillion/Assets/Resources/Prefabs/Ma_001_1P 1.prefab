@@ -308,7 +308,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 35604521499659847}
         m_TargetAssemblyTypeName: NewBuildingcon, Assembly-CSharp
-        m_MethodName: OnHold
+        m_MethodName: BuildingMove
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -324,7 +324,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 35604521499659847}
         m_TargetAssemblyTypeName: NewBuildingcon, Assembly-CSharp
-        m_MethodName: _Rotate
+        m_MethodName: BuildingRotation
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
