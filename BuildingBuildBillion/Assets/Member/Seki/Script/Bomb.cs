@@ -27,11 +27,12 @@ public class Bomb : NewBuildingcon
     // Update is called once per frame
     void Update()
     {
+        /*
         if(Input.GetKeyDown(KeyCode.A))
         {
             //Debug.Log(this.transform.localPosition);
             //BombEvent();
-        }
+        }*/
     }
 
     void BombEvent()
@@ -45,9 +46,15 @@ public class Bomb : NewBuildingcon
     private void OnCollisionEnter2D(Collision2D collision)
     {
         
-        _animator.SetBool("BombBool", true);
+        //_animator.SetBool("BombBool", true);
         
     }
+    
+    public void AnimStart()
+    {
+        _animator.SetBool("BombBool", true);
+    }
+
 
     private void OnTriggerEnter2D(Collider2D col)
     {//ÉRÉâÉCÇæÅ[í ÇËî≤ÇØÇΩÇÁîÚÇŒÇ∑
