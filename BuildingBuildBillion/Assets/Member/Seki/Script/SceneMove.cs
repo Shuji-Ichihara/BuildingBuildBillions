@@ -19,6 +19,14 @@ public class SceneMove : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.X))
+        {
+            Title();
+        }
+    }
     public void Title()
     {
         SceneManager.LoadScene(_titleSceneName);
