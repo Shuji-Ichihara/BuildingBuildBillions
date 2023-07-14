@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CraneJib : MonoBehaviour
+public class CraneJib : NewBuildingcon
 {
     private float startPosition;
     private float endPosition;
@@ -107,5 +107,12 @@ public class CraneJib : MonoBehaviour
     public void ExitContract()
     {
         jibContract = false;
+    }
+    /// <summary>
+    /// イベント登録用関数
+    /// </summary>
+    public void EventRegistration()
+    {
+        CanTurn();
     }
 }
