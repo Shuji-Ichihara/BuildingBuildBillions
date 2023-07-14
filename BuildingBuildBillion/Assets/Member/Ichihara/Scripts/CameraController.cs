@@ -22,14 +22,14 @@ public class CameraController : SingletonMonoBehaviour<CameraController>
     private GameObject _empty = null;
     private Vector3 _defaultPosition = Vector3.zero;
     
-    private Func<GameObject, GameObject, float> _getObjectTop;
+    private Func<GameObject, GameObject, float> ObjectTop;
 
     // Start is called before the first frame update
     void Start()
     {
         _camera.m_Lens.OrthographicSize = 540.0f;
         _defaultPosition = _empty.transform.position;
-        _getObjectTop = GetObjectTop;
+        ObjectTop += GetObjectTop;
     }
 
     /// <summary>
@@ -92,6 +92,11 @@ public class CameraController : SingletonMonoBehaviour<CameraController>
     /// <returns></returns>
     private float GetObjectTop(GameObject obj, GameObject obj2)
     {
+        if (GameManager.Instance.CountDownGameTime < 0.0f)
+        {
+            ObjectTop -= GetObjectTop;
+            return default;
+        }
         float top = 0.0f;
         if (obj.transform.position.y > obj2.transform.position.y)
         {
@@ -116,26 +121,34 @@ public class CameraController : SingletonMonoBehaviour<CameraController>
     {
         // 変更の可能性有
         await UniTask.WaitForFixedUpdate(token);
-        // カメラのズーム、移動を止める処理
-        float top = _getObjectTop(GameManager.Instance.Obj, GameManager.Instance.Obj2);
-        if (_empty.transform.position.y - top
-            > _camera.m_Lens.OrthographicSize * GameManager.Instance.BuildingHeightAndScreenRatio / 2.0f) { return; }
-        _empty.transform.position += new Vector3(0.0f, zoom, 0.0f);
-        _empty.transform.position = new Vector3(_empty.transform.position.x
-                                              , Mathf.Clamp(_empty.transform.position.y
-                                                          , _defaultPosition.y
-                                                          , Screen.height * 1.5f - (Screen.height / 2.0f - _defaultPosition.y))
-                                              , 0.0f);
-        // カメラの Y 座標の移動
-        _camera.transform.position += vector * _moveCameraSpeed;
-        JadgementBarController.Instance.MoveJadgementBarFallPoint(movedSwitch);
-        GameManager.Instance.MoveBuildingSpawnPoint(zoom);
-        // カメラの Y 座標の移動限界を定義
-        _camera.transform.position = new Vector3(0.0f
-                                               , Mathf.Clamp(_camera.transform.position.y
-                                                            , 0.0f
-                                                            , Screen.height / 2.0f)
-                                               , _camera.transform.position.z);
+        try
+        {
+            // カメラのズーム、移動を止める処理
+            float top = ObjectTop(GameManager.Instance.Obj, GameManager.Instance.Obj2);
+            if (_empty.transform.position.y - top
+                > _camera.m_Lens.OrthographicSize * GameManager.Instance.BuildingHeightAndScreenRatio / 2.0f) { return; }
+            _empty.transform.position += new Vector3(0.0f, zoom, 0.0f);
+            _empty.transform.position = new Vector3(_empty.transform.position.x
+                                                  , Mathf.Clamp(_empty.transform.position.y
+                                                              , _defaultPosition.y
+                                                              , Screen.height * 1.5f - (Screen.height / 2.0f - _defaultPosition.y))
+                                                  , 0.0f);
+            // カメラの Y 座標の移動
+            _camera.transform.position += vector * _moveCameraSpeed;
+            JadgementBarController.Instance.MoveJadgementBarFallPoint(movedSwitch);
+            GameManager.Instance.MoveBuildingSpawnPoint(zoom);
+            // カメラの Y 座標の移動限界を定義
+            _camera.transform.position = new Vector3(0.0f
+                                                   , Mathf.Clamp(_camera.transform.position.y
+                                                                , 0.0f
+                                                                , Screen.height / 2.0f)
+                                                   , _camera.transform.position.z);
+        }
+        catch(MissingReferenceException mre)
+        {
+            ObjectTop -= GetObjectTop;
+            throw mre.InnerException;
+        }
     }
 
     /// <summary>
