@@ -16,9 +16,9 @@ public class NewBuildingcon : MonoBehaviour
     [SerializeField]
     private float _rotateAngle;
     [SerializeField]
-    private GameObject _col;
+    private GameObject _col = null;
     [SerializeField]
-    private GameObject _col2;
+    private GameObject _col2 = null;
     private enum PlayerNum
     {
         Player1 = 0,
@@ -97,7 +97,6 @@ public class NewBuildingcon : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(rb);
         _previousTime += Time.deltaTime;
         if (_previousTime >= _fallTime)
         {
@@ -237,16 +236,18 @@ public class NewBuildingcon : MonoBehaviour
             if (_rotatePermission == false || Block == BlockStae.Canon)
             {
                 transform.RotateAround(transform.TransformPoint(_rotationPoint), new Vector3(0, 0, 1), -_rotateAngle);
-
-                if (_col.activeSelf == false && _col != null)
+                if (_col != null)
                 {
-                    _col.SetActive(true);
-                    _col2.SetActive(false);
-                }
-                else if (_col.activeSelf == true && _col != null)
-                {
-                    _col.SetActive(false);
-                    _col2.SetActive(true);
+                    if (_col.activeSelf == false && _col != null)
+                    {
+                        _col.SetActive(true);
+                        _col2.SetActive(false);
+                    }
+                    else if (_col.activeSelf == true && _col != null)
+                    {
+                        _col.SetActive(false);
+                        _col2.SetActive(true);
+                    }
                 }
                 _rotatePermission = true;
             }
@@ -257,16 +258,18 @@ public class NewBuildingcon : MonoBehaviour
             if (_rotatePermission == false || Block == BlockStae.Canon)
             {
                 transform.RotateAround(transform.TransformPoint(_rotationPoint), new Vector3(0, 0, 1), _rotateAngle);
-
-                if (_col.activeSelf == true && _col !=null)
+                if (_col != null)
                 {
-                    _col.SetActive(false);
-                    _col2.SetActive(true);
-                }
-                else if (_col.activeSelf == false && _col != null)
-                {
-                    _col.SetActive(true);
-                    _col2.SetActive(false);
+                    if (_col.activeSelf == true && _col != null)
+                    {
+                        _col.SetActive(false);
+                        _col2.SetActive(true);
+                    }
+                    else if (_col.activeSelf == false && _col != null)
+                    {
+                        _col.SetActive(true);
+                        _col2.SetActive(false);
+                    }
                 }
                 _rotatePermission = true;
             }
@@ -396,7 +399,7 @@ public class NewBuildingcon : MonoBehaviour
                 this.GetComponent<PlayerInput>().enabled = false;
                 if (cachespownBill2P == null) cachespownBill2P = FindObjectOfType<SpownBill2P>();
                 cachespownBill2P.NewBill2P();//新しいビルをリスポーン
-                                         // このオブジェクトが無効化される時に、自身の座標を格納
+                                             // このオブジェクトが無効化される時に、自身の座標を格納
                 GameManager.Instance.SpownBill.BuildingPosition = transform.position;
                 break;
         }
