@@ -15,7 +15,7 @@ public class TitleEvent : MonoBehaviour
     {
         animator = titleObj.GetComponent<Animator>();
         SceneManager.sceneLoaded += OnSceneLoaded;
-        
+        animator.SetBool("Anim", true);
     }
     // Update is called once per frame
     void Update()
