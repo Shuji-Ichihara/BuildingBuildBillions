@@ -7,15 +7,16 @@ public class TitleEvent : MonoBehaviour
 {
 
     [SerializeField]
-    GameObject titleObj;
+    GameObject titleObj,startObj;
 
-    Animator animator;
+    Animator titleAnimator,startAnimator;
     // Start is called before the first frame update
     void Start()
     {
-        animator = titleObj.GetComponent<Animator>();
+        titleAnimator = titleObj.GetComponent<Animator>();
+        startAnimator = startObj.GetComponent<Animator>();
         SceneManager.sceneLoaded += OnSceneLoaded;
-        animator.SetBool("Anim", true);
+        titleAnimator.SetBool("Anim", true);
     }
     // Update is called once per frame
     void Update()
@@ -27,10 +28,19 @@ public class TitleEvent : MonoBehaviour
         }*/
     }
 
-    void A()
+    void PushA()
+    {//コントローラーA押したときのヤツ
+        //SceneMove.instance.MainGame();
+        startAnimator.SetInteger("ButtonINT", 1);
+    }
+
+    void PullA()
     {//コントローラーA押したときのヤツ
         SceneMove.instance.MainGame();
+        startAnimator.SetInteger("ButtonINT", 0);
     }
+
+
 
     void B()
     {//コントローラーB押したときのヤツ
@@ -39,7 +49,7 @@ public class TitleEvent : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        animator = titleObj.GetComponent<Animator>();
+        titleAnimator = titleObj.GetComponent<Animator>();
        
     }
 }

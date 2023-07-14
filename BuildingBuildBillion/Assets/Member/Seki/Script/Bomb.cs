@@ -67,11 +67,14 @@ public class Bomb : NewBuildingcon
         //Debug.Log(hit);
         //Debug.LogError(Mathf.Atan2(hit.y,hit.x)*Mathf.Rad2Deg);//Šp“x‚¾‚æ
 
-        col.gameObject.GetComponent<Rigidbody2D>().AddForce(hit*power, ForceMode2D.Impulse);//‚Á”ò‚Î‚·
+        col.gameObject.GetComponent<Rigidbody2D>().AddForce(hit*power, ForceMode2D.Impulse);
+        //‚Á”ò‚Î‚·
     }
 
     IEnumerator BombCor() 
     {
+        //”š”­Œø‰Ê‰¹“ü‚ê‚é‚È‚çƒRƒR!!
+
         _bombCollider.enabled = false;
         _bombCollider.enabled = true;
         _bombCollider.isTrigger = true;
