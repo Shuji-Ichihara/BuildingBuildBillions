@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2166492274088901796}
   m_Layer: 0
   m_Name: body
-  m_TagString: Untagged
+  m_TagString: Bill
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -333,7 +333,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _fireTime: 1
-  _cannnonBulletImpact: 200
+  _cannnonBulletImpact: 10000
   _cannonBullet: {fileID: 4029430022120792514, guid: 8f7d2572878bb404091ed33a2289e63f, type: 3}
   _cannonMuzzle: {fileID: 2166492274277147779}
 --- !u!114 &7014364478219550060
