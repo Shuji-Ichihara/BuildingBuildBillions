@@ -129,7 +129,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     }
 
     /// <summary>
-    /// スプライトを取得し、次建材を表示する
+    /// スプライトを取得し、次建材のサムネイル画像を表示する
     /// </summary>
     /// <param name="obj">表示するオブジェクトの種類</param>
     /// <returns></returns>
