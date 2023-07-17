@@ -85,15 +85,33 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     /// <returns></returns>
     private async UniTask CountDownToStartTheGame(CancellationToken token = default)
     {
+        bool thirdCount = false;
+        bool secondCount = false;
+        bool firstCount = false;
         while (_waitingGameTime > 0.0f)
         {
+            if (thirdCount == false && UIManager.Instance.WaitingGameTimeText.text == "3")
+            {
+                SoundManager.Instance.PlaySE(SESoundData.SE.CountDown);
+                thirdCount = true;
+            }
+            else if (secondCount == false && UIManager.Instance.WaitingGameTimeText.text == "2")
+            {
+                SoundManager.Instance.PlaySE(SESoundData.SE.CountDown);
+                secondCount = true;
+            }
+            else if (firstCount == false && UIManager.Instance.WaitingGameTimeText.text == "1")
+            {
+                SoundManager.Instance.PlaySE(SESoundData.SE.CountDown);
+                firstCount = true;
+            }
             _waitingGameTime -= Time.deltaTime;
             UIManager.Instance.FadeOutImage(3.0f).Forget();
             await UniTask.Yield(token);
         }
         // ここに開始時の演出を加える
         await UIManager.Instance.StartGameEffect();
-        SoundManager.Instance.PlayBGM(BGMSoundData.BGM.Game);
+        SoundManager.Instance.PlayBGM(BGMSoundData.BGM.GameBGM);
         SpownBill.NewBill();
         SpownBill2P.NewBill2P();
         while (_countDownGameTime > 0.0f)
@@ -130,7 +148,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         }
     }
 
-    
+
 
     /// <summary>
     /// ゲーム終了時の処理
