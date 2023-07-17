@@ -30,6 +30,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     // ゲーム開始までの待機時間を表示
     [SerializeField]
     private TextMeshProUGUI _waitingGameTimeText = null;
+    public TextMeshProUGUI WaitingGameTimeText => _waitingGameTimeText;
     [System.NonSerialized]
     public bool IsStartedGameTime = false;
 
@@ -165,6 +166,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     {
         _waitingGameTimeText.fontSize = 300.0f;
         _waitingGameTimeText.text = "Let's build!!!";
+        SoundManager.Instance.PlaySE(SESoundData.SE.StartGame);
         await UniTask.Delay(1500, false, PlayerLoopTiming.Update, token);
         var waitingGameTimeTextParent = _waitingGameTimeText.GetComponentInParent<CanvasGroup>();
         waitingGameTimeTextParent.ignoreParentGroups = false;
