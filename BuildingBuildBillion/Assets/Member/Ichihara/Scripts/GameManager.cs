@@ -1,6 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameManager : SingletonMonoBehaviour<GameManager>
 {
@@ -40,6 +41,8 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     // 2P が操作しているオブジェクト
     [System.NonSerialized]
     public GameObject Obj2 = null;
+    [System.NonSerialized]
+    public PlayerInput PlayerInput = null;
     #endregion
 
     // ゲーム終了判定
@@ -65,8 +68,14 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         // _buildSpawnPoint の初期値を代入
         _defaultBuildSpawnPoint1 = _buildSpawnPoint1.transform.position;
         _defaultBuildSpawnPoint2 = _buildSpawnPoint2.transform.position;
-        //CameraControllerTest.Instance.CallCalucrateCameraMovement();
+        PlayerInput = GetComponent<PlayerInput>();
+        PlayerInput.enabled = false;
         await CountDownToStartTheGame();
+    }
+
+    private void Update()
+    {
+        QuitApplication();
     }
 
     /// <summary>
@@ -85,25 +94,25 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     /// <returns></returns>
     private async UniTask CountDownToStartTheGame(CancellationToken token = default)
     {
-        bool thirdCount = false;
-        bool secondCount = false;
-        bool firstCount = false;
+        bool countThree = false;
+        bool countTwo = false;
+        bool countOne = false;
         while (_waitingGameTime > 0.0f)
         {
-            if (thirdCount == false && UIManager.Instance.WaitingGameTimeText.text == "3")
+            if (countThree == false && UIManager.Instance.WaitingGameTimeText.text == "3")
             {
                 SoundManager.Instance.PlaySE(SESoundData.SE.CountDown);
-                thirdCount = true;
+                countThree = true;
             }
-            else if (secondCount == false && UIManager.Instance.WaitingGameTimeText.text == "2")
+            else if (countTwo == false && UIManager.Instance.WaitingGameTimeText.text == "2")
             {
                 SoundManager.Instance.PlaySE(SESoundData.SE.CountDown);
-                secondCount = true;
+                countTwo = true;
             }
-            else if (firstCount == false && UIManager.Instance.WaitingGameTimeText.text == "1")
+            else if (countOne == false && UIManager.Instance.WaitingGameTimeText.text == "1")
             {
                 SoundManager.Instance.PlaySE(SESoundData.SE.CountDown);
-                firstCount = true;
+                countOne = true;
             }
             _waitingGameTime -= Time.deltaTime;
             UIManager.Instance.FadeOutImage(3.0f).Forget();
@@ -119,6 +128,8 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
             CountDown();
             await UniTask.Yield(token);
         }
+        //
+        SoundManager.Instance.StopBGM();
     }
 
     /// <summary>
@@ -147,8 +158,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
             await UniTask.Yield(token);
         }
     }
-
-
 
     /// <summary>
     /// ゲーム終了時の処理
@@ -182,5 +191,33 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
                                                                      , _defaultBuildSpawnPoint2.y
                                                                      , Screen.height * 1.5f)
                                                          , 0.0f);
+    }
+
+    public void ChangeTitleScene(InputAction.CallbackContext context)
+    {
+        if(IsPreviewedResult == true && context.phase == InputActionPhase.Canceled)
+        {
+            SceneMove.instance.TitleMove();
+        }
+    }
+
+    /// <summary>
+    /// アプリ終了
+    /// </summary>
+    private void QuitApplication()
+    {
+        if(Input.GetKeyDown(KeyCode.Return))
+        {
+            SceneMove.instance.TitleMove();
+        }
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();        
+#endif
+        }
     }
 }
