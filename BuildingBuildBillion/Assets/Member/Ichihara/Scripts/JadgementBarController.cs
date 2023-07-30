@@ -83,18 +83,28 @@ public class JadgementBarController : SingletonMonoBehaviour<JadgementBarControl
     /// </summary>
     public bool Jadge()
     {
-        bool _player1Tag = false;
-        bool _player2Tag = false;
+        // タグチェックを bool 配列に格納し、
+        // 配列内の true, false の要素数の差で勝敗を決定する。
+        bool[] playerTag = new bool[Objects.Count];
+        int player1TagCount = 0;
+        int player2TagCount = 0;
 
-        foreach (GameObject obj in Objects)
+        for (int i = 0; i < playerTag.Length; i++)
         {
-            _player1Tag = obj.CompareTag("Bill");
-            _player2Tag = obj.CompareTag("Bill2");
+            playerTag[i] = Objects[i].CompareTag("Bill");
+            if (playerTag[i] == true)
+            {
+                player1TagCount++;
+            }
+            else
+            {
+                player2TagCount++;
+            }
         }
 
         bool isPreviewDraw = false;
         // 引き分け処理
-        if (Objects.Count >= 2 || (true == _player1Tag && true == _player2Tag))
+        if (Objects.Count >= 2 || player1TagCount == player2TagCount)
         {
             UIManager.Instance.DrawText.fontSize = 180.0f;
             UIManager.Instance.DrawText.text
@@ -102,14 +112,14 @@ public class JadgementBarController : SingletonMonoBehaviour<JadgementBarControl
             isPreviewDraw = true;
             return isPreviewDraw;
         }
-        else if (true == _player1Tag && false == _player2Tag)
+        else if (player1TagCount > player2TagCount)
         {
             UIManager.Instance.Player1ResultText.text
                 = UIManager.Instance.YouWon;
             UIManager.Instance.Player2ResultText.text
                 = UIManager.Instance.YouLost;
         }
-        else if (false == _player1Tag && true == _player2Tag)
+        else if (player1TagCount < player2TagCount)
         {
             UIManager.Instance.Player1ResultText.text
                 = UIManager.Instance.YouLost;
