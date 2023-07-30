@@ -113,17 +113,23 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
                 _gameUICanvas.gameObject.SetActive(false);
                 _waitingGameTimeText.color = Color.clear;
             }
-            // 勝敗が確定したら、リザルトシーンのキャンバスを呼び出す。
+            // 勝敗が確定したら、リザルトシーンのキャンバスを呼び出す
+            // ついでにリザルトシーンの音声再生処理もここで呼び出す
             if (true == GameManager.Instance.IsPreviewedResult && false == _isDoneOnce)
             {
+                _isDoneOnce = true;
                 var resultSceneCanvasGroup = _resultSceneCanvas.GetComponent<CanvasGroup>();
                 resultSceneCanvasGroup.alpha = 1.0f;
-                await FadeInImage(3.0f, 0.8f);
+                SoundManager.Instance.PlayBGM(BGMSoundData.BGM.AnnouncementOfResult);
+                await FadeInImage(5.0f, 0.8f);
+                // AnnouncementOfResult を停止
+                SoundManager.Instance.PlaySE(SESoundData.SE.Cheer);
+                SoundManager.Instance.PlayBGM(BGMSoundData.BGM.ResultBGM);
                 JadgementBarController.Instance.Jadge();
                 _pleasePushToA = GameObject.Find("PleasePushToA").GetComponent<TextMeshProUGUI>();
                 _pleasePushToA.text = _pleasePushToAText;
                 FadeText().Forget();
-                _isDoneOnce = true;
+                GameManager.Instance.PlayerInput.enabled = true;
             }
         }
     }
