@@ -11,4 +11,5 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Member/Ichihara/Scenes/GameSceneTest.unity
     guid: b351ab04d9f4aba4f8e04ff79837f0e6
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: b841c3b261055174e867ca2dd923bfbd, type: 2}

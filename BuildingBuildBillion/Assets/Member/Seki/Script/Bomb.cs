@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -11,16 +11,16 @@ public class Bomb : MonoBehaviour
     Animator _animator;
     [SerializeField]
     GameObject colObj;
-    [SerializeField, Header("ƒ{ƒ€‚Ì”š”­‚Ì”ÍˆÍ")]
+    [SerializeField, Header("ãƒœãƒ ã®çˆ†ç™ºã®ç¯„å›²")]
     private int bombRadius = 0;
-    [SerializeField, Header("ƒ{ƒ€‚Ì”š”­‚ÌL‚ª‚éƒXƒs[ƒh")]
+    [SerializeField, Header("ãƒœãƒ ã®çˆ†ç™ºã®åºƒãŒã‚‹ã‚¹ãƒ”ãƒ¼ãƒ‰")]
     private int bombSpeed = 0;
-    [SerializeField,Header("ƒ{ƒ€‚Ì‚Á”ò‚Î‚·ƒpƒ[")]
-    private int power=0;
+    [SerializeField, Header("ãƒœãƒ ã®å¹ã£é£›ã°ã™ãƒ‘ãƒ¯ãƒ¼")]
+    private int power = 0;
     // Start is called before the first frame update
     void Start()
     {
-        _bombCollider =colObj.GetComponent<CircleCollider2D>();
+        _bombCollider = colObj.GetComponent<CircleCollider2D>();
         _rb = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
     }
@@ -34,10 +34,14 @@ public class Bomb : MonoBehaviour
             //Debug.Log(this.transform.localPosition);
             //BombEvent();
         }*/
+        if (GameManager.Instance.IsEndedGame == true)
+        {
+            this.enabled = false;
+        }
     }
 
     void BombEvent()
-    {//‚±‚±‚Å”š”­
+    {//ã“ã“ã§çˆ†ç™º
         StartCoroutine(BombCor());
         //_bombCollider.radius = 5;
         GetComponent<SpriteRenderer>().enabled = false;
@@ -46,11 +50,11 @@ public class Bomb : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        
+
         //_animator.SetBool("BombBool", true);
-        
+
     }
-    
+
     public void AnimStart()
     {
         _animator.SetBool("BombBool", true);
@@ -58,23 +62,35 @@ public class Bomb : MonoBehaviour
 
 
     private void OnTriggerEnter2D(Collider2D col)
-    {//ƒRƒ‰ƒC‚¾[’Ê‚è”²‚¯‚½‚ç”ò‚Î‚·
-        //ver2
-        Vector3 hit;
-        hit = col.ClosestPoint(this.transform.position);//triggerÕ“ËˆÊ’u
+    {
+        if (col.CompareTag("Bill") || col.CompareTag("Bill2"))
+        {
+            //ã‚³ãƒ©ã‚¤ã ãƒ¼é€šã‚ŠæŠœã‘ãŸã‚‰é£›ã°ã™
+            //ver2
+            Vector3 hit;
+            hit = col.ClosestPoint(this.transform.position);//triggerè¡çªä½ç½®
 
 
-        hit = transform.InverseTransformPoint(hit);//G‚ê‚½ƒIƒuƒWƒFƒNƒg‚Ìƒ[ƒJƒ‹À•W
-        //Debug.Log(hit);
-        //Debug.LogError(Mathf.Atan2(hit.y,hit.x)*Mathf.Rad2Deg);//Šp“x‚¾‚æ
+            hit = transform.InverseTransformPoint(hit);//è§¦ã‚ŒãŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™
+                                                       //Debug.Log(hit);
+                                                       //Debug.LogError(Mathf.Atan2(hit.y,hit.x)*Mathf.Rad2Deg);//è§’åº¦ã ã‚ˆ
 
-        col.gameObject.GetComponent<Rigidbody2D>().AddForce(hit*power, ForceMode2D.Impulse);
-        //‚Á”ò‚Î‚·
+            try
+            {
+                col.gameObject.GetComponent<Rigidbody2D>().AddForce(hit * power, ForceMode2D.Impulse);
+            }
+            catch (MissingComponentException mce)
+            {
+                throw mce.InnerException;
+            }
+            //å¹ã£é£›ã°ã™
+        }
     }
 
-    IEnumerator BombCor() 
+    IEnumerator BombCor()
     {
-        //”š”­Œø‰Ê‰¹“ü‚ê‚é‚È‚çƒRƒR!!
+        //çˆ†ç™ºåŠ¹æœéŸ³å…¥ã‚Œã‚‹ãªã‚‰ã‚³ã‚³!!
+        SoundManager.Instance.PlaySE(SESoundData.SE.ExplosionBomb);
 
         _bombCollider.enabled = false;
         _bombCollider.enabled = true;
@@ -82,10 +98,10 @@ public class Bomb : MonoBehaviour
         float count = 0;
         float time = 1f / bombSpeed;
         _rb.bodyType = RigidbodyType2D.Static;
-        while(count<time)
+        while (count < time)
         {
-            _bombCollider.radius += Time.deltaTime*bombSpeed*bombRadius;
-            count+=Time.deltaTime;
+            _bombCollider.radius += Time.deltaTime * bombSpeed * bombRadius;
+            count += Time.deltaTime;
             yield return null;
         }
         _bombCollider.enabled = false;

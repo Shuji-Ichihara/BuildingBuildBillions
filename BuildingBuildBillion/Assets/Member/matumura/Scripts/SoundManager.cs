@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -47,6 +47,10 @@ public class SoundManager : MonoBehaviour
         seAudioSource.PlayOneShot(data.audioClip);
     }
 
+    public void StopBGM()
+    {
+        bgmAudioSource.Stop();
+    }
 }
 
 [System.Serializable]
@@ -54,10 +58,17 @@ public class BGMSoundData
 {
     public enum BGM
     {
-        // ‚±‚±ƒ‰ƒxƒ‹A‰¼‚Å–¼‘O“ü‚ê‚Ä‚é‚Ì‚Å©—R•ÏXA‰Â‚Å‚·
-        Title,//ƒ^ƒCƒgƒ‹
-        Game,//ƒQ[ƒ€ƒV[ƒ“
-        Result,//ƒŠƒUƒ‹ƒg‰æ–Ê
+        /*
+        // ã“ã“ãƒ©ãƒ™ãƒ«ã€ä»®ã§åå‰å…¥ã‚Œã¦ã‚‹ã®ã§è‡ªç”±å¤‰æ›´ã€å¯ã§ã™
+        Title,//ã‚¿ã‚¤ãƒˆãƒ«
+        Game,//ã‚²ãƒ¼ãƒ ã‚·ãƒ¼ãƒ³
+        Result,//ãƒªã‚¶ãƒ«ãƒˆç”»é¢
+        */
+
+        TitleBGM,
+        GameBGM,
+        AnnouncementOfResult,
+        ResultBGM,
     }
 
     public BGM bgm;
@@ -71,8 +82,17 @@ public class SESoundData
 {
     public enum SE
     {
-        Attack,//UŒ‚
-        Fall,//—‰º
+        /*
+        Attack,//æ”»æ’ƒ
+        Fall,//è½ä¸‹
+        */
+
+        PressButton,
+        CountDown,
+        StartGame,
+        MoveBuilding,
+        ExplosionBomb,
+        Cheer,
     }
 
     public SE se;
@@ -82,5 +102,5 @@ public class SESoundData
 }
 
 /*SoundManager.Instance.PlayBGM(BGMSoundData.BGM.Title);
- ‹È‚ğ—¬‚µ‚½‚¢‚Æ‚«‚ÉÅŒã‚ÉTitle‚Æ‚©Game‚Á‚Ä‚©‚¢‚ÄA“K“–‚ÈŠ‚É‚±‚Ìã‚Ì•¶‚ğ‘‚¢‚Ä‚­‚¾‚³‚¢*/
+ æ›²ã‚’æµã—ãŸã„ã¨ãã«æœ€å¾Œã«Titleã¨ã‹Gameã£ã¦ã‹ã„ã¦ã€é©å½“ãªæ‰€ã«ã“ã®ä¸Šã®æ–‡ã‚’æ›¸ã„ã¦ãã ã•ã„*/
 

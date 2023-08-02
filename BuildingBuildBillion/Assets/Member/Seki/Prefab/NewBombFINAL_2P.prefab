@@ -169,7 +169,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 5
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
@@ -190,9 +190,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colObj: {fileID: 3288148453815528634}
-  bombRadius: 300
-  bombSpeed: 50
-  power: 500
+  bombRadius: 100
+  bombSpeed: 100
+  power: 300
 --- !u!95 &5409081793170664833
 Animator:
   serializedVersion: 5

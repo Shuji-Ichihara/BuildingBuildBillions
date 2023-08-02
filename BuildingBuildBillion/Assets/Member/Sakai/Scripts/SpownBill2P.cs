@@ -13,5 +13,6 @@ public class SpownBill2P : MonoBehaviour
         if (GameManager.Instance.CountDownGameTime < 0.0f) { return; }
         if (Bills2P.Length != 0)
             GameManager.Instance.Obj2 = Instantiate(Bills2P[Random.Range(0, Bills2P.Length)], transform.position, Quaternion.identity);
+        UIManager.Instance.Player2NextBuildingMaterial.sprite = UIManager.Instance.PreviewBuildingSprite(in GameManager.Instance.Obj2);
     }
 }
