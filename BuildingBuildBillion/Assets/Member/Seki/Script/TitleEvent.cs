@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class TitleEvent : MonoBehaviour
@@ -15,7 +16,7 @@ public class TitleEvent : MonoBehaviour
     {
         titleAnimator = titleObj.GetComponent<Animator>();
         startAnimator = startObj.GetComponent<Animator>();
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        //SceneManager.sceneLoaded += OnSceneLoaded;
         titleAnimator.SetBool("Anim", true);
     }
     // Update is called once per frame
@@ -40,6 +41,7 @@ public class TitleEvent : MonoBehaviour
     {//コントローラーA離したときのヤツ
         SceneMove.instance.MainGame();
         startAnimator.SetInteger("ButtonINT", 0);
+        Debug.Log("遷移した");
     }
 
 
@@ -50,8 +52,33 @@ public class TitleEvent : MonoBehaviour
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        titleAnimator = titleObj.GetComponent<Animator>();
+    {/*
+        if (titleObj != null && startObj != null)
+        {
+            titleAnimator = titleObj.GetComponent<Animator>();
+            startAnimator = startObj.GetComponent<Animator>();
+        }
+        else
+        {
+            Debug.Log("このシーンにタイトルは無い");
+        }*/
+      
        
+    }
+    public void _Rotate(InputAction.CallbackContext context)
+    {
+        switch (context.phase)
+        {
+
+            case InputActionPhase.Started:
+                Debug.Log("osa");
+                PushA();
+                break;
+            case InputActionPhase.Canceled:
+                Debug.Log("ha");
+                PullA();
+                break;
+        }
+
     }
 }

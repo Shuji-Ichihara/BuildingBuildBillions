@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 9219266272503271502}
   - component: {fileID: 5358453945087650415}
   - component: {fileID: -8153811063297168897}
-  - component: {fileID: 169506540509253298}
   - component: {fileID: 5264240954566992666}
   m_Layer: 0
   m_Name: LongPlane2P
@@ -131,7 +130,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 50
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1

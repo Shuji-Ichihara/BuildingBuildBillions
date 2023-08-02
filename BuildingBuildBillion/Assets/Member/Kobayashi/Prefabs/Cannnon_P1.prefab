@@ -296,7 +296,7 @@ MonoBehaviour:
   _downSpeed: 10
   _rotateAngle: 0
   _col: {fileID: 0}
-  _col2: {fileID: 0}
+  _col2: {fileID: 4340422232149585968}
   Player: 0
   Block: 1
   _restTime: 0.25
