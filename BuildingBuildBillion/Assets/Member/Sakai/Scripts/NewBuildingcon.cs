@@ -1,4 +1,4 @@
-using Cysharp.Threading.Tasks;
+ï»¿using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ public class NewBuildingcon : MonoBehaviour
 {
     [SerializeField] private float _downSpeed = 10;
     private float _previousTime = 0;
-    // ƒuƒƒbƒN‚Ì—‚¿‚éŠÔ
+    // ãƒ–ãƒ­ãƒƒã‚¯ã®è½ã¡ã‚‹æ™‚é–“
     private float _fallTime = 1f;
     [SerializeField]
     private float _rotateAngle;
@@ -35,7 +35,7 @@ public class NewBuildingcon : MonoBehaviour
 
     private bool _isRightPressed = false;
     private bool _isLeftPressed = false;
-    // ƒuƒƒbƒN‰ñ“]
+    // ãƒ–ãƒ­ãƒƒã‚¯å›è»¢
     private Vector3 _rotationPoint;
     private Vector2 _inputMove = Vector2.zero;
 
@@ -55,7 +55,7 @@ public class NewBuildingcon : MonoBehaviour
     private Vector2 _moveDistance = new Vector2(50.0f, 0);
 
     [SerializeField] private UnityEvent myEvent = new UnityEvent();
-    public Sprite[] sprites; // ƒXƒvƒ‰ƒCƒg‚Ì”z—ñ
+    public Sprite[] sprites; // ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã®é…åˆ—
 
     private SpriteRenderer spriteRenderer;
 
@@ -79,7 +79,7 @@ public class NewBuildingcon : MonoBehaviour
         }
         this.transform.gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
         spriteRenderer = GetComponent<SpriteRenderer>();
-        // Å‰‚ÉƒXƒvƒ‰ƒCƒg‚ğƒ‰ƒ“ƒ_ƒ€‚É‘I‘ğ‚·‚é
+        // æœ€åˆã«ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã‚’ãƒ©ãƒ³ãƒ€ãƒ ã«é¸æŠã™ã‚‹
         if (sprites.Length > 0)
         {
             ChangeSpriteRandomly();
@@ -308,12 +308,12 @@ public class NewBuildingcon : MonoBehaviour
         {
             if (myEvent != null)
             {
-                //myEvent‚É“o˜^‚³‚ê‚Ä‚¢‚éŠÖ”‚ğÀs
+                //myEventã«ç™»éŒ²ã•ã‚Œã¦ã„ã‚‹é–¢æ•°ã‚’å®Ÿè¡Œ
                 myEvent.Invoke();
             }
             rb.constraints = RigidbodyConstraints2D.None;
             transform.position = new Vector3(transform.position.x, transform.position.y, 0);
-            //transform.position = new Vector3(transform.position.x, 1, 0);//À•W‚ğ(0,1)‚É–ß‚·
+            //transform.position = new Vector3(transform.position.x, 1, 0);//åº§æ¨™ã‚’(0,1)ã«æˆ»ã™
             this.enabled = false;
             CreateNextBlock();
         }
@@ -321,11 +321,11 @@ public class NewBuildingcon : MonoBehaviour
         {
             if (myEvent != null)
             {
-                //myEvent‚É“o˜^‚³‚ê‚Ä‚¢‚éŠÖ”‚ğÀs
+                //myEventã«ç™»éŒ²ã•ã‚Œã¦ã„ã‚‹é–¢æ•°ã‚’å®Ÿè¡Œ
                 myEvent.Invoke();
             }
             rb.constraints = RigidbodyConstraints2D.None;
-            transform.position = new Vector3(transform.position.x, transform.position.y, 0);//À•W‚ğ‚»‚Ìê‚É‚Æ‚Ç‚Ü‚é
+            transform.position = new Vector3(transform.position.x, transform.position.y, 0);//åº§æ¨™ã‚’ãã®å ´ã«ã¨ã©ã¾ã‚‹
 
             this.enabled = false;
             CreateNextBlock();
@@ -371,18 +371,20 @@ public class NewBuildingcon : MonoBehaviour
                 _rotatePermission = false;
                 break;
         }
+        SoundManager.Instance.PlaySE(SESoundData.SE.MoveBuilding);
     }
     public void BuildingMove(InputAction.CallbackContext context)
     {
         _inputMove = context.ReadValue<Vector2>();
         //Debug.Log(_inputMove);
+        SoundManager.Instance.PlaySE(SESoundData.SE.MoveBuilding);
 
     }
 
     static SpownBill cacheSpownBill;
     static SpownBill2P cachespownBill2P;
     /// <summary>
-    /// Ÿ‚ÌƒuƒƒbƒN‚Ì¶¬ƒƒWƒbƒN
+    /// æ¬¡ã®ãƒ–ãƒ­ãƒƒã‚¯ã®ç”Ÿæˆãƒ­ã‚¸ãƒƒã‚¯
     /// </summary>
     void CreateNextBlock()
     {
@@ -391,15 +393,15 @@ public class NewBuildingcon : MonoBehaviour
             case PlayerNum.Player1:
                 this.GetComponent<PlayerInput>().enabled = false;
                 if (cacheSpownBill == null) cacheSpownBill = FindObjectOfType<SpownBill>();
-                cacheSpownBill.NewBill();//V‚µ‚¢ƒrƒ‹‚ğƒŠƒXƒ|[ƒ“
-                                         // ‚±‚ÌƒIƒuƒWƒFƒNƒg‚ª–³Œø‰»‚³‚ê‚é‚ÉA©g‚ÌÀ•W‚ğŠi”[
+                cacheSpownBill.NewBill();//æ–°ã—ã„ãƒ“ãƒ«ã‚’ãƒªã‚¹ãƒãƒ¼ãƒ³
+                                         // ã“ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒç„¡åŠ¹åŒ–ã•ã‚Œã‚‹æ™‚ã«ã€è‡ªèº«ã®åº§æ¨™ã‚’æ ¼ç´
                 GameManager.Instance.SpownBill.BuildingPosition = transform.position;
                 break;
             case PlayerNum.Player2:
                 this.GetComponent<PlayerInput>().enabled = false;
                 if (cachespownBill2P == null) cachespownBill2P = FindObjectOfType<SpownBill2P>();
-                cachespownBill2P.NewBill2P();//V‚µ‚¢ƒrƒ‹‚ğƒŠƒXƒ|[ƒ“
-                                             // ‚±‚ÌƒIƒuƒWƒFƒNƒg‚ª–³Œø‰»‚³‚ê‚é‚ÉA©g‚ÌÀ•W‚ğŠi”[
+                cachespownBill2P.NewBill2P();//æ–°ã—ã„ãƒ“ãƒ«ã‚’ãƒªã‚¹ãƒãƒ¼ãƒ³
+                                             // ã“ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒç„¡åŠ¹åŒ–ã•ã‚Œã‚‹æ™‚ã«ã€è‡ªèº«ã®åº§æ¨™ã‚’æ ¼ç´
                 GameManager.Instance.SpownBill.BuildingPosition = transform.position;
                 break;
         }
@@ -418,10 +420,20 @@ public class NewBuildingcon : MonoBehaviour
     }
     private void ChangeSpriteRandomly()
     {
-        // ƒXƒvƒ‰ƒCƒg‚Ì”z—ñ‚©‚çƒ‰ƒ“ƒ_ƒ€‚ÉƒXƒvƒ‰ƒCƒg‚ğ‘I‘ğ‚·‚é
+        // ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã®é…åˆ—ã‹ã‚‰ãƒ©ãƒ³ãƒ€ãƒ ã«ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã‚’é¸æŠã™ã‚‹
         Sprite randomSprite = sprites[UnityEngine.Random.Range(0, sprites.Length)];
-        // ƒXƒvƒ‰ƒCƒg‚ğ•ÏX‚·‚é
+        // ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã‚’å¤‰æ›´ã™ã‚‹
         spriteRenderer.sprite = randomSprite;
 
+    }
+
+    /// <summary>
+    /// ãƒ–ãƒ­ãƒƒã‚¯ã®é‹å‹•ã‚’ç„¡åŠ¹åŒ–
+    /// </summary>
+    /// <param name="obj">å¯¾è±¡ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ</param>
+    public void FreezeAllConstrains(GameObject obj)
+    {
+        Rigidbody2D rb2D = obj.GetComponent<Rigidbody2D>();
+        rb2D.constraints = RigidbodyConstraints2D.FreezeAll;
     }
 }

@@ -8,12 +8,16 @@ public class TitleEvent : MonoBehaviour
 {
 
     [SerializeField]
-    GameObject titleObj,startObj;
+    GameObject titleObj, startObj;
 
-    Animator titleAnimator,startAnimator;
+    Animator titleAnimator, startAnimator;
+
+    //
+    private bool isSceneMove = false;
     // Start is called before the first frame update
     void Start()
     {
+        isSceneMove = false;
         titleAnimator = titleObj.GetComponent<Animator>();
         startAnimator = startObj.GetComponent<Animator>();
         //SceneManager.sceneLoaded += OnSceneLoaded;
@@ -33,15 +37,23 @@ public class TitleEvent : MonoBehaviour
     {//コントローラーA押したときのヤツ
         //SceneMove.instance.MainGame();
 
+        //
+        SoundManager.Instance.StopBGM();
         //ボタンプッシュ効果音はココ!!
+        SoundManager.Instance.PlaySE(SESoundData.SE.PressButton);
         startAnimator.SetInteger("ButtonINT", 1);
     }
 
     void PullA()
-    {//コントローラーA離したときのヤツ
-        SceneMove.instance.MainGame();
-        startAnimator.SetInteger("ButtonINT", 0);
-        Debug.Log("遷移した");
+    {
+        if (isSceneMove == false)
+        { 
+            //コントローラーA離したときのヤツ
+            SceneMove.instance.MainGame();
+            startAnimator.SetInteger("ButtonINT", 0);
+            Debug.Log("遷移した");
+            isSceneMove = true;
+        }
     }
 
 
@@ -62,8 +74,8 @@ public class TitleEvent : MonoBehaviour
         {
             Debug.Log("このシーンにタイトルは無い");
         }*/
-      
-       
+
+
     }
     public void _Rotate(InputAction.CallbackContext context)
     {

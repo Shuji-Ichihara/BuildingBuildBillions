@@ -16,6 +16,15 @@ public class Cannon : MonoBehaviour
         _rg = this.gameObject.GetComponent<Rigidbody2D>();
 
     }
+
+    private void Update()
+    {
+        if(GameManager.Instance.IsEndedGame == true)
+        {
+            this.enabled = false;
+        }
+    }
+
     /// <summary>
     /// イベント登録用関数
     /// </summary>
@@ -33,6 +42,7 @@ public class Cannon : MonoBehaviour
         yield return new WaitForSeconds(_fireTime);//指定した時間待つ
         GameObject clone = Instantiate(_cannonBullet, _cannonMuzzle.transform.position, this.transform.rotation);//弾生成
         clone.GetComponent<Rigidbody2D>().AddForce(_cannnonBulletImpact * _cannonMuzzle.transform.right, ForceMode2D.Impulse);//弾に衝撃を与えて発射
+        SoundManager.Instance.PlaySE(SESoundData.SE.ExplosionBomb);
         _rg.constraints = RigidbodyConstraints2D.None;//contrainsのチェックをすべて外す
         this.enabled = false;   //スクリプトを非アクティブにする。
     }
