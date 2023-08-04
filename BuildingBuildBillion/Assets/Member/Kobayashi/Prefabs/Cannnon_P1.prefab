@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2166492274088901794}
   - component: {fileID: 2166492274088901795}
   - component: {fileID: 2166492274088901796}
+  - component: {fileID: 1835234423568670170}
   m_Layer: 0
   m_Name: body
   m_TagString: Bill
@@ -29,7 +30,8 @@ Transform:
   m_LocalPosition: {x: 0.25, y: 1.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8048627679178101611}
   m_Father: {fileID: 2166492274631125315}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -53,7 +55,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -111,6 +113,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4.285829, y: 2.6584141}
   m_EdgeRadius: 0
+--- !u!114 &1835234423568670170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2166492274088901793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8f6d3c6e4250e84192f5b34ce9e71bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlowOff: 0
+  glowColor: {r: 1, g: 1, b: 1, a: 1}
+  glowBrightness: 3.12
+  outlineWidth: 6
+  alphaThreshold: 0.01
+  drawOutside: 0
+  enableInstancing: 0
 --- !u!1 &2166492274277147779
 GameObject:
   m_ObjectHideFlags: 0
@@ -157,6 +178,7 @@ GameObject:
   - component: {fileID: -3027562418126910897}
   - component: {fileID: 2060356631334193869}
   - component: {fileID: 7014364478219550060}
+  - component: {fileID: 6978950281667690491}
   m_Layer: 0
   m_Name: Cannnon_P1
   m_TagString: Bill
@@ -178,7 +200,6 @@ Transform:
   m_Children:
   - {fileID: 2166492274088901794}
   - {fileID: 2166492274277147780}
-  - {fileID: 8048627679178101611}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -202,7 +223,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -450,6 +471,25 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &6978950281667690491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2166492274631125312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8f6d3c6e4250e84192f5b34ce9e71bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlowOff: 0
+  glowColor: {r: 1, g: 1, b: 1, a: 1}
+  glowBrightness: 10
+  outlineWidth: 4
+  alphaThreshold: 0.01
+  drawOutside: 0
+  enableInstancing: 0
 --- !u!1 &4340422232149585968
 GameObject:
   m_ObjectHideFlags: 0
@@ -475,13 +515,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4340422232149585968}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.25, y: -1.15, z: 0}
   m_LocalScale: {x: 3.5, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2166492274631125315}
-  m_RootOrder: 2
+  m_Father: {fileID: 2166492274088901794}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &3369850405977021616
 BoxCollider2D:

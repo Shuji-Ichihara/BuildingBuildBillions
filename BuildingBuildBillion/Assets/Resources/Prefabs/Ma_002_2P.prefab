@@ -156,6 +156,7 @@ GameObject:
   - component: {fileID: 9219266272503271502}
   - component: {fileID: 5249087020731422277}
   - component: {fileID: 6689021729462517443}
+  - component: {fileID: 4612967954036316800}
   m_Layer: 0
   m_Name: Ma_002_2P
   m_TagString: Bill2
@@ -419,3 +420,21 @@ MonoBehaviour:
   BuildingStop: 0
   Stop: 0
   rb: {fileID: 0}
+--- !u!114 &4612967954036316800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4356865857506395295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8f6d3c6e4250e84192f5b34ce9e71bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  glowColor: {r: 1, g: 1, b: 1, a: 1}
+  glowBrightness: 1
+  outlineWidth: 10
+  alphaThreshold: 0.01
+  drawOutside: 0
+  enableInstancing: 0
