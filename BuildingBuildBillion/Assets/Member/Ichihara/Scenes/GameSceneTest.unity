@@ -3246,7 +3246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af8910cfe8e418e488bc449e0abb5e87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _setGameTime: 999
+  _setGameTime: 30
   _setWaitingGameTime: 3
   _buildingHeightAndScreenRatio: 0.5
   _buildSpawnPoint1: {fileID: 234395655}
@@ -3483,7 +3483,7 @@ GameObject:
   - component: {fileID: 5270200589753131847}
   - component: {fileID: 5270200589753131840}
   m_Layer: 0
-  m_Name: Square
+  m_Name: JadgementBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
