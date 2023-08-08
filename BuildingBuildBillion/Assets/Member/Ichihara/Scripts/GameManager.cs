@@ -43,6 +43,9 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     public GameObject Obj2 = null;
     [System.NonSerialized]
     public PlayerInput PlayerInput = null;
+    // このゾーンにある建材は、勝敗に影響しない
+    private GameObject _player1ExculusionZone = null;
+    private GameObject _player2ExculusionZone = null;
     #endregion
 
     // ゲーム終了判定
@@ -59,6 +62,8 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         {
             Debug.LogError("アタッチされてねーよ！！");
         }
+        _player1ExculusionZone = GameObject.Find("Player1ExculusionZone");
+        _player2ExculusionZone = GameObject.Find("Player2ExculusionZone");
         IsEndedGame = false;
         IsPreviewedResult = false;
         _countDownGameTime = _setGameTime;
@@ -70,7 +75,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         _defaultBuildSpawnPoint2 = _buildSpawnPoint2.transform.position;
         PlayerInput = GetComponent<PlayerInput>();
         PlayerInput.enabled = false;
-        await CountDownToStartTheGame();
+        await PlayGameTime();
     }
 
     private void Update()
@@ -92,7 +97,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     /// </summary>
     /// <param name="token">キャンセル処理用のトークン</param>
     /// <returns></returns>
-    private async UniTask CountDownToStartTheGame(CancellationToken token = default)
+    private async UniTask PlayGameTime(CancellationToken token = default)
     {
         bool countThree = false;
         bool countTwo = false;
@@ -154,6 +159,12 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
             {
                 NewBuildingcon newBuildingcon = obj.GetComponent<NewBuildingcon>();
                 newBuildingcon.FreezeAllConstrains(obj);
+            }
+            if(obj.transform.position.x < _player1ExculusionZone.transform.position.x + _player1ExculusionZone.transform.localScale.x
+                || obj.transform.position.x > _player2ExculusionZone.transform.position.x - _player2ExculusionZone.transform.localScale.x)
+            {
+                Collider2D collision = obj.GetComponent<Collider2D>();
+                collision.enabled = false;
             }
             await UniTask.Yield(token);
         }
