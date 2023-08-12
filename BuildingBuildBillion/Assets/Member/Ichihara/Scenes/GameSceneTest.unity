@@ -348,11 +348,11 @@ PrefabInstance:
     - target: {fileID: 3035006443894946442, guid: e2fd76f9a2d706549ada359f3a642337, type: 3}
       propertyPath: Bills.Array.data[3]
       value: 
-      objectReference: {fileID: 2802399254260151252, guid: 42dc5eeb65d212640aa17117243f86c1, type: 3}
+      objectReference: {fileID: 5409081793170664847, guid: 047a9689416b4164ea24acd242ca49fb, type: 3}
     - target: {fileID: 3035006443894946442, guid: e2fd76f9a2d706549ada359f3a642337, type: 3}
       propertyPath: Bills.Array.data[4]
       value: 
-      objectReference: {fileID: 4356865857506395295, guid: 51313add21296dc45a39cd8e6a466359, type: 3}
+      objectReference: {fileID: 5409081793170664847, guid: 047a9689416b4164ea24acd242ca49fb, type: 3}
     - target: {fileID: 3035006443894946442, guid: e2fd76f9a2d706549ada359f3a642337, type: 3}
       propertyPath: Bills.Array.data[5]
       value: 
@@ -3498,7 +3498,7 @@ Transform:
   m_GameObject: {fileID: 5270200589753131841}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4000, y: 50, z: 1}
+  m_LocalScale: {x: 4000, y: 100, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5270200587620445118}
