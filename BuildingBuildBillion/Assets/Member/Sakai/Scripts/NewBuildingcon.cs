@@ -10,7 +10,7 @@ using UnityEngine.InputSystem;
 
 public class NewBuildingcon : MonoBehaviour
 {
-    [SerializeField] private float _downSpeed = 10;
+    [SerializeField] private float _downSpeed = 250;
     private float _previousTime = 0;
     // ブロックの落ちる時間
     private float _fallTime = 1f;
@@ -290,13 +290,13 @@ public class NewBuildingcon : MonoBehaviour
                         //transform.position += new Vector3(moveDistance, 0, 0);
                         //Vector2 Move = this.transform.position + moveDistance;
                         //rb.MovePosition(Move);
-                        rb.velocity -= _moveDistance * 20;
+                        rb.velocity -= _moveDistance * 30;
                     }
                     if (Mathf.Ceil(_inputMove.x) == 1)
                     {
                         //Vector2 Move = this.transform.position + moveDistance;
                         //rb.MovePosition(Move);
-                        rb.velocity += _moveDistance * 20;
+                        rb.velocity += _moveDistance * 30;
                     }
                 }
 
