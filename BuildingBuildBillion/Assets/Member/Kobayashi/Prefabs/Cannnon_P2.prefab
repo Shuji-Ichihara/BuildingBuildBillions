@@ -155,8 +155,8 @@ GameObject:
   - component: {fileID: 2166492274631125316}
   - component: {fileID: 2166492274631125317}
   - component: {fileID: 2060356631334193869}
-  - component: {fileID: 8893859492925121976}
   - component: {fileID: 905709477998515847}
+  - component: {fileID: 8893859492925121976}
   m_Layer: 0
   m_Name: Cannnon_P2
   m_TagString: Bill2
@@ -297,6 +297,45 @@ MonoBehaviour:
   _cannnonBulletImpact: 10000
   _cannonBullet: {fileID: 4029430022120792514, guid: 8f7d2572878bb404091ed33a2289e63f, type: 3}
   _cannonMuzzle: {fileID: 2166492274277147779}
+--- !u!114 &905709477998515847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2166492274631125312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15bdbf6d1f64f9d44bc81c60a54e9d0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _downSpeed: 10
+  _rotateAngle: 0
+  _col: {fileID: 0}
+  _col2: {fileID: 6912896558422480769}
+  Player: 1
+  Block: 0
+  _restTime: 0.25
+  _pastPositions: []
+  myEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2060356631334193869}
+        m_TargetAssemblyTypeName: Cannon, Assembly-CSharp
+        m_MethodName: EventRegistration
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  sprites: []
+  BuildingStop: 0
+  Stop: 0
+  rb: {fileID: 0}
 --- !u!114 &8893859492925121976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -407,45 +446,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &905709477998515847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2166492274631125312}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15bdbf6d1f64f9d44bc81c60a54e9d0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _downSpeed: 10
-  _rotateAngle: 0
-  _col: {fileID: 0}
-  _col2: {fileID: 6912896558422480769}
-  Player: 1
-  Block: 0
-  _restTime: 0.25
-  _pastPositions: []
-  myEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2060356631334193869}
-        m_TargetAssemblyTypeName: Cannon, Assembly-CSharp
-        m_MethodName: EventRegistration
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  sprites: []
-  BuildingStop: 0
-  Stop: 0
-  rb: {fileID: 0}
 --- !u!1 &6912896558422480769
 GameObject:
   m_ObjectHideFlags: 0
