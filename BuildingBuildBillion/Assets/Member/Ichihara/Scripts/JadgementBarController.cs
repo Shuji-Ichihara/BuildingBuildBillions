@@ -118,6 +118,7 @@ public class JadgementBarController : SingletonMonoBehaviour<JadgementBarControl
                 = UIManager.Instance.YouWon;
             UIManager.Instance.Player2ResultText.text
                 = UIManager.Instance.YouLost;
+            UIManager.Instance.CallLoseTextAnimation(UIManager.Instance.Player1ResultText);
         }
         else if (player1TagCount < player2TagCount)
         {
@@ -125,14 +126,7 @@ public class JadgementBarController : SingletonMonoBehaviour<JadgementBarControl
                 = UIManager.Instance.YouLost;
             UIManager.Instance.Player2ResultText.text
                 = UIManager.Instance.YouWon;
-        }
-        else
-        {
-            UIManager.Instance.DrawText.fontSize = 180.0f;
-            UIManager.Instance.DrawText.text
-                = "Draw.\nThank you for Playing!";
-            isPreviewDraw = true;
-            return isPreviewDraw;
+            UIManager.Instance.CallLoseTextAnimation(UIManager.Instance.Player1ResultText);
         }
         return isPreviewDraw;
     }
