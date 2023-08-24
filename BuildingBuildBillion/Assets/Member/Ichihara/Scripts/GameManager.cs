@@ -44,7 +44,9 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     [System.NonSerialized]
     public PlayerInput PlayerInput = null;
     // このゾーンにある建材は、勝敗に影響しない
+    [SerializeField]
     private GameObject _player1ExculusionZone = null;
+    [SerializeField]
     private GameObject _player2ExculusionZone = null;
     #endregion
 
@@ -54,6 +56,8 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     // リザルト画面を表示するフラグ
     [System.NonSerialized]
     public bool IsPreviewedResult = false;
+    // キャンセル処理用のトークン
+    private CancellationTokenSource cts = new CancellationTokenSource();
 
     // Start is called before the first frame update
     async void Start()
@@ -62,8 +66,11 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         {
             Debug.LogError("アタッチされてねーよ！！");
         }
-        _player1ExculusionZone = GameObject.Find("Player1ExculusionZone");
-        _player2ExculusionZone = GameObject.Find("Player2ExculusionZone");
+        if (_player1ExculusionZone == null || _player2ExculusionZone == null)
+        {
+            _player1ExculusionZone = GameObject.Find("Player1ExculusionZone");
+            _player2ExculusionZone = GameObject.Find("Player2ExculusionZone");
+        }
         IsEndedGame = false;
         IsPreviewedResult = false;
         _countDownGameTime = _setGameTime;
@@ -75,11 +82,12 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         _defaultBuildSpawnPoint2 = _buildSpawnPoint2.transform.position;
         PlayerInput = GetComponent<PlayerInput>();
         PlayerInput.enabled = false;
-        await PlayGameTime();
+        await PlayGameTime(cts);
     }
 
     private void Update()
     {
+        MoveScene();
         QuitApplication();
     }
 
@@ -97,7 +105,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     /// </summary>
     /// <param name="token">キャンセル処理用のトークン</param>
     /// <returns></returns>
-    private async UniTask PlayGameTime(CancellationToken token = default)
+    private async UniTask PlayGameTime(CancellationTokenSource cts = default)
     {
         bool countThree = false;
         bool countTwo = false;
@@ -120,18 +128,18 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
                 countOne = true;
             }
             _waitingGameTime -= Time.deltaTime;
-            UIManager.Instance.FadeOutImage(3.0f).Forget();
-            await UniTask.Yield(token);
+            UIManager.Instance.FadeOutBackGroundImage(3.0f, token: cts).Forget();
+            await UniTask.Yield(cts.Token);
         }
         // ここに開始時の演出を加える
-        await UIManager.Instance.StartGameEffect();
+        await UIManager.Instance.StartGameEffect(cts);
         SoundManager.Instance.PlayBGM(BGMSoundData.BGM.GameBGM);
         SpownBill.NewBill();
         SpownBill2P.NewBill2P();
         while (_countDownGameTime > 0.0f)
         {
             CountDown();
-            await UniTask.Yield(token);
+            await UniTask.Yield(cts.Token);
         }
         //
         SoundManager.Instance.StopBGM();
@@ -143,7 +151,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     /// <param name="objects">フィールドに存在する建材オブジェクトを格納する配列</param>
     /// <param name="token">キャンセル処理のトークン</param>
     /// <returns></returns>
-    private async UniTask SearchController(GameObject[] objects, CancellationToken token = default)
+    private async UniTask SearchNewBuildingcon(GameObject[] objects, CancellationToken token = default)
     {
         foreach (GameObject obj in objects)
         {
@@ -160,11 +168,22 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
                 NewBuildingcon newBuildingcon = obj.GetComponent<NewBuildingcon>();
                 newBuildingcon.FreezeAllConstrains(obj);
             }
-            if(obj.transform.position.x < _player1ExculusionZone.transform.position.x + _player1ExculusionZone.transform.localScale.x
-                || obj.transform.position.x > _player2ExculusionZone.transform.position.x - _player2ExculusionZone.transform.localScale.x)
+            // 当たり判定を無効化    c
+            if (false == (obj.transform.position.x > _player1ExculusionZone.transform.position.x + _player1ExculusionZone.transform.localScale.x / 2.0f
+                && obj.transform.position.x < _player2ExculusionZone.transform.position.x - _player2ExculusionZone.transform.localScale.x / 2.0f))
             {
                 Collider2D collision = obj.GetComponent<Collider2D>();
-                collision.enabled = false;
+                Collider2D childrenCollision = obj.GetComponentInChildren<Collider2D>();
+                Debug.Log($"{null == collision}");
+                Debug.Log($"{null == childrenCollision}");
+                if (!(null == collision))
+                {
+                    collision.enabled = false;
+                }
+                if (!(null == childrenCollision))
+                {
+                    childrenCollision.enabled = false;
+                }
             }
             await UniTask.Yield(token);
         }
@@ -179,8 +198,8 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     {
         var bill = GameObject.FindGameObjectsWithTag("Bill");
         var bill2 = GameObject.FindGameObjectsWithTag("Bill2");
-        await UniTask.WhenAll(SearchController(bill, token),
-                              SearchController(bill2, token));
+        await UniTask.WhenAll(SearchNewBuildingcon(bill, token),
+                              SearchNewBuildingcon(bill2, token));
     }
 
     /// <summary>
@@ -204,9 +223,24 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
                                                          , 0.0f);
     }
 
+    /// <summary>
+    /// InputSystem コールバック関数
+    /// </summary>
+    /// <param name="context">ゲームパッドのキー入力</param>
     public void ChangeTitleScene(InputAction.CallbackContext context)
     {
-        if(IsPreviewedResult == true && context.phase == InputActionPhase.Canceled)
+        if (IsPreviewedResult == true && context.phase == InputActionPhase.Canceled)
+        {
+            SceneMove.instance.TitleMove();
+        }
+    }
+
+    /// <summary>
+    /// シーン遷移
+    /// </summary>
+    private void MoveScene()
+    {
+        if (Input.GetKeyDown(KeyCode.Return))
         {
             SceneMove.instance.TitleMove();
         }
@@ -217,15 +251,10 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     /// </summary>
     private void QuitApplication()
     {
-        if(Input.GetKeyDown(KeyCode.Return))
-        {
-            SceneMove.instance.TitleMove();
-        }
-
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
 #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
+            UnityEditor.EditorApplication.isPlaying = false;
 #else
         Application.Quit();        
 #endif
