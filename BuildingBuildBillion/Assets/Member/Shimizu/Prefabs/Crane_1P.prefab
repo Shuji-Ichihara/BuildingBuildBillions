@@ -1114,7 +1114,7 @@ MonoBehaviour:
   rb: {fileID: 3722237425199768678}
   craneSensor: {fileID: 3722237426725970159}
   armSprite: {fileID: 3722237425110060689}
-  speed: 10
+  speed: 100
   endPosition: 90
 --- !u!61 &3722237427161425424
 BoxCollider2D:
