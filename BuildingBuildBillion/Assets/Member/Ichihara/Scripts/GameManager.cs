@@ -128,7 +128,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
                 countOne = true;
             }
             _waitingGameTime -= Time.deltaTime;
-            UIManager.Instance.FadeOutBackGroundImage(3.0f, token: cts).Forget();
+            UIManager.Instance.FadeOutBackGroundImage(3.0f, cts: cts).Forget();
             await UniTask.Yield(cts.Token);
         }
         // ここに開始時の演出を加える
@@ -141,7 +141,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
             CountDown();
             await UniTask.Yield(cts.Token);
         }
-        //
+        // ゲーム内 BGM 停止
         SoundManager.Instance.StopBGM();
     }
 
@@ -149,9 +149,9 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     /// 画面にあるすべての建材の Rigidbody2D を検索、取得
     /// </summary>
     /// <param name="objects">フィールドに存在する建材オブジェクトを格納する配列</param>
-    /// <param name="token">キャンセル処理のトークン</param>
+    /// <param name="cts">キャンセル処理のトークン</param>
     /// <returns></returns>
-    private async UniTask SearchNewBuildingcon(GameObject[] objects, CancellationToken token = default)
+    private async UniTask SearchNewBuildingcon(GameObject[] objects, CancellationTokenSource cts = default)
     {
         foreach (GameObject obj in objects)
         {
@@ -168,14 +168,12 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
                 NewBuildingcon newBuildingcon = obj.GetComponent<NewBuildingcon>();
                 newBuildingcon.FreezeAllConstrains(obj);
             }
-            // 当たり判定を無効化    c
+            // 当たり判定を無効化
             if (false == (obj.transform.position.x > _player1ExculusionZone.transform.position.x + _player1ExculusionZone.transform.localScale.x / 2.0f
                 && obj.transform.position.x < _player2ExculusionZone.transform.position.x - _player2ExculusionZone.transform.localScale.x / 2.0f))
             {
                 Collider2D collision = obj.GetComponent<Collider2D>();
                 Collider2D childrenCollision = obj.GetComponentInChildren<Collider2D>();
-                Debug.Log($"{null == collision}");
-                Debug.Log($"{null == childrenCollision}");
                 if (!(null == collision))
                 {
                     collision.enabled = false;
@@ -185,21 +183,21 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
                     childrenCollision.enabled = false;
                 }
             }
-            await UniTask.Yield(token);
+            await UniTask.Yield(cts.Token);
         }
     }
 
     /// <summary>
     /// ゲーム終了時の処理
     /// </summary>
-    /// <param name="token">キャンセル処理のトークン</param>
+    /// <param name="cts">キャンセル処理のトークン</param>
     /// <returns></returns>
-    public async UniTask EndGame(CancellationToken token = default)
+    public async UniTask EndGame(CancellationTokenSource cts = default)
     {
         var bill = GameObject.FindGameObjectsWithTag("Bill");
         var bill2 = GameObject.FindGameObjectsWithTag("Bill2");
-        await UniTask.WhenAll(SearchNewBuildingcon(bill, token),
-                              SearchNewBuildingcon(bill2, token));
+        await UniTask.WhenAll(SearchNewBuildingcon(bill, cts),
+                              SearchNewBuildingcon(bill2, cts));
     }
 
     /// <summary>
@@ -256,7 +254,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
 #else
-        Application.Quit();        
+            Application.Quit();        
 #endif
         }
     }
