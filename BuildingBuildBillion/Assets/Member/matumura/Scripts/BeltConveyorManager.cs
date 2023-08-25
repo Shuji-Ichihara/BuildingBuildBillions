@@ -18,12 +18,13 @@ public class BeltConveyorManager : MonoBehaviour
 
     void Start()
     {
-        diffX = speed * Time.fixedDeltaTime;
+        
     }
 
 
     private void FixedUpdate()
     {
+        diffX = speed * Time.fixedDeltaTime;
         foreach (GameObject gameObject in gameObjects)
         {
             Vector2 speed = new Vector3(diffX, 0);
