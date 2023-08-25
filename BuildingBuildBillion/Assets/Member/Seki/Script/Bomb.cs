@@ -45,6 +45,7 @@ public class Bomb : MonoBehaviour
         StartCoroutine(BombCor());
         //_bombCollider.radius = 5;
         GetComponent<SpriteRenderer>().enabled = false;
+        GetComponent<CircleCollider2D>().enabled = false;
         //_bombCollider.enabled = false;
     }
 
@@ -74,7 +75,7 @@ public class Bomb : MonoBehaviour
             hit = transform.InverseTransformPoint(hit);//触れたオブジェクトのローカル座標
                                                        //Debug.Log(hit);
                                                        //Debug.LogError(Mathf.Atan2(hit.y,hit.x)*Mathf.Rad2Deg);//角度だよ
-
+            if (hit == null) { return; }
             try
             {
                 col.gameObject.GetComponent<Rigidbody2D>().AddForce(hit * power, ForceMode2D.Impulse);
