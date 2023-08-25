@@ -1942,44 +1942,48 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4384610566604232898, guid: c23760478dac31d4f9dea6024e1a82d0, type: 3}
+      propertyPath: masterVolume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4384610566604232898, guid: c23760478dac31d4f9dea6024e1a82d0, type: 3}
       propertyPath: seSoundDatas.Array.data[0].volume
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4384610566604232898, guid: c23760478dac31d4f9dea6024e1a82d0, type: 3}
       propertyPath: seSoundDatas.Array.data[1].volume
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4384610566604232898, guid: c23760478dac31d4f9dea6024e1a82d0, type: 3}
       propertyPath: seSoundDatas.Array.data[2].volume
-      value: 0
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 4384610566604232898, guid: c23760478dac31d4f9dea6024e1a82d0, type: 3}
       propertyPath: seSoundDatas.Array.data[3].volume
-      value: 0
+      value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 4384610566604232898, guid: c23760478dac31d4f9dea6024e1a82d0, type: 3}
       propertyPath: seSoundDatas.Array.data[4].volume
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4384610566604232898, guid: c23760478dac31d4f9dea6024e1a82d0, type: 3}
       propertyPath: seSoundDatas.Array.data[5].volume
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4384610566604232898, guid: c23760478dac31d4f9dea6024e1a82d0, type: 3}
       propertyPath: bgmSoundDatas.Array.data[0].volume
-      value: 0
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 4384610566604232898, guid: c23760478dac31d4f9dea6024e1a82d0, type: 3}
       propertyPath: bgmSoundDatas.Array.data[1].volume
-      value: 0
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 4384610566604232898, guid: c23760478dac31d4f9dea6024e1a82d0, type: 3}
       propertyPath: bgmSoundDatas.Array.data[2].volume
-      value: 0
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 4384610566604232898, guid: c23760478dac31d4f9dea6024e1a82d0, type: 3}
       propertyPath: bgmSoundDatas.Array.data[3].volume
-      value: 0
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 4384610566604232910, guid: c23760478dac31d4f9dea6024e1a82d0, type: 3}
       propertyPath: m_RootOrder
