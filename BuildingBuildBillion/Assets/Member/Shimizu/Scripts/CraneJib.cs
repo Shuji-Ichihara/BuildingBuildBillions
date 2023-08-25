@@ -44,7 +44,7 @@ public class CraneJib : NewBuildingcon
                 craneSensor.CraneMoveOn();
             }
             //
-            Debug.Log(armSprite.size);
+            //Debug.Log(armSprite.size);
         }
         //˜r‚ªk‚Ş
         if(jibContract)

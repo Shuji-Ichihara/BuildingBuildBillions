@@ -652,6 +652,7 @@ MonoBehaviour:
   sprites: []
   BuildingStop: 0
   Stop: 0
+  rb: {fileID: 0}
   craneSensor: {fileID: 2440671648724674896}
   armSprite: {fileID: 2440671648826617774}
   speed: 5

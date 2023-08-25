@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 3722237425110060691}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 2.25, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 4.84, y: 1.12, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3722237426435362276}
@@ -78,8 +78,8 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_DrawMode: 1
+  m_Size: {x: 5.44, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -168,20 +168,20 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 3722237427161425424}
     m_ColliderPaths:
-    - - X: 498000000
+    - - X: 154723008
         Y: 750000000
-      - X: -402000000
+      - X: -14000000
         Y: 750000000
-      - X: -402000000
+      - X: -14000000
         Y: 550000000
-      - X: 498000000
+      - X: 154723008
         Y: 550000000
   m_CompositePaths:
     m_Paths:
-    - - {x: 49.8, y: 75}
-      - {x: -40.2, y: 75}
-      - {x: -40.2, y: 55}
-      - {x: 49.8, y: 55}
+    - - {x: 15.472301, y: 75}
+      - {x: -1.4, y: 75}
+      - {x: -1.4, y: 55}
+      - {x: 15.472301, y: 55}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0
 --- !u!114 &3722237425199768677
@@ -827,7 +827,7 @@ Transform:
   m_GameObject: {fileID: 3722237426725970148}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3722237426435362276}
@@ -878,7 +878,7 @@ SpriteRenderer:
   m_Color: {r: 0, g: 0, b: 0, a: 0.25490198}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
+  m_DrawMode: 1
   m_Size: {x: 0.5, y: 0.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
@@ -897,7 +897,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dfce77d425c5804199c63347b6f9829, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 100
+  width: 10
   distanceJoint2D: {fileID: 3722237426435362277}
   craneJib: {fileID: 3722237427161425453}
   widthExtend: 0
@@ -922,7 +922,7 @@ BoxCollider2D:
     oldSize: {x: 1, y: 1}
     newSize: {x: 0.5, y: 0.5}
     adaptiveTilingThreshold: 0.5
-    drawMode: 0
+    drawMode: 1
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
@@ -1064,9 +1064,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3722237427161425455}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.01, y: 3.25, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.07, y: 3.25, z: 0}
+  m_LocalScale: {x: 0.18747, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3722237425110060688}
@@ -1114,8 +1114,8 @@ MonoBehaviour:
   rb: {fileID: 3722237425199768678}
   craneSensor: {fileID: 3722237426725970159}
   armSprite: {fileID: 3722237425110060689}
-  speed: 100
-  endPosition: 90
+  speed: 10
+  endPosition: 1
 --- !u!61 &3722237427161425424
 BoxCollider2D:
   m_ObjectHideFlags: 0
