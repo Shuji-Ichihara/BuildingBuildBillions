@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class JadgementBarController : SingletonMonoBehaviour<JadgementBarController>
@@ -20,6 +21,8 @@ public class JadgementBarController : SingletonMonoBehaviour<JadgementBarControl
     // 重力の大きさを調整する
     [SerializeField, Range(0.0f, 10.0f)]
     private float _gravityScaleParameter = 5.0f;
+
+    private CancellationTokenSource cts = new CancellationTokenSource();
 
     // Start is called before the first frame update
     void Start()
@@ -44,14 +47,14 @@ public class JadgementBarController : SingletonMonoBehaviour<JadgementBarControl
         {
             if (false == GameManager.Instance.IsEndedGame)
             {
+                GameManager.Instance.IsEndedGame = true;
                 // カウントダウンが終了したら操作中のオブジェクトを破棄する
                 Destroy(GameManager.Instance.Obj);
                 Destroy(GameManager.Instance.Obj2);
-                await GameManager.Instance.EndGame();
+                await GameManager.Instance.EndGame(cts);
                 // 勝敗判定に必要なので enabled を true にする
                 _jadgementBar.GetComponent<SpriteRenderer>().enabled = true;
                 _jadgementBar.GetComponent<Collider2D>().enabled = true;
-                GameManager.Instance.IsEndedGame = true;
             }
             _rb2D.gravityScale = _gravityScaleParameter;
         }
@@ -83,28 +86,27 @@ public class JadgementBarController : SingletonMonoBehaviour<JadgementBarControl
     /// </summary>
     public bool Jadge()
     {
-        // タグチェックを bool 配列に格納し、
-        // 配列内の true, false の要素数の差で勝敗を決定する。
-        bool[] playerTag = new bool[Objects.Count];
-        int player1TagCount = 0;
-        int player2TagCount = 0;
+        // 判定バーに触れたオブジェクトの座標を取得し、
+        // それらの x 座標の位置で勝敗を決める
+        Vector2[] buildingPosition = new Vector2[Objects.Count];
+        int rightOfCenter = 0;
+        int leftOfCenter = 0;
 
-        for (int i = 0; i < playerTag.Length; i++)
+        for (int i = 0; i < buildingPosition.Length; i++)
         {
-            playerTag[i] = Objects[i].CompareTag("Bill");
-            if (playerTag[i] == true)
+            if(buildingPosition[i].x < Screen.width / 2)
             {
-                player1TagCount++;
+                rightOfCenter++;
             }
-            else
+            else if(buildingPosition[i].x > Screen.width / 2)
             {
-                player2TagCount++;
+                leftOfCenter++;
             }
         }
 
         bool isPreviewDraw = false;
         // 引き分け処理
-        if (Objects.Count >= 2 || player1TagCount == player2TagCount)
+        if (Objects.Count >= 2 || rightOfCenter == leftOfCenter)
         {
             UIManager.Instance.DrawText.fontSize = 180.0f;
             UIManager.Instance.DrawText.text
@@ -112,14 +114,14 @@ public class JadgementBarController : SingletonMonoBehaviour<JadgementBarControl
             isPreviewDraw = true;
             return isPreviewDraw;
         }
-        else if (player1TagCount > player2TagCount)
+        else if (rightOfCenter > leftOfCenter)
         {
             UIManager.Instance.Player1Result.sprite
                 = UIManager.Instance.YouWon;
             UIManager.Instance.Player2Result.sprite
                 = UIManager.Instance.YouLost;
         }
-        else if (player1TagCount < player2TagCount)
+        else if (rightOfCenter < leftOfCenter)
         {
             UIManager.Instance.Player1Result.sprite
                 = UIManager.Instance.YouLost;
