@@ -365,6 +365,7 @@ GameObject:
   - component: {fileID: 899885171}
   - component: {fileID: 899885170}
   - component: {fileID: 899885169}
+  - component: {fileID: 899885173}
   m_Layer: 5
   m_Name: Conveyor (2)
   m_TagString: Untagged
@@ -389,8 +390,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -230, y: -173}
-  m_SizeDelta: {x: 500, y: 50}
+  m_AnchoredPosition: {x: -246, y: -194}
+  m_SizeDelta: {x: 375, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &899885169
 MonoBehaviour:
@@ -418,7 +419,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.7328644, y: 0.93229294}
+  m_Offset: {x: 1.9674683, y: -48.453026}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -429,7 +430,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 500.6699, y: 46.40783}
+  m_Size: {x: 354.98315, y: 95.79315}
   m_EdgeRadius: 0
 --- !u!114 &899885171
 MonoBehaviour:
@@ -451,7 +452,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b35a67fd503d3e244a2e4a9699469a52, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3644f4b9f032e6c4688101c04ffbe6f6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -469,6 +470,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 899885167}
   m_CullTransparentMesh: 1
+--- !u!95 &899885173
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 899885167}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3ca4c4b3d6b234f4eb135b782a1fdfbf, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &915515519
 GameObject:
   m_ObjectHideFlags: 0
@@ -798,6 +819,7 @@ GameObject:
   - component: {fileID: 2079769317}
   - component: {fileID: 2079769320}
   - component: {fileID: 2079769319}
+  - component: {fileID: 2079769321}
   m_Layer: 5
   m_Name: Conveyor
   m_TagString: Untagged
@@ -822,8 +844,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -552, y: 33}
-  m_SizeDelta: {x: 500, y: 50}
+  m_AnchoredPosition: {x: -552, y: 38.99}
+  m_SizeDelta: {x: 375, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2079769317
 MonoBehaviour:
@@ -845,7 +867,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b35a67fd503d3e244a2e4a9699469a52, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3644f4b9f032e6c4688101c04ffbe6f6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -889,7 +911,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.7328644, y: 0.93229294}
+  m_Offset: {x: 0.73283386, y: -50.922287}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -900,5 +922,25 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 500.6699, y: 46.40783}
+  m_Size: {x: 357.45248, y: 100.73166}
   m_EdgeRadius: 0
+--- !u!95 &2079769321
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2079769315}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ed5afa362ebf1cb448bac558d08af99b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
