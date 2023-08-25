@@ -190,9 +190,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colObj: {fileID: 3288148453815528634}
-  bombRadius: 100
-  bombSpeed: 100
-  power: 300
+  bombRadius: 50
+  bombSpeed: 50
+  power: 100
 --- !u!95 &5409081793170664833
 Animator:
   serializedVersion: 5
