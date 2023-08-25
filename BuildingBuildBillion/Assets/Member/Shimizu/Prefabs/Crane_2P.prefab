@@ -171,13 +171,13 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 10
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 500
   m_Material: {fileID: 6200000, guid: 75524e781d45cf34688d9d03db514cb6, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 1
 --- !u!66 &3722237425199768679
 CompositeCollider2D:
@@ -207,26 +207,12 @@ CompositeCollider2D:
         Y: 550000320
       - X: 402000224
         Y: 550000320
-  - m_Collider: {fileID: 3722237427151502462}
-    m_ColliderPaths:
-    - - X: 500000000
-        Y: 750000000
-      - X: -500000000
-        Y: 750000000
-      - X: -500000000
-        Y: -750000000
-      - X: 500000000
-        Y: -750000000
   m_CompositePaths:
     m_Paths:
-    - - {x: 50, y: 75}
-      - {x: 40.200024, y: 75}
-      - {x: 40.200024, y: 75.00003}
+    - - {x: 40.200024, y: 75.00003}
       - {x: -49.799976, y: 75.00003}
-      - {x: -49.799976, y: 75}
-      - {x: -50, y: 75}
-      - {x: -50, y: -75}
-      - {x: 50, y: -75}
+      - {x: -49.799976, y: 55.000034}
+      - {x: 40.200024, y: 55.000034}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0
 --- !u!114 &3722237425199768677
@@ -351,7 +337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15bdbf6d1f64f9d44bc81c60a54e9d0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _downSpeed: 10
+  _downSpeed: 100
   _rotateAngle: 90
   _col: {fileID: 3722237426086314304}
   _col2: {fileID: 3722237426297920310}
@@ -1028,7 +1014,7 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 1
+  m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}

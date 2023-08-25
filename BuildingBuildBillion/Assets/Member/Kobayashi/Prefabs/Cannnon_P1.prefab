@@ -314,7 +314,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15bdbf6d1f64f9d44bc81c60a54e9d0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _downSpeed: 250
+  _downSpeed: 100
   _rotateAngle: 0
   _col: {fileID: 0}
   _col2: {fileID: 4340422232149585968}
