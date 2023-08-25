@@ -114,19 +114,17 @@ public class JadgementBarController : SingletonMonoBehaviour<JadgementBarControl
         }
         else if (player1TagCount > player2TagCount)
         {
-            UIManager.Instance.Player1ResultText.text
+            UIManager.Instance.Player1Result.sprite
                 = UIManager.Instance.YouWon;
-            UIManager.Instance.Player2ResultText.text
+            UIManager.Instance.Player2Result.sprite
                 = UIManager.Instance.YouLost;
-            UIManager.Instance.CallLoseTextAnimation(UIManager.Instance.Player1ResultText);
         }
         else if (player1TagCount < player2TagCount)
         {
-            UIManager.Instance.Player1ResultText.text
+            UIManager.Instance.Player1Result.sprite
                 = UIManager.Instance.YouLost;
-            UIManager.Instance.Player2ResultText.text
+            UIManager.Instance.Player2Result.sprite
                 = UIManager.Instance.YouWon;
-            UIManager.Instance.CallLoseTextAnimation(UIManager.Instance.Player1ResultText);
         }
         return isPreviewDraw;
     }
