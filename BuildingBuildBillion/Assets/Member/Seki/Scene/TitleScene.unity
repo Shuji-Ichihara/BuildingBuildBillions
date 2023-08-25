@@ -917,7 +917,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1072
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_FlipX: 0
@@ -1227,7 +1227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _fadeObj: {fileID: 563456335}
-  _spriteRenderer: {fileID: 0}
+  _spriteRenderer: {fileID: 563456336}
   _fadeTime: 1
 --- !u!1 &988762898
 GameObject:

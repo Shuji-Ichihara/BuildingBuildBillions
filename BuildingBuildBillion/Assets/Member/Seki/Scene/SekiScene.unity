@@ -1787,6 +1787,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _fadeObj: {fileID: 1819117912}
+  _spriteRenderer: {fileID: 0}
   _fadeTime: 1
 --- !u!4 &1509912068
 Transform:
@@ -2706,7 +2707,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5409081793170664847, guid: 2cc6a0d5b66388f479a204a859f00d98, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2cc6a0d5b66388f479a204a859f00d98, type: 3}
