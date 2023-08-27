@@ -94,11 +94,12 @@ public class JadgementBarController : SingletonMonoBehaviour<JadgementBarControl
 
         for (int i = 0; i < buildingPosition.Length; i++)
         {
-            if(buildingPosition[i].x < Screen.width / 2)
+            buildingPosition[i] = Objects[i].transform.position;
+            if (buildingPosition[i].x < 0.0f)
             {
                 rightOfCenter++;
             }
-            else if(buildingPosition[i].x > Screen.width / 2)
+            else if (buildingPosition[i].x > 0.0f)
             {
                 leftOfCenter++;
             }
