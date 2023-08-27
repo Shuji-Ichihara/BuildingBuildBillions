@@ -71,6 +71,14 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     private TextMeshProUGUI _pleasePushToA = null;
     [Space(3)]
     #endregion
+
+    #region UI アニメーション
+    [SerializeField]
+    private Animator _player1Anim = null;
+    [SerializeField]
+    private Animator _player2Anim = null;
+    #endregion
+
     // 一度のみ実行するフラグ
     private bool _isDoneOnce = false;
     // キャンセル処理用のトークン
@@ -84,9 +92,9 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         Player2Result.color = Color.clear;
         _pleasePushToA = GameObject.Find("PleasePushToA").GetComponent<TextMeshProUGUI>();
         _pleasePushToA.text = "";
-       // 次建材表示のバックグラウンドのカラー指定
-       //_player1NextBack = GameObject.Find("Player1NextBack").GetComponent<Image>();
-       // _player2NextBack = GameObject.Find("Player2NextBack").GetComponent<Image>();
+        // 次建材表示のバックグラウンドのカラー指定
+        //_player1NextBack = GameObject.Find("Player1NextBack").GetComponent<Image>();
+        // _player2NextBack = GameObject.Find("Player2NextBack").GetComponent<Image>();
         // ゲーム中に使用するキャンバスを非アクティブ化
         // 同時に、リザルトシーンのキャンバスを透明化
         _gameUICanvas.gameObject.SetActive(false);
@@ -126,12 +134,16 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
                 await FadeInBackGroundImage(5.0f, 0.8f, cts);
                 SoundManager.Instance.PlayBGM(BGMSoundData.BGM.AnnouncementOfResult);
                 _resultTtile.enabled = true;
+                // 溜めの演出
                 await UniTask.DelayFrame(60 * 3, cancellationToken: cts.Token);
                 JadgementBarController.Instance.Jadge();
                 Player1Result.color = Color.white;
                 Player2Result.color = Color.white;
-                await UniTask.DelayFrame(60 * 2, cancellationToken: cts.Token);
+                PlayPlayer1ResultAnimation(Player1Result);
+                PlayPlayer2ResultAnimation(Player2Result);
+                await UniTask.DelayFrame(60 * 4, cancellationToken: cts.Token);
                 // AnnouncementOfResult を停止
+                SoundManager.Instance.StopBGM();
                 SoundManager.Instance.PlaySE(SESoundData.SE.Cheer);
                 SoundManager.Instance.PlayBGM(BGMSoundData.BGM.ResultBGM);
                 _pleasePushToA = GameObject.Find("PleasePushToA").GetComponent<TextMeshProUGUI>();
@@ -269,6 +281,30 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
                 isFaded = true;
             }
             await UniTask.Yield(cts.Token);
+        }
+    }
+
+    private void PlayPlayer1ResultAnimation(Image image)
+    {
+        if (image.sprite == _youWon)
+        {
+            _player1Anim.SetBool("WinPlayer", true);
+        }
+        else if (image.sprite == _youLost)
+        {
+            _player1Anim.SetBool("LosePlayer", true);
+        }
+    }
+
+    private void PlayPlayer2ResultAnimation(Image image)
+    {
+        if (image.sprite == _youWon)
+        {
+            _player2Anim.SetBool("WinPlayer", true);
+        }
+        else if (image.sprite == _youLost)
+        {
+            _player2Anim.SetBool("LosePlayer", true);
         }
     }
 }
