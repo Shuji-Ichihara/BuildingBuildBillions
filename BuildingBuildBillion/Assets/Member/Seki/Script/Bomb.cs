@@ -45,14 +45,13 @@ public class Bomb : MonoBehaviour
         StartCoroutine(BombCor());
         //_bombCollider.radius = 5;
         GetComponent<SpriteRenderer>().enabled = false;
+        GetComponent<CircleCollider2D>().enabled = false;
         //_bombCollider.enabled = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-
         //_animator.SetBool("BombBool", true);
-
     }
 
     public void AnimStart()
@@ -74,14 +73,18 @@ public class Bomb : MonoBehaviour
             hit = transform.InverseTransformPoint(hit);//触れたオブジェクトのローカル座標
                                                        //Debug.Log(hit);
                                                        //Debug.LogError(Mathf.Atan2(hit.y,hit.x)*Mathf.Rad2Deg);//角度だよ
-
             try
             {
-                col.gameObject.GetComponent<Rigidbody2D>().AddForce(hit * power, ForceMode2D.Impulse);
+                Rigidbody2D rigidbody2D = col.gameObject.GetComponent<Rigidbody2D>();
+                if (rigidbody2D != null)
+                {
+                    rigidbody2D.AddForce(hit * power, ForceMode2D.Impulse);
+                }
+
             }
-            catch (MissingComponentException mce)
+            catch (System.Exception e)
             {
-                throw mce.InnerException;
+                throw e;
             }
             //吹っ飛ばす
         }

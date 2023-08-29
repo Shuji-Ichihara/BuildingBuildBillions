@@ -55,41 +55,52 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     #region リザルトシーンの UI
     [Header("リザルトシーンのUI")]
     [SerializeField]
-    private string _youWon = "You won !!";
-    public string YouWon => _youWon;
+    private Sprite _youWon = null;
+    public Sprite YouWon => _youWon;
     [SerializeField]
-    private string _youLost = "You lost ...";
-    public string YouLost => _youLost;
+    private Sprite _youLost = null;
+    public Sprite YouLost => _youLost;
+    [SerializeField]
+    private Image _resultTtile = null;
     // 外部から書き換えるため。
-    public TextMeshProUGUI Player1ResultText = null;
-    public TextMeshProUGUI Player2ResultText = null;
+    public Image Player1Result = null;
+    public Image Player2Result = null;
     public TextMeshProUGUI DrawText = null;
     [SerializeField]
     private string _pleasePushToAText = "Please push to A";
     private TextMeshProUGUI _pleasePushToA = null;
     [Space(3)]
     #endregion
+
+    #region UI アニメーション
+    [SerializeField]
+    private Animator _player1Anim = null;
+    [SerializeField]
+    private Animator _player2Anim = null;
+    #endregion
+
     // 一度のみ実行するフラグ
     private bool _isDoneOnce = false;
+    // キャンセル処理用のトークン
+    private CancellationTokenSource cts = new CancellationTokenSource();
 
     // Start is called before the first frame update
     void Start()
     {
-        Player1ResultText.text = "";
-        Player2ResultText.text = "";
+        _resultTtile.color = Color.white;
+        Player1Result.color = Color.clear;
+        Player2Result.color = Color.clear;
         _pleasePushToA = GameObject.Find("PleasePushToA").GetComponent<TextMeshProUGUI>();
         _pleasePushToA.text = "";
         // 次建材表示のバックグラウンドのカラー指定
-        _player1NextBack = GameObject.Find("Player1NextBack").GetComponent<Image>();
-        _player1NextBack.color = new Color32(0, 0, 0, 85);
-        _player2NextBack = GameObject.Find("Player2NextBack").GetComponent<Image>();
-        _player2NextBack.color = new Color32(0, 0, 0, 85);
+        //_player1NextBack = GameObject.Find("Player1NextBack").GetComponent<Image>();
+        // _player2NextBack = GameObject.Find("Player2NextBack").GetComponent<Image>();
         // ゲーム中に使用するキャンバスを非アクティブ化
         // 同時に、リザルトシーンのキャンバスを透明化
         _gameUICanvas.gameObject.SetActive(false);
         var resultSceneCanvasGroup = _resultSceneCanvas.GetComponent<CanvasGroup>();
         resultSceneCanvasGroup.alpha = 0.0f;
-        // 背景を黒の半透明にしておく
+        _resultTtile.enabled = false;
         _waitingGameTimeText.color = Color.yellow;
         _backGroundImage.color = new Color32(0, 0, 0, 128);
         // DrawText の中身を空文字で初期化する
@@ -120,15 +131,24 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
                 _isDoneOnce = true;
                 var resultSceneCanvasGroup = _resultSceneCanvas.GetComponent<CanvasGroup>();
                 resultSceneCanvasGroup.alpha = 1.0f;
+                await FadeInBackGroundImage(5.0f, 0.8f, cts);
                 SoundManager.Instance.PlayBGM(BGMSoundData.BGM.AnnouncementOfResult);
-                await FadeInImage(5.0f, 0.8f);
+                _resultTtile.enabled = true;
+                // 溜めの演出
+                await UniTask.DelayFrame(60 * 3, cancellationToken: cts.Token);
+                JadgementBarController.Instance.Jadge();
+                Player1Result.color = Color.white;
+                Player2Result.color = Color.white;
+                PlayPlayer1ResultAnimation(Player1Result);
+                PlayPlayer2ResultAnimation(Player2Result);
+                await UniTask.DelayFrame(60 * 4, cancellationToken: cts.Token);
                 // AnnouncementOfResult を停止
+                SoundManager.Instance.StopBGM();
                 SoundManager.Instance.PlaySE(SESoundData.SE.Cheer);
                 SoundManager.Instance.PlayBGM(BGMSoundData.BGM.ResultBGM);
-                JadgementBarController.Instance.Jadge();
                 _pleasePushToA = GameObject.Find("PleasePushToA").GetComponent<TextMeshProUGUI>();
                 _pleasePushToA.text = _pleasePushToAText;
-                FadeText().Forget();
+                FadeText(_pleasePushToA, token: cts).Forget();
                 GameManager.Instance.PlayerInput.enabled = true;
             }
         }
@@ -146,7 +166,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         {
             buildingSprite = obj.GetComponent<SpriteRenderer>().sprite;
         }
-        catch(MissingComponentException mce)
+        catch (MissingComponentException mce)
         {
             buildingSprite = obj.GetComponentInChildren<SpriteRenderer>().sprite;
         }
@@ -168,12 +188,12 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     /// </summary>
     /// <param name="token"></param>
     /// <returns></returns>
-    public async UniTask StartGameEffect(CancellationToken token = default)
+    public async UniTask StartGameEffect(CancellationTokenSource token = default)
     {
         _waitingGameTimeText.fontSize = 300.0f;
         _waitingGameTimeText.text = "Let's build!!!";
         SoundManager.Instance.PlaySE(SESoundData.SE.StartGame);
-        await UniTask.Delay(1500, false, PlayerLoopTiming.Update, token);
+        await UniTask.Delay(1500, false, PlayerLoopTiming.Update, token.Token);
         var waitingGameTimeTextParent = _waitingGameTimeText.GetComponentInParent<CanvasGroup>();
         waitingGameTimeTextParent.ignoreParentGroups = false;
         IsStartedGameTime = true;
@@ -183,18 +203,19 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     /// <summary>
     /// テキストを点滅
     /// </summary>
-    /// <param name="isFaded">alpha の増減切り替え</param>
+    /// <param name="tmp">フェードさせるテキスト</param>
     /// <param name="token">キャンセル処理用のトークン</param>
     /// <returns></returns>
-    private async UniTask FadeText(bool isFaded = false, CancellationToken token = default)
+    private async UniTask FadeText(TextMeshProUGUI tmp, CancellationTokenSource token = default)
     {
-        Color textColor = _pleasePushToA.color;
+        bool isFaded = false;
+        Color textColor = tmp.color;
         while (true)
         {
             if (false == isFaded)
             {
                 textColor.a -= Time.deltaTime;
-                _pleasePushToA.color = new Color(textColor.r, textColor.g, textColor.b, textColor.a);
+                tmp.color = new Color(textColor.r, textColor.g, textColor.b, textColor.a);
                 if (textColor.a < 0.0f)
                 {
                     textColor.a = 0.0f;
@@ -204,14 +225,14 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
             else if (true == isFaded)
             {
                 textColor.a += Time.deltaTime;
-                _pleasePushToA.color = new Color(textColor.r, textColor.g, textColor.b, textColor.a);
+                tmp.color = new Color(textColor.r, textColor.g, textColor.b, textColor.a);
                 if (textColor.a > 1.0f)
                 {
                     textColor.a = 1.0f;
                     isFaded = false;
                 }
             }
-            await UniTask.Yield(token);
+            await UniTask.Yield(token.Token);
         }
     }
 
@@ -220,11 +241,11 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     /// </summary>
     /// <param name="fadeOutTime">フェードアウトにかかる秒数</param>
     /// <param name="alphaRatio">開始時最終的な alpha 値の割合</param>
-    /// <param name="isFaded">フェード終了フラグ</param>
-    /// <param name="token">キャンセル処理用のトークン</param>
+    /// <param name="cts">キャンセル処理用のトークン</param>
     /// <returns></returns>
-    public async UniTask FadeOutImage(float fadeOutTime, float alphaRatio = 0.5f, bool isFaded = false, CancellationToken token = default)
+    public async UniTask FadeOutBackGroundImage(float fadeOutTime, float alphaRatio = 0.5f, CancellationTokenSource cts = default)
     {
+        bool isFaded = false;
         Color imageColor = _backGroundImage.color;
         while (false == isFaded)
         {
@@ -235,7 +256,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
                 imageColor.a = 0.0f;
                 isFaded = true;
             }
-            await UniTask.Yield(token);
+            await UniTask.Yield(cts.Token);
         }
     }
 
@@ -244,22 +265,46 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     /// </summary>
     /// <param name="fadeInTime">フェードインにかかる秒数</param>
     /// <param name="alphaRatio">開始時の alpha 値の割合</param>
-    /// <param name="isFaded">フェード終了フラグ</param>
-    /// <param name="token">キャンセル処理用のトークン</param>
+    /// <param name="cts">キャンセル処理用のトークン</param>
     /// <returns></returns>
-    private async UniTask FadeInImage(float fadeInTime, float alphaRatio = 0.5f, bool isFaded = false, CancellationToken token = default)
+    private async UniTask FadeInBackGroundImage(float fadeInTime, float alphaRatio = 0.5f, CancellationTokenSource cts = default)
     {
+        bool isFaded = false;
         Color imageColor = _backGroundImage.color;
         while (false == isFaded)
         {
             imageColor.a += Time.deltaTime * alphaRatio * (fadeInTime * 0.1f);
             _backGroundImage.color = new Color(imageColor.r, imageColor.g, imageColor.b, imageColor.a);
-            if (imageColor.a > 0.5f)
+            if (imageColor.a > alphaRatio)
             {
                 imageColor.a = 0.3f;
                 isFaded = true;
             }
-            await UniTask.Yield(token);
+            await UniTask.Yield(cts.Token);
+        }
+    }
+
+    private void PlayPlayer1ResultAnimation(Image image)
+    {
+        if (image.sprite == _youWon)
+        {
+            _player1Anim.SetBool("WinPlayer", true);
+        }
+        else if (image.sprite == _youLost)
+        {
+            _player1Anim.SetBool("LosePlayer", true);
+        }
+    }
+
+    private void PlayPlayer2ResultAnimation(Image image)
+    {
+        if (image.sprite == _youWon)
+        {
+            _player2Anim.SetBool("WinPlayer", true);
+        }
+        else if (image.sprite == _youLost)
+        {
+            _player2Anim.SetBool("LosePlayer", true);
         }
     }
 }

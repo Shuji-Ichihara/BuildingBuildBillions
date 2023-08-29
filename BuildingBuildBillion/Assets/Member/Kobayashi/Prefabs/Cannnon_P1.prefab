@@ -154,8 +154,8 @@ GameObject:
   - component: {fileID: 2166492274631125314}
   - component: {fileID: 2166492274631125316}
   - component: {fileID: 2166492274631125317}
-  - component: {fileID: -3027562418126910897}
   - component: {fileID: 2060356631334193869}
+  - component: {fileID: -3027562418126910897}
   - component: {fileID: 7014364478219550060}
   m_Layer: 0
   m_Name: Cannnon_P1
@@ -281,6 +281,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.4069731, y: 1.420877}
   m_EdgeRadius: 0
+--- !u!114 &2060356631334193869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2166492274631125312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 879c89c4554477b4e9321f6478a83071, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fireTime: 1
+  _cannnonBulletImpact: 10000
+  _cannonBullet: {fileID: 4029430022120792514, guid: 8f7d2572878bb404091ed33a2289e63f, type: 3}
+  _cannonMuzzle: {fileID: 2166492274277147779}
 --- !u!114 &-3027562418126910897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -320,22 +336,6 @@ MonoBehaviour:
   BuildingStop: 0
   Stop: 0
   rb: {fileID: 0}
---- !u!114 &2060356631334193869
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2166492274631125312}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 879c89c4554477b4e9321f6478a83071, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _fireTime: 1
-  _cannnonBulletImpact: 10000
-  _cannonBullet: {fileID: 4029430022120792514, guid: 8f7d2572878bb404091ed33a2289e63f, type: 3}
-  _cannonMuzzle: {fileID: 2166492274277147779}
 --- !u!114 &7014364478219550060
 MonoBehaviour:
   m_ObjectHideFlags: 0
