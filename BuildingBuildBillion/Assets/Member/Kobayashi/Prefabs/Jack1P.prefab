@@ -363,7 +363,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &2708327462132795764
@@ -379,13 +379,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _jackSprite:
-  - {fileID: 21300000, guid: 34112297488f53541b6f54f8c2e10aeb, type: 3}
+  - {fileID: 21300000, guid: 339b287448e90a54395a6a0fdb63e864, type: 3}
   - {fileID: 21300000, guid: 1d2fd2f9df2f78744bb25fd0255fbbe3, type: 3}
   - {fileID: 21300000, guid: 44b3ea7894b001b4e90356879f55d2ea, type: 3}
   _maxAllowedAngleUp: 5
   _maxAllowedAngleDown: 175
-  isUp: 0
-  isDown: 0
 --- !u!61 &2708327462132795720
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -468,7 +466,7 @@ MonoBehaviour:
   _downSpeed: 10
   _rotateAngle: 0
   _col: {fileID: 0}
-  _col2: {fileID: 0}
+  _col2: {fileID: 1533179524416314669}
   Player: 0
   Block: 0
   _restTime: 0.25
@@ -507,7 +505,7 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 31101085729613574}
         m_TargetAssemblyTypeName: NewBuildingcon, Assembly-CSharp
         m_MethodName: BuildingMove
         m_Mode: 0
@@ -523,7 +521,7 @@ MonoBehaviour:
     m_ActionName: Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/XInputControllerWindows/dpad]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 31101085729613574}
         m_TargetAssemblyTypeName: NewBuildingcon, Assembly-CSharp
         m_MethodName: BuildingRotation
         m_Mode: 0
