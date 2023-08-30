@@ -46,9 +46,6 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     public Image Player1NextBuildingMaterial = null;
     // 次の建材表示 (2P)
     public Image Player2NextBuildingMaterial = null;
-    // 次の建材表示の背景
-    private Image _player1NextBack = null;
-    private Image _player2NextBack = null;
     [Space(3)]
     #endregion
 
@@ -72,7 +69,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     [Space(3)]
     #endregion
 
-    #region UI アニメーション
+    #region アニメーション
     [SerializeField]
     private Animator _player1Anim = null;
     [SerializeField]
@@ -82,7 +79,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     // 一度のみ実行するフラグ
     private bool _isDoneOnce = false;
     // キャンセル処理用のトークン
-    private CancellationTokenSource cts = new CancellationTokenSource();
+    private CancellationTokenSource _cts = new CancellationTokenSource();
 
     // Start is called before the first frame update
     void Start()
@@ -131,24 +128,24 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
                 _isDoneOnce = true;
                 var resultSceneCanvasGroup = _resultSceneCanvas.GetComponent<CanvasGroup>();
                 resultSceneCanvasGroup.alpha = 1.0f;
-                await FadeInBackGroundImage(5.0f, 0.8f, cts);
+                await FadeInBackGroundImage(5.0f, 0.8f, _cts);
                 SoundManager.Instance.PlayBGM(BGMSoundData.BGM.AnnouncementOfResult);
                 _resultTtile.enabled = true;
                 // 溜めの演出
-                await UniTask.DelayFrame(60 * 3, cancellationToken: cts.Token);
+                await UniTask.DelayFrame(60 * 3, cancellationToken: _cts.Token);
                 JadgementBarController.Instance.Jadge();
                 Player1Result.color = Color.white;
                 Player2Result.color = Color.white;
-                PlayPlayer1ResultAnimation(Player1Result);
-                PlayPlayer2ResultAnimation(Player2Result);
-                await UniTask.DelayFrame(60 * 4, cancellationToken: cts.Token);
+                await UniTask.WhenAll(
+                    PlayPlayer1ResultAnimation(Player1Result, _cts),
+                    PlayPlayer2ResultAnimation(Player2Result, _cts));
                 // AnnouncementOfResult を停止
                 SoundManager.Instance.StopBGM();
                 SoundManager.Instance.PlaySE(SESoundData.SE.Cheer);
                 SoundManager.Instance.PlayBGM(BGMSoundData.BGM.ResultBGM);
                 _pleasePushToA = GameObject.Find("PleasePushToA").GetComponent<TextMeshProUGUI>();
                 _pleasePushToA.text = _pleasePushToAText;
-                FadeText(_pleasePushToA, token: cts).Forget();
+                FadeText(_pleasePushToA, cts: _cts).Forget();
                 GameManager.Instance.PlayerInput.enabled = true;
             }
         }
@@ -186,14 +183,14 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     /// <summary>
     /// ゲーム開始時の演出
     /// </summary>
-    /// <param name="token"></param>
+    /// <param name="cts"></param>
     /// <returns></returns>
-    public async UniTask StartGameEffect(CancellationTokenSource token = default)
+    public async UniTask StartGameEffect(CancellationTokenSource cts = default)
     {
         _waitingGameTimeText.fontSize = 300.0f;
         _waitingGameTimeText.text = "Let's build!!!";
         SoundManager.Instance.PlaySE(SESoundData.SE.StartGame);
-        await UniTask.Delay(1500, false, PlayerLoopTiming.Update, token.Token);
+        await UniTask.Delay(1500, false, PlayerLoopTiming.Update, cts.Token);
         var waitingGameTimeTextParent = _waitingGameTimeText.GetComponentInParent<CanvasGroup>();
         waitingGameTimeTextParent.ignoreParentGroups = false;
         IsStartedGameTime = true;
@@ -204,9 +201,9 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     /// テキストを点滅
     /// </summary>
     /// <param name="tmp">フェードさせるテキスト</param>
-    /// <param name="token">キャンセル処理用のトークン</param>
+    /// <param name="cts">キャンセル処理用のトークン</param>
     /// <returns></returns>
-    private async UniTask FadeText(TextMeshProUGUI tmp, CancellationTokenSource token = default)
+    private async UniTask FadeText(TextMeshProUGUI tmp, CancellationTokenSource cts = default)
     {
         bool isFaded = false;
         Color textColor = tmp.color;
@@ -232,7 +229,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
                     isFaded = false;
                 }
             }
-            await UniTask.Yield(token.Token);
+            await UniTask.Yield(cts.Token);
         }
     }
 
@@ -284,10 +281,17 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         }
     }
 
-    private void PlayPlayer1ResultAnimation(Image image)
+    /// <summary>
+    /// Player1 のリザルトアニメーション
+    /// </summary>
+    /// <param name="image">アニメーションするイメージ画像</param>
+    /// <param name="cts">キャンセル処理用のトークン</param>
+    /// <returns></returns>
+    private async UniTask PlayPlayer1ResultAnimation(Image image, CancellationTokenSource cts = default)
     {
         if (image.sprite == _youWon)
         {
+            await UniTask.DelayFrame(60 * 4, cancellationToken:cts.Token);
             _player1Anim.SetBool("WinPlayer", true);
         }
         else if (image.sprite == _youLost)
@@ -296,10 +300,16 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         }
     }
 
-    private void PlayPlayer2ResultAnimation(Image image)
+    /// <summary>
+    /// Player2 のリザルトアニメーション
+    /// </summary>
+    /// <param name="image">アニメーションするイメージ画像</param>
+    /// <returns>キャンセル処理用のトークン</returns>
+    private async UniTask  PlayPlayer2ResultAnimation(Image image, CancellationTokenSource cts = default)
     {
         if (image.sprite == _youWon)
         {
+            await UniTask.DelayFrame(60 * 4, cancellationToken:cts.Token);
             _player2Anim.SetBool("WinPlayer", true);
         }
         else if (image.sprite == _youLost)
