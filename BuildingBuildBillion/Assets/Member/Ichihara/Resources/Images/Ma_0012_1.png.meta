@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:BuildingBuildBillion/Assets/Resources/Textures/Jack/Ma_0007_1.png.meta
 guid: 6c5fc38477c8a7744b6c3bfb2f49893c
-========
-guid: 5b62058cc77b49946b0bb8e9d0596d6c
->>>>>>>> feature/ichihara/Manager_2:BuildingBuildBillion/Assets/Member/Ichihara/Resources/Images/Ma_0012_1.png.meta
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,8 +101,6 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-<<<<<<<< HEAD:BuildingBuildBillion/Assets/Resources/Textures/Jack/Ma_0007_1.png.meta
-========
   - serializedVersion: 3
     buildTarget: Android
     maxTextureSize: 2048
@@ -143,7 +137,6 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
->>>>>>>> feature/ichihara/Manager_2:BuildingBuildBillion/Assets/Member/Ichihara/Resources/Images/Ma_0012_1.png.meta
   spriteSheet:
     serializedVersion: 2
     sprites: []
