@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Conveyor
+  m_Name: conve
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -39,8 +39,13 @@ AnimationClip:
       value: {fileID: 21300000, guid: b0773c4c65e795248b5df213f60cba6a, type: 3}
     - time: 1.2
       value: {fileID: 21300000, guid: 47cdcc66dea8aa847b9cc224eec8a9f6, type: 3}
+<<<<<<< HEAD:BuildingBuildBillion/Assets/Member/matumura/Images/Ma_0004/Conveyor.anim
     - time: 1.2166667
       value: {fileID: 21300000, guid: 612874361496c514293eec0c14ace524, type: 3}
+=======
+    - time: 1.3333334
+      value: {fileID: 21300000, guid: 6cc758de099cb944f949e1562a2d2f5c, type: 3}
+>>>>>>> origin/matumura:BuildingBuildBillion/Assets/Member/matumura/Images/Ma_0004/conve.anim
     attribute: m_Sprite
     path: 
     classID: 212
@@ -76,7 +81,11 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
+<<<<<<< HEAD:BuildingBuildBillion/Assets/Member/matumura/Images/Ma_0004/Conveyor.anim
     m_StopTime: 1.2333333
+=======
+    m_StopTime: 1.35
+>>>>>>> origin/matumura:BuildingBuildBillion/Assets/Member/matumura/Images/Ma_0004/conve.anim
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0

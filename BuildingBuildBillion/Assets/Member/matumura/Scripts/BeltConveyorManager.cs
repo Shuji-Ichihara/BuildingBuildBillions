@@ -42,8 +42,6 @@ public class BeltConveyorManager : MonoBehaviour
 
 
 
-
-
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (gameObjects.Contains(collision.gameObject))
