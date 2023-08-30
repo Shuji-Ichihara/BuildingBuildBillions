@@ -57,7 +57,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     [System.NonSerialized]
     public bool IsPreviewedResult = false;
     // キャンセル処理用のトークン
-    private CancellationTokenSource cts = new CancellationTokenSource();
+    private CancellationTokenSource _cts = new CancellationTokenSource();
 
     // Start is called before the first frame update
     async void Start()
@@ -82,7 +82,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         _defaultBuildSpawnPoint2 = _buildSpawnPoint2.transform.position;
         PlayerInput = GetComponent<PlayerInput>();
         PlayerInput.enabled = false;
-        await PlayGameTime(cts);
+        await PlayGameTime(_cts);
     }
 
     private void Update()
