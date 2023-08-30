@@ -18,8 +18,8 @@ GameObject:
   - component: {fileID: -805288295250458417}
   - component: {fileID: -8873757601331911749}
   m_Layer: 0
-  m_Name: Conveyor2P
-  m_TagString: Bill2
+  m_Name: Conveyor
+  m_TagString: Bill
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -79,7 +79,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97d17114e99ddd64bbf076480f843b6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: -100
+  speed: 100
 --- !u!95 &1741790246900036779
 Animator:
   serializedVersion: 5
@@ -90,7 +90,7 @@ Animator:
   m_GameObject: {fileID: 1741790246900036769}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ed5afa362ebf1cb448bac558d08af99b, type: 2}
+  m_Controller: {fileID: 9100000, guid: f1b005d88f768c041a473f3de66a7b7a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -116,13 +116,25 @@ MonoBehaviour:
   _rotateAngle: 0
   _col: {fileID: 2892423280629222401}
   _col2: {fileID: 5292065585422109741}
-  Player: 1
+  Player: 0
   Block: 0
   _restTime: 0.25
   _pastPositions: []
   myEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1741790246900036773}
+        m_TargetAssemblyTypeName: BeltConveyorManager, Assembly-CSharp
+        m_MethodName: EventRegistration
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   sprites: []
   BuildingStop: 0
   Stop: 0
