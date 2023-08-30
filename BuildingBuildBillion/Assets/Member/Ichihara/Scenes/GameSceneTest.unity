@@ -352,7 +352,7 @@ PrefabInstance:
     - target: {fileID: 3035006443894946442, guid: e2fd76f9a2d706549ada359f3a642337, type: 3}
       propertyPath: Bills.Array.data[4]
       value: 
-      objectReference: {fileID: 5409081793170664847, guid: 047a9689416b4164ea24acd242ca49fb, type: 3}
+      objectReference: {fileID: 2708327462132795763, guid: 806ac36e4ae5bf642bb7906e10aa76d4, type: 3}
     - target: {fileID: 3035006443894946442, guid: e2fd76f9a2d706549ada359f3a642337, type: 3}
       propertyPath: Bills.Array.data[5]
       value: 
@@ -2160,7 +2160,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5b62058cc77b49946b0bb8e9d0596d6c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6c5fc38477c8a7744b6c3bfb2f49893c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2683,7 +2683,7 @@ PrefabInstance:
     - target: {fileID: 6644617886362527705, guid: 43bdb773fcc3b0943a4f1a3f297e2fc7, type: 3}
       propertyPath: Bills2P.Array.data[4]
       value: 
-      objectReference: {fileID: 5409081793170664847, guid: 2cc6a0d5b66388f479a204a859f00d98, type: 3}
+      objectReference: {fileID: 5532559884414097555, guid: 1d0c4563aeeeb734f96797206fa0f331, type: 3}
     - target: {fileID: 6644617886362527705, guid: 43bdb773fcc3b0943a4f1a3f297e2fc7, type: 3}
       propertyPath: Bills2P.Array.data[5]
       value: 
