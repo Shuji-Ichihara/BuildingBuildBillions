@@ -22,6 +22,7 @@ public class CameraController : SingletonMonoBehaviour<CameraController>
     private GameObject _empty = null;
     private Vector3 _defaultPosition = Vector3.zero;
 
+    private CancellationTokenSource _cts = new CancellationTokenSource();
     private Func<GameObject, GameObject, float> ObjectTop;
 
     // Start is called before the first frame update
@@ -37,13 +38,14 @@ public class CameraController : SingletonMonoBehaviour<CameraController>
     /// </summary>
     public void CallCalucrateCameraMovement()
     {
-        CalucrateCameraMovement(this.GetCancellationTokenOnDestroy()).Forget();
+        CalucrateCameraMovement(_cts).Forget();
     }
 
     /// <summary>
     /// カメラズーム
     /// </summary>
-    private async UniTask CalucrateCameraMovement(CancellationToken token = default)
+    /// <param name="cts">キャンセル処理用のトークン</param>
+    private async UniTask CalucrateCameraMovement(CancellationTokenSource cts = default)
     {
         // カメラの OrthographicSize の変化量
         float zoom = _zoomCameraSpeed * Time.deltaTime;
@@ -75,12 +77,12 @@ public class CameraController : SingletonMonoBehaviour<CameraController>
                 isMovedCameraSwtich = false;
             }
             else { continue; }
-            await MoveCamera(zoom, moveVector, isMovedCameraSwtich, token);
+            await MoveCamera(zoom, moveVector, isMovedCameraSwtich, cts);
             // カメラの OrthgraphicSize の限界値を定義
             _camera.m_Lens.OrthographicSize = Mathf.Clamp(_camera.m_Lens.OrthographicSize
                                                      , Screen.height / 2.0f
                                                      , Screen.height); ;
-            await UniTask.Yield(token);
+            await UniTask.Yield(cts.Token);
         }
 
     }
@@ -116,16 +118,21 @@ public class CameraController : SingletonMonoBehaviour<CameraController>
     /// <param name="zoom">カメラズームの変化量</param>
     /// <param name="vector">カメラの Y 軸の移動方向</param>
     /// <param name="movedSwitch">カメラの移動方向の切り替え</param>
-    /// <param name="token">UniTask 中止用のトークン</param>
+    /// <param name="cts">UniTask 中止用のトークン</param>
     /// <returns></returns>
-    private async UniTask MoveCamera(float zoom, Vector3 vector, bool movedSwitch, CancellationToken token = default)
+    private async UniTask MoveCamera(float zoom, Vector3 vector, bool movedSwitch, CancellationTokenSource cts = default)
     {
         // 変更の可能性有
-        await UniTask.WaitForFixedUpdate(token);
+        await UniTask.WaitForFixedUpdate(cts.Token);
         try
         {
             // カメラのズーム、移動を止める処理
             float top = ObjectTop(GameManager.Instance.Obj, GameManager.Instance.Obj2);
+            if (ObjectTop == null)
+            {
+                cts.Cancel();
+                return;
+            }
             if (_empty.transform.position.y - top
                 > _camera.m_Lens.OrthographicSize * GameManager.Instance.BuildingHeightAndScreenRatio / 2.0f) { return; }
             _empty.transform.position += new Vector3(0.0f, zoom, 0.0f);
