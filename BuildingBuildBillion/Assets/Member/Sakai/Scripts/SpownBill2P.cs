@@ -22,7 +22,7 @@ public class SpownBill2P : MonoBehaviour
             int indexToUse = randomIndices2P[0];
             GameObject newBill2P = Instantiate(Bills2P[indexToUse], transform.position, Quaternion.identity);
             GameManager.Instance.Obj2 = newBill2P;
-            UIManager.Instance.Player2NextBuildingMaterial.sprite = UIManager.Instance.PreviewBuildingSprite(Bills2P[randomIndices2P[1]]);
+            UIManager.Instance.Player2NextBuildingMaterial.sprite = UIManager.Instance.PreviewBuildingThumbnail(Bills2P[randomIndices2P[1]]);
 
             randomIndices2P.RemoveAt(0); // 配列の先頭の値を削除
             int newIndex = GenerateRandomIndex2P(); // 新しい乱数を生成

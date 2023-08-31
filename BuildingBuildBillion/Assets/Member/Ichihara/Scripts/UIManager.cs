@@ -136,10 +136,10 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
                 JadgementBarController.Instance.Jadge();
                 Player1Result.color = Color.white;
                 Player2Result.color = Color.white;
-                await UniTask.WhenAll(
-                    PlayPlayer1ResultAnimation(Player1Result, _cts),
-                    PlayPlayer2ResultAnimation(Player2Result, _cts));
+                PlayPlayer1ResultAnimation(Player1Result, _cts).Forget();
+                PlayPlayer2ResultAnimation(Player2Result, _cts).Forget();
                 // AnnouncementOfResult を停止
+                await UniTask.DelayFrame(60, cancellationToken: _cts.Token);
                 SoundManager.Instance.StopBGM();
                 SoundManager.Instance.PlaySE(SESoundData.SE.Cheer);
                 SoundManager.Instance.PlayBGM(BGMSoundData.BGM.ResultBGM);
@@ -156,17 +156,11 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     /// </summary>
     /// <param name="obj">表示するオブジェクトの種類</param>
     /// <returns></returns>
-    public Sprite PreviewBuildingSprite(GameObject obj)
+    public Sprite PreviewBuildingThumbnail(GameObject obj)
     {
-        Sprite buildingSprite;
-        try
-        {
-            buildingSprite = obj.GetComponent<SpriteRenderer>().sprite;
-        }
-        catch (MissingComponentException mce)
-        {
-            buildingSprite = obj.GetComponentInChildren<SpriteRenderer>().sprite;
-        }
+        Sprite buildingSprite = obj.GetComponent<SpriteRenderer>().sprite;
+        if (buildingSprite == null) { buildingSprite = obj.GetComponentInChildren<SpriteRenderer>().sprite; }
+        // 表示するサムネイル画像
         Sprite thumbnail = null;
 
         for (int i = 0; i < _thumbnailImages.Count; i++)
