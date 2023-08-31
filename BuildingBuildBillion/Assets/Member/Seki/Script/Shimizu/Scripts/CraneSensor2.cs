@@ -68,7 +68,7 @@ public class CraneSensor2 : MonoBehaviour
         //k‚ß‚é
         if (widthContract)
         {
-            Debug.Log(defaultPositionParent.x);
+            //Debug.Log(defaultPositionParent.x);
             transform.parent.localPosition = new Vector2(Mathf.Lerp(-endPositionWidth + defaultPositionParent.x, defaultPositionParent.x - 8.5f, ratio2), transform.parent.localPosition.y);
             ratio2 += Time.deltaTime / speedWidth;
             if (ratio2 > 1f)
@@ -96,8 +96,8 @@ public class CraneSensor2 : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Materials"))
-        {
+        if (collision.gameObject.CompareTag("Bill")||  (collision.gameObject.CompareTag("Bill2")))
+        { 
             armCanMove = false;
             armCatch = true;
             otherObject = collision.gameObject;

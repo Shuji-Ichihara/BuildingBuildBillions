@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using SpriteGlow;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using UnityEngine.InputSystem;
 
 public class NewBuildingcon : MonoBehaviour
 {
-    [SerializeField] private float _downSpeed = 10;
+    [SerializeField] private float _downSpeed = 250;
     private float _previousTime = 0;
     // ブロックの落ちる時間
     private float _fallTime = 1f;
@@ -45,7 +46,7 @@ public class NewBuildingcon : MonoBehaviour
     [SerializeField]
     private float _restTime = 0.25f;
     private float _fromMoveHorizonal = 0.0f;
-
+  
     private bool _right = true;
     private bool _left = true;
     private Vector3 _screenPoint;
@@ -63,11 +64,11 @@ public class NewBuildingcon : MonoBehaviour
     public bool Stop;
     public Rigidbody2D rb;
     //public Vector3 billControllerPosition { get; private set; }
-
+  
 
     public void Start()
     {
-        //rb.gravityScale = 500;
+     
 
         rb = this.gameObject.GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Dynamic;
@@ -97,6 +98,7 @@ public class NewBuildingcon : MonoBehaviour
 
     void Update()
     {
+        SpriteGlowEffect scriptA = this.GetComponent<SpriteGlowEffect>();
         _previousTime += Time.deltaTime;
         if (_previousTime >= _fallTime)
         {
@@ -288,13 +290,13 @@ public class NewBuildingcon : MonoBehaviour
                         //transform.position += new Vector3(moveDistance, 0, 0);
                         //Vector2 Move = this.transform.position + moveDistance;
                         //rb.MovePosition(Move);
-                        rb.velocity -= _moveDistance * 20;
+                        rb.velocity -= _moveDistance * 30;
                     }
                     if (Mathf.Ceil(_inputMove.x) == 1)
                     {
                         //Vector2 Move = this.transform.position + moveDistance;
                         //rb.MovePosition(Move);
-                        rb.velocity += _moveDistance * 20;
+                        rb.velocity += _moveDistance * 30;
                     }
                 }
 
@@ -315,6 +317,7 @@ public class NewBuildingcon : MonoBehaviour
             transform.position = new Vector3(transform.position.x, transform.position.y, 0);
             //transform.position = new Vector3(transform.position.x, 1, 0);//座標を(0,1)に戻す
             this.enabled = false;
+            scriptA.DisableGlow();
             CreateNextBlock();
         }
         if (BuildingStop == true)
@@ -327,6 +330,7 @@ public class NewBuildingcon : MonoBehaviour
             rb.constraints = RigidbodyConstraints2D.None;
             transform.position = new Vector3(transform.position.x, transform.position.y, 0);//座標をその場にとどまる
 
+            scriptA.DisableGlow();
             this.enabled = false;
             CreateNextBlock();
         }
@@ -346,7 +350,7 @@ public class NewBuildingcon : MonoBehaviour
 
 
     }
-
+    
     public void BuildingRotation(InputAction.CallbackContext context)
     {
         var y = context.control.name;

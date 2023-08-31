@@ -22,7 +22,7 @@
                     "path": "<Gamepad>/buttonSouth",
                     "interactions": "Press(behavior=2)",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Gamepad",
                     "action": "A_Button",
                     "isComposite": false,
                     "isPartOfComposite": false

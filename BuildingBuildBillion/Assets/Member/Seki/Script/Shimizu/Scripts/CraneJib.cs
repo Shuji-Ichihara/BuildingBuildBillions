@@ -21,6 +21,8 @@ public class CraneJib : NewBuildingcon
 
     private void Start()
     {
+
+        Debug.Log(armSprite.size);
         craneSensor.GetComponent<Transform>();
     }
     private void Update()
@@ -42,6 +44,7 @@ public class CraneJib : NewBuildingcon
                 craneSensor.CraneMoveOn();
             }
             //
+            //Debug.Log(armSprite.size);
         }
         //òrÇ™èkÇﬁ
         if(jibContract)

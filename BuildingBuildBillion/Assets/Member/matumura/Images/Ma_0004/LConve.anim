@@ -129,6 +129,8 @@ AnimationClip:
       value: {fileID: 21300000, guid: 612874361496c514293eec0c14ace524, type: 3}
     - time: 0.13333334
       value: {fileID: 21300000, guid: e5d74591a5ff6df499dfa851328318d2, type: 3}
+    - time: 0.2
+      value: {fileID: 21300000, guid: 612874361496c514293eec0c14ace524, type: 3}
     - time: 0.26666668
       value: {fileID: 21300000, guid: bf28d4c7bf35ac04d8f172c1749030bb, type: 3}
     - time: 0.4
@@ -149,6 +151,18 @@ AnimationClip:
       value: {fileID: 21300000, guid: 6cc758de099cb944f949e1562a2d2f5c, type: 3}
     attribute: m_Sprite
     path: 
+<<<<<<< HEAD:BuildingBuildBillion/Assets/Member/matumura/Images/Ma_0004/LeftConbe.anim
+    classID: 114
+    script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  - curve:
+    - time: 0
+      value: {fileID: 21300000, guid: 612874361496c514293eec0c14ace524, type: 3}
+    - time: 1.35
+      value: {fileID: 21300000, guid: 612874361496c514293eec0c14ace524, type: 3}
+    attribute: m_Sprite
+    path: 
+=======
+>>>>>>> origin/matumura:BuildingBuildBillion/Assets/Member/matumura/Images/Ma_0004/LConve.anim
     classID: 212
     script: {fileID: 0}
   m_SampleRate: 60
@@ -167,6 +181,13 @@ AnimationClip:
       isPPtrCurve: 1
     - serializedVersion: 2
       path: 0
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 212
+      customType: 23
+      isPPtrCurve: 1
+    - serializedVersion: 2
+      path: 0
       attribute: 4
       script: {fileID: 0}
       typeID: 4
@@ -175,6 +196,7 @@ AnimationClip:
     pptrCurveMapping:
     - {fileID: 21300000, guid: 612874361496c514293eec0c14ace524, type: 3}
     - {fileID: 21300000, guid: e5d74591a5ff6df499dfa851328318d2, type: 3}
+    - {fileID: 21300000, guid: 612874361496c514293eec0c14ace524, type: 3}
     - {fileID: 21300000, guid: bf28d4c7bf35ac04d8f172c1749030bb, type: 3}
     - {fileID: 21300000, guid: 13d5daccaf722224fbecb2094542e59b, type: 3}
     - {fileID: 21300000, guid: d5b11f58e650e9d42893ad3b1593a870, type: 3}
@@ -184,12 +206,14 @@ AnimationClip:
     - {fileID: 21300000, guid: b0773c4c65e795248b5df213f60cba6a, type: 3}
     - {fileID: 21300000, guid: 47cdcc66dea8aa847b9cc224eec8a9f6, type: 3}
     - {fileID: 21300000, guid: 6cc758de099cb944f949e1562a2d2f5c, type: 3}
+    - {fileID: 21300000, guid: 612874361496c514293eec0c14ace524, type: 3}
+    - {fileID: 21300000, guid: 612874361496c514293eec0c14ace524, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1.35
+    m_StopTime: 1.3666667
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
