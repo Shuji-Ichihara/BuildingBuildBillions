@@ -49,6 +49,7 @@ public class SpownBill2P : MonoBehaviour
     private void SetSpriteInBills2P(int index)
     {
         NewBuildingcon newBuildingcon = Bills2P[index].GetComponent<NewBuildingcon>();
+        if(newBuildingcon == null) { newBuildingcon = Bills2P[index].GetComponentInChildren<NewBuildingcon>(); }
         if (newBuildingcon.sprites.Length > 0)
         {
             // 最初にスプライトをランダムに選択する
