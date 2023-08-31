@@ -21,8 +21,15 @@ public class SpownBill : MonoBehaviour
         {
             int indexToUse = randomIndices[0];
             GameObject newBill = Instantiate(Bills[indexToUse], transform.position, Quaternion.identity);
+            NewBuildingcon newBuildingcon = newBill.GetComponent<NewBuildingcon>();
+            if (newBuildingcon.sprites.Length > 0)
+            {
+                // 最初にスプライトをランダムに選択する
+                SpriteRenderer spriteRenderer = newBuildingcon.GetComponent<SpriteRenderer>();
+                newBuildingcon.ChangeSpriteRandomly(spriteRenderer);
+            }
             GameManager.Instance.Obj = newBill;
-            UIManager.Instance.Player1NextBuildingMaterial.sprite = UIManager.Instance.PreviewBuildingSprite(newBill);
+            UIManager.Instance.Player1NextBuildingMaterial.sprite = UIManager.Instance.PreviewBuildingSprite(Bills[randomIndices[1]]);
 
             randomIndices.RemoveAt(0); // 配列の先頭の値を削除
             int newIndex = GenerateRandomIndex(); // 新しい乱数を生成

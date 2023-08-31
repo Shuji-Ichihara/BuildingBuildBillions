@@ -46,7 +46,7 @@ public class NewBuildingcon : MonoBehaviour
     [SerializeField]
     private float _restTime = 0.25f;
     private float _fromMoveHorizonal = 0.0f;
-  
+
     private bool _right = true;
     private bool _left = true;
     private Vector3 _screenPoint;
@@ -64,12 +64,9 @@ public class NewBuildingcon : MonoBehaviour
     public bool Stop;
     public Rigidbody2D rb;
     //public Vector3 billControllerPosition { get; private set; }
-  
 
     public void Start()
     {
-     
-
         rb = this.gameObject.GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Dynamic;
         if (_col != null && _col2 != null)
@@ -79,12 +76,6 @@ public class NewBuildingcon : MonoBehaviour
 
         }
         this.transform.gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        // 最初にスプライトをランダムに選択する
-        if (sprites.Length > 0)
-        {
-            ChangeSpriteRandomly();
-        }
         switch (Block)
         {
             case BlockStae.Normal:
@@ -344,13 +335,12 @@ public class NewBuildingcon : MonoBehaviour
         }
         if (Mathf.Ceil(_inputMove.y) == -1)
         {
-
             rb.velocity += new Vector2(0, Mathf.Abs(_inputMove.y) * -_downSpeed * 5);
         }
 
 
     }
-    
+
     public void BuildingRotation(InputAction.CallbackContext context)
     {
         var y = context.control.name;
@@ -422,13 +412,12 @@ public class NewBuildingcon : MonoBehaviour
         }
 
     }
-    private void ChangeSpriteRandomly()
+    public void ChangeSpriteRandomly(SpriteRenderer renderer)
     {
         // スプライトの配列からランダムにスプライトを選択する
         Sprite randomSprite = sprites[UnityEngine.Random.Range(0, sprites.Length)];
         // スプライトを変更する
-        spriteRenderer.sprite = randomSprite;
-
+        renderer.sprite = randomSprite;
     }
 
     /// <summary>
