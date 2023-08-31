@@ -131,16 +131,14 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
                 await FadeInBackGroundImage(5.0f, 0.8f, _cts);
                 SoundManager.Instance.PlayBGM(BGMSoundData.BGM.AnnouncementOfResult);
                 _resultTtile.enabled = true;
-                // 溜めの演出
+                // 溜め時間
                 await UniTask.DelayFrame(60 * 3, cancellationToken: _cts.Token);
                 JadgementBarController.Instance.Jadge();
                 Player1Result.color = Color.white;
                 Player2Result.color = Color.white;
                 PlayPlayer1ResultAnimation(Player1Result, _cts).Forget();
                 PlayPlayer2ResultAnimation(Player2Result, _cts).Forget();
-                // AnnouncementOfResult を停止
-                await UniTask.DelayFrame(60, cancellationToken: _cts.Token);
-                SoundManager.Instance.StopBGM();
+                await UniTask.DelayFrame(60 * 3, cancellationToken: _cts.Token);
                 SoundManager.Instance.PlaySE(SESoundData.SE.Cheer);
                 SoundManager.Instance.PlayBGM(BGMSoundData.BGM.ResultBGM);
                 _pleasePushToA = GameObject.Find("PleasePushToA").GetComponent<TextMeshProUGUI>();
@@ -285,8 +283,15 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     {
         if (image.sprite == _youWon)
         {
-            await UniTask.DelayFrame(60 * 4, cancellationToken: cts.Token);
-            _player1Anim.SetBool("WinPlayer", true);
+            try
+            {
+                await UniTask.DelayFrame(60 * 2, cancellationToken: cts.Token);
+                _player1Anim.SetBool("WinPlayer", true);
+            }
+            catch (MissingReferenceException mre)
+            {
+                throw;
+            }
         }
         else if (image.sprite == _youLost)
         {
@@ -303,8 +308,15 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     {
         if (image.sprite == _youWon)
         {
-            await UniTask.DelayFrame(60 * 4, cancellationToken: cts.Token);
-            _player2Anim.SetBool("WinPlayer", true);
+            try
+            {
+                await UniTask.DelayFrame(60 * 2, cancellationToken: cts.Token);
+                _player2Anim.SetBool("WinPlayer", true);
+            }
+            catch (MissingReferenceException mre)
+            {
+                throw;
+            }
         }
         else if (image.sprite == _youLost)
         {
