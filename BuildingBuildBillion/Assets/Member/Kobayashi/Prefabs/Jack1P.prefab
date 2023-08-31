@@ -289,6 +289,7 @@ GameObject:
   - component: {fileID: 2265978749675644060}
   - component: {fileID: 31101085729613574}
   - component: {fileID: 4758191830546683483}
+  - component: {fileID: 2579302433592282923}
   m_Layer: 0
   m_Name: Jack1P
   m_TagString: Bill
@@ -355,15 +356,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 34112297488f53541b6f54f8c2e10aeb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 339b287448e90a54395a6a0fdb63e864, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 5, y: 5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &2708327462132795764
@@ -402,7 +403,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 10.24, y: 6.56}
-    newSize: {x: 1, y: 1}
+    newSize: {x: 5, y: 5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -592,3 +593,22 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &2579302433592282923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2708327462132795763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8f6d3c6e4250e84192f5b34ce9e71bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlowOff: 0
+  glowColor: {r: 1, g: 1, b: 1, a: 1}
+  glowBrightness: 4
+  outlineWidth: 5
+  alphaThreshold: 0.01
+  drawOutside: 0
+  enableInstancing: 0
