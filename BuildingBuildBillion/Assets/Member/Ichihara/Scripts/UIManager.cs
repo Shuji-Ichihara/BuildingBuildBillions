@@ -138,7 +138,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
                 Player2Result.color = Color.white;
                 PlayPlayer1ResultAnimation(Player1Result, _cts).Forget();
                 PlayPlayer2ResultAnimation(Player2Result, _cts).Forget();
-                await UniTask.DelayFrame(60 * 3, cancellationToken: _cts.Token);
+                await UniTask.DelayFrame(60, cancellationToken: _cts.Token);
                 SoundManager.Instance.PlaySE(SESoundData.SE.Cheer);
                 SoundManager.Instance.PlayBGM(BGMSoundData.BGM.ResultBGM);
                 _pleasePushToA = GameObject.Find("PleasePushToA").GetComponent<TextMeshProUGUI>();
