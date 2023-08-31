@@ -156,7 +156,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     /// </summary>
     /// <param name="obj">表示するオブジェクトの種類</param>
     /// <returns></returns>
-    public Sprite PreviewBuildingSprite(in GameObject obj)
+    public Sprite PreviewBuildingSprite(GameObject obj)
     {
         Sprite buildingSprite;
         try
@@ -171,7 +171,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 
         for (int i = 0; i < _thumbnailImages.Count; i++)
         {
-            if (buildingSprite == _thumbnailImages[i].BuildingSprite || buildingSprite == _thumbnailImages[i].BuildingSprite)
+            if (buildingSprite == _thumbnailImages[i].BuildingSprite)
             {
                 thumbnail = _thumbnailImages[i].ThumbnailImage;
                 break;
@@ -291,7 +291,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     {
         if (image.sprite == _youWon)
         {
-            await UniTask.DelayFrame(60 * 4, cancellationToken:cts.Token);
+            await UniTask.DelayFrame(60 * 4, cancellationToken: cts.Token);
             _player1Anim.SetBool("WinPlayer", true);
         }
         else if (image.sprite == _youLost)
@@ -305,11 +305,11 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     /// </summary>
     /// <param name="image">アニメーションするイメージ画像</param>
     /// <returns>キャンセル処理用のトークン</returns>
-    private async UniTask  PlayPlayer2ResultAnimation(Image image, CancellationTokenSource cts = default)
+    private async UniTask PlayPlayer2ResultAnimation(Image image, CancellationTokenSource cts = default)
     {
         if (image.sprite == _youWon)
         {
-            await UniTask.DelayFrame(60 * 4, cancellationToken:cts.Token);
+            await UniTask.DelayFrame(60 * 4, cancellationToken: cts.Token);
             _player2Anim.SetBool("WinPlayer", true);
         }
         else if (image.sprite == _youLost)
