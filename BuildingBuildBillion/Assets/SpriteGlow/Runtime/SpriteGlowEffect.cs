@@ -62,7 +62,7 @@ namespace SpriteGlow
         [Tooltip("The brightness (power) of the glow."), Range(1, 30)]
         [SerializeField] private float glowBrightness = 2f;
         [Tooltip("Width of the outline, in texels."), Range(0,30)]
-        [SerializeField] private int outlineWidth = 1;
+        [SerializeField] private int outlineWidth = 30;
         [Tooltip("Threshold to determine sprite borders."), Range(0f, 1f)]
         [SerializeField] private float alphaThreshold = .01f;
         [Tooltip("Whether the outline should only be drawn outside of the sprite borders. Make sure sprite texture has sufficient transparent space for the required outline width.")]
