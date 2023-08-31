@@ -26,7 +26,7 @@ public class SpownBill : MonoBehaviour
 
             randomIndices.RemoveAt(0); // 配列の先頭の値を削除
             int newIndex = GenerateRandomIndex(); // 新しい乱数を生成
-            SetSpriteInBills(newIndex);
+            SetSpriteInBills(newIndex); // 表示するスプライトを確定(Plane のみ)
             randomIndices.Add(newIndex); // 新しい乱数を配列の最後尾に追加
         }
     }
