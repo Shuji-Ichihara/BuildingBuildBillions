@@ -180,7 +180,7 @@ GameObject:
   - component: {fileID: 7014364478219550060}
   - component: {fileID: 6978950281667690491}
   m_Layer: 0
-  m_Name: Cannnon_P1
+  m_Name: Cannon_P1
   m_TagString: Bill
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
