@@ -12,6 +12,7 @@ public class BeltConveyorManager : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (GameManager.Instance.CountDownGameTime < 0.0f) { return; }
         diffX = speed * Time.fixedDeltaTime;
         foreach (GameObject gameObject in gameObjects)
         {
