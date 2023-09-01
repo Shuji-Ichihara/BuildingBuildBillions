@@ -26,15 +26,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2166492274088901793}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.25, y: 1.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8048627679178101611}
-  m_Father: {fileID: 2166492274631125315}
+  m_Father: {fileID: 6962081943724240958}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2166492274088901795
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -155,12 +155,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2166492274277147779}
-  m_LocalRotation: {x: 0, y: 0, z: 0.17459345, w: 0.98464066}
+  m_LocalRotation: {x: -0, y: -0, z: 0.17459345, w: 0.98464066}
   m_LocalPosition: {x: 1.37, y: 1.28, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2166492274631125315}
+  m_Father: {fileID: 6962081943724240958}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 20.11}
 --- !u!1 &2166492274631125312
@@ -181,7 +181,7 @@ GameObject:
   - component: {fileID: 6978950281667690491}
   m_Layer: 0
   m_Name: Cannon_P2
-  m_TagString: Bill
+  m_TagString: Bill2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -198,8 +198,7 @@ Transform:
   m_LocalScale: {x: 40, y: 40, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2166492274088901794}
-  - {fileID: 2166492274277147780}
+  - {fileID: 6962081943724240958}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -383,7 +382,19 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: -3027562418126910897}
+        m_TargetAssemblyTypeName: NewBuildingcon, Assembly-CSharp
+        m_MethodName: BuildingMove
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 6878b54c-e3c3-4399-9446-66a9ab2509ae
     m_ActionName: Player/Move[/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow,/XInputControllerWindows/dpad]
   - m_PersistentCalls:
@@ -395,7 +406,19 @@ MonoBehaviour:
     m_ActionId: 41ada5cc-883b-47ea-beea-6ab73e81d203
     m_ActionName: Player/Fire[/XInputControllerWindows/rightTrigger,/Mouse/leftButton,/Touchscreen/primaryTouch/tap]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: -3027562418126910897}
+        m_TargetAssemblyTypeName: NewBuildingcon, Assembly-CSharp
+        m_MethodName: BuildingRotation
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: aecbed79-b224-4be8-ab71-6404f9258b7d
     m_ActionName: Player/Ro[/XInputControllerWindows/leftShoulder,/XInputControllerWindows/rightShoulder,/Keyboard/n,/Keyboard/m]
   - m_PersistentCalls:
@@ -533,3 +556,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23c27d5fdbcd4be41b481b60df477934, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &7561549613495552821
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6962081943724240958}
+  m_Layer: 0
+  m_Name: CannonRotate
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6962081943724240958
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7561549613495552821}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2166492274088901794}
+  - {fileID: 2166492274277147780}
+  m_Father: {fileID: 2166492274631125315}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
