@@ -36,7 +36,7 @@ public class JadgementBarController : SingletonMonoBehaviour<JadgementBarControl
         _rb2D.constraints = RigidbodyConstraints2D.FreezeRotation;
         _rb2D.gravityScale = 0.0f;
         // このスクリプトアタッチされているオブジェクトの初期座標で初期化
-        _defaultJadgementBarFallPosition = Vector3.up * (Screen.height / 2.0f + _jadgementBarFallPointHeight);
+        _defaultJadgementBarFallPosition = Vector3.up * (Screen.height / 2.0f + _jadgementBarFallPointHeight) + Vector3.right * 60.0f;
         transform.position = _defaultJadgementBarFallPosition;
     }
 
