@@ -132,13 +132,22 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
                 SoundManager.Instance.PlayBGM(BGMSoundData.BGM.AnnouncementOfResult);
                 _resultTtile.enabled = true;
                 // 溜め時間
-                await UniTask.DelayFrame(60 * 3, cancellationToken: _cts.Token);
-                JadgementBarController.Instance.Jadge();
-                Player1Result.color = Color.white;
-                Player2Result.color = Color.white;
+                await UniTask.DelayFrame(60 * 2, cancellationToken: _cts.Token);
+                bool isDraw =JadgementBarController.Instance.Jadge();
+                if(true == isDraw)
+                {
+                    Player1Result.color = Color.clear;
+                    Player2Result.color = Color.clear;
+                }
+                else if(false == isDraw)
+                {
+                    Player1Result.color = Color.white;
+                    Player2Result.color = Color.white;
+                }
                 PlayPlayer1ResultAnimation(Player1Result, _cts).Forget();
                 PlayPlayer2ResultAnimation(Player2Result, _cts).Forget();
-                await UniTask.DelayFrame(60, cancellationToken: _cts.Token);
+                await UniTask.DelayFrame(60 * 2, cancellationToken: _cts.Token);
+                SoundManager.Instance.StopBGM();
                 SoundManager.Instance.PlaySE(SESoundData.SE.Cheer);
                 SoundManager.Instance.PlayBGM(BGMSoundData.BGM.ResultBGM);
                 _pleasePushToA = GameObject.Find("PleasePushToA").GetComponent<TextMeshProUGUI>();
@@ -156,8 +165,15 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     /// <returns></returns>
     public Sprite PreviewBuildingThumbnail(GameObject obj)
     {
-        Sprite buildingSprite = obj.GetComponent<SpriteRenderer>().sprite;
-        if (buildingSprite == null) { buildingSprite = obj.GetComponentInChildren<SpriteRenderer>().sprite; }
+        Sprite buildingSprite;
+        try
+        {
+            buildingSprite = obj.GetComponent<SpriteRenderer>().sprite;
+        }
+        catch(MissingComponentException mce)
+        {
+            buildingSprite = obj.GetComponentInChildren<SpriteRenderer>().sprite;
+        }
         // 表示するサムネイル画像
         Sprite thumbnail = null;
 
