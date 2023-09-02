@@ -103,7 +103,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     /// <summary>
     /// ゲームを開始するまでのカウントダウン処理
     /// </summary>
-    /// <param name="token">キャンセル処理用のトークン</param>
+    /// <param name="cts">キャンセル処理用のトークン</param>
     /// <returns></returns>
     private async UniTask PlayGameTime(CancellationTokenSource cts = default)
     {
@@ -203,6 +203,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     /// <summary>
     /// 建材がスポーンするポイントを移動させる
     /// </summary>
+    /// <param name="zoom">カメラズームの変化量</param>
     public void MoveBuildingSpawnPoint(float zoom)
     {
         _buildSpawnPoint1.transform.position += Vector3.up * zoom;
