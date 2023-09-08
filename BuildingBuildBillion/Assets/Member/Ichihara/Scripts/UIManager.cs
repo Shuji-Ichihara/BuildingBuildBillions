@@ -64,8 +64,8 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     public Image Player2Result = null;
     public TextMeshProUGUI DrawText = null;
     [SerializeField]
-    private string _pleasePushToAText = "Please push to A";
-    private TextMeshProUGUI _pleasePushToA = null;
+    private GameObject _pleasePushToAImage = null;
+  
     [Space(3)]
     #endregion
 
@@ -87,8 +87,8 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         _resultTtile.color = Color.white;
         Player1Result.color = Color.clear;
         Player2Result.color = Color.clear;
-        _pleasePushToA = GameObject.Find("PleasePushToA").GetComponent<TextMeshProUGUI>();
-        _pleasePushToA.text = "";
+        _pleasePushToAImage.SetActive(false);
+
         // 次建材表示のバックグラウンドのカラー指定
         //_player1NextBack = GameObject.Find("Player1NextBack").GetComponent<Image>();
         // _player2NextBack = GameObject.Find("Player2NextBack").GetComponent<Image>();
@@ -102,6 +102,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         _backGroundImage.color = new Color32(0, 0, 0, 128);
         // DrawText の中身を空文字で初期化する
         DrawText.text = "";
+       
     }
 
     // Update is called once per frame
@@ -150,9 +151,10 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
                 SoundManager.Instance.StopBGM();
                 SoundManager.Instance.PlaySE(SESoundData.SE.Cheer);
                 SoundManager.Instance.PlayBGM(BGMSoundData.BGM.ResultBGM);
-                _pleasePushToA = GameObject.Find("PleasePushToA").GetComponent<TextMeshProUGUI>();
-                _pleasePushToA.text = _pleasePushToAText;
-                FadeText(_pleasePushToA, cts: _cts).Forget();
+                if (_pleasePushToAImage != null)
+                {
+                    _pleasePushToAImage.gameObject.SetActive(true);
+                }
                 GameManager.Instance.PlayerInput.enabled = true;
             }
         }
