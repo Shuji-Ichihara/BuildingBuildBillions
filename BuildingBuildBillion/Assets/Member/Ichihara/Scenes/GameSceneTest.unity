@@ -3605,25 +3605,25 @@ MonoBehaviour:
   _timeText: {fileID: 7208757307481110520}
   _thumbnailImages:
   - BuildingSprite: {fileID: 21300000, guid: fcfc4e29bf3cf57469f920351603ec08, type: 3}
-    ThumbnailImage: {fileID: 21300000, guid: b457e0444f83bee4996b30ecdc87a7fd, type: 3}
+    ThumbnailImage: {fileID: 21300000, guid: bed65a185afc8e946a3f73b093428920, type: 3}
   - BuildingSprite: {fileID: 21300000, guid: 608f3b7c98933a4428d45f3d77aed53a, type: 3}
-    ThumbnailImage: {fileID: 21300000, guid: 63e77dde2a9ba1b4eb177e123ac447af, type: 3}
+    ThumbnailImage: {fileID: 21300000, guid: 9cdf502d79620db499915e5206b84306, type: 3}
   - BuildingSprite: {fileID: 21300000, guid: 2ba37c038fdc1da4a824ff25d6f6f8c0, type: 3}
-    ThumbnailImage: {fileID: 21300000, guid: ae88698482da91642a379804cd8690a4, type: 3}
+    ThumbnailImage: {fileID: 21300000, guid: 4b20a3a4b5ca5a440971b770288a1344, type: 3}
   - BuildingSprite: {fileID: 21300000, guid: 10a53198d0977e14e8d94ad33aaa7f8c, type: 3}
-    ThumbnailImage: {fileID: 21300000, guid: 8bda06e8c702200448e232229670a10a, type: 3}
+    ThumbnailImage: {fileID: 21300000, guid: 9894e95d4e87f5849ac5a41914debf7c, type: 3}
   - BuildingSprite: {fileID: 21300000, guid: 904f48877d32bb3418c359b01f4ce5e6, type: 3}
-    ThumbnailImage: {fileID: 21300000, guid: 63c2169d96bb0ad40a93c14491fb12da, type: 3}
+    ThumbnailImage: {fileID: 21300000, guid: dee98cf8ebc6ca046b0745d9e9fd7547, type: 3}
   - BuildingSprite: {fileID: 21300000, guid: 37f67db5ec2f9e1489fd4489ea1e1021, type: 3}
-    ThumbnailImage: {fileID: 21300000, guid: 578dfbc2e60c9aa49979c7e66ef3df02, type: 3}
+    ThumbnailImage: {fileID: 21300000, guid: ec3f46533ba4f4443baba4b8272c838e, type: 3}
   - BuildingSprite: {fileID: 21300000, guid: 270826851caa84743a337dda131bc56d, type: 3}
-    ThumbnailImage: {fileID: 21300000, guid: 83b1d34f56fd6e342b5f42d59b9789a9, type: 3}
+    ThumbnailImage: {fileID: 21300000, guid: ea74f58051cc7274995d8ebfe394ab7f, type: 3}
   - BuildingSprite: {fileID: 21300000, guid: b92f0b22afd082f429aa4bf3234a2a27, type: 3}
-    ThumbnailImage: {fileID: 21300000, guid: 71b03018cc004f043b13a26a7e1ef28b, type: 3}
+    ThumbnailImage: {fileID: 21300000, guid: 1a3916706bfcad54eaeeda9032a38d76, type: 3}
   - BuildingSprite: {fileID: 21300000, guid: 612874361496c514293eec0c14ace524, type: 3}
-    ThumbnailImage: {fileID: 21300000, guid: f2a9047919c033247ae3c0a98cc49f9f, type: 3}
+    ThumbnailImage: {fileID: 21300000, guid: c2b35e4a51ff69f4c99f5430d9956ac7, type: 3}
   - BuildingSprite: {fileID: 21300000, guid: 339b287448e90a54395a6a0fdb63e864, type: 3}
-    ThumbnailImage: {fileID: 21300000, guid: 7d86e2d869201b14dac71304244b355c, type: 3}
+    ThumbnailImage: {fileID: 21300000, guid: 41ed7ee378708b14299569152c2625ff, type: 3}
   Player1NextBuildingMaterial: {fileID: 1937709978}
   Player2NextBuildingMaterial: {fileID: 1055178945}
   _youWon: {fileID: 21300000, guid: 84072b07c479a6e44916b005c00b1f7c, type: 3}
@@ -3801,7 +3801,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: ea99330b902f8a04e8032e1a009e2e8b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 80b4a59e7f129e2479a612f901f7d7c1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -3839,8 +3839,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5270200589753131841}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 80, y: 80, z: 1}
+  m_LocalPosition: {x: -59, y: 39.9083, z: 0}
+  m_LocalScale: {x: 44.2087, y: 44.2087, z: 0.5526087}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5270200587620445118}
@@ -3863,7 +3863,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 39.371033, y: 2.23}
+    oldSize: {x: 86.17057, y: 2.23}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
