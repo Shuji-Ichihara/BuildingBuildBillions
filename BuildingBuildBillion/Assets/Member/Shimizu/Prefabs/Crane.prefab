@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 2440671646995049946}
   - component: {fileID: 9147321625954393874}
   - component: {fileID: 221745779329946707}
-  - component: {fileID: 4703878072319312649}
   m_Layer: 0
   m_Name: Crane
   m_TagString: Bill
@@ -277,25 +276,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4703878072319312649
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2440671646995049951}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8f6d3c6e4250e84192f5b34ce9e71bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlowOff: 0
-  glowColor: {r: 1, g: 1, b: 1, a: 1}
-  glowBrightness: 2
-  outlineWidth: 1
-  alphaThreshold: 0.01
-  drawOutside: 0
-  enableInstancing: 0
 --- !u!1 &2440671648436421720
 GameObject:
   m_ObjectHideFlags: 0
@@ -382,6 +362,7 @@ GameObject:
   - component: {fileID: 2440671648724674897}
   - component: {fileID: 2440671648724674896}
   - component: {fileID: 2440671648724674900}
+  - component: {fileID: 4860453989307149891}
   m_Layer: 0
   m_Name: Hook
   m_TagString: Bill
@@ -424,7 +405,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -499,6 +480,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.4, y: 2.45}
   m_EdgeRadius: 0
+--- !u!114 &4860453989307149891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2440671648724674907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8f6d3c6e4250e84192f5b34ce9e71bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlowOff: 0
+  glowColor: {r: 1, g: 1, b: 1, a: 1}
+  glowBrightness: 2
+  outlineWidth: 30
+  alphaThreshold: 0.01
+  drawOutside: 0
+  enableInstancing: 0
 --- !u!1 &2440671648818722244
 GameObject:
   m_ObjectHideFlags: 0
@@ -510,6 +510,7 @@ GameObject:
   - component: {fileID: 2440671648818722247}
   - component: {fileID: 2440671648818722246}
   - component: {fileID: 2440671648818722241}
+  - component: {fileID: 1995470368159582007}
   m_Layer: 0
   m_Name: CraneBody
   m_TagString: Bill
@@ -552,7 +553,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -610,6 +611,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5.3, y: 10.5}
   m_EdgeRadius: 0
+--- !u!114 &1995470368159582007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2440671648818722244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8f6d3c6e4250e84192f5b34ce9e71bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlowOff: 0
+  glowColor: {r: 1, g: 1, b: 1, a: 1}
+  glowBrightness: 2
+  outlineWidth: 30
+  alphaThreshold: 0.01
+  drawOutside: 0
+  enableInstancing: 0
 --- !u!1 &2440671648826617744
 GameObject:
   m_ObjectHideFlags: 0
@@ -622,6 +642,7 @@ GameObject:
   - component: {fileID: 2440671648826617774}
   - component: {fileID: 2440671648826617746}
   - component: {fileID: 2440671648826617775}
+  - component: {fileID: 7471586802756841860}
   m_Layer: 0
   m_Name: Arms
   m_TagString: Bill
@@ -665,7 +686,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -766,6 +787,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 29.73, y: 5.7}
   m_EdgeRadius: 0
+--- !u!114 &7471586802756841860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2440671648826617744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8f6d3c6e4250e84192f5b34ce9e71bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlowOff: 0
+  glowColor: {r: 1, g: 1, b: 1, a: 1}
+  glowBrightness: 2
+  outlineWidth: 30
+  alphaThreshold: 0.01
+  drawOutside: 0
+  enableInstancing: 0
 --- !u!1 &5245516307759417956
 GameObject:
   m_ObjectHideFlags: 0
