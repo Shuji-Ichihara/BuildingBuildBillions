@@ -62,11 +62,13 @@ public class NewBuildingcon : MonoBehaviour
 
     public bool BuildingStop;
     public bool Stop;
+    public bool isopareton;
     public Rigidbody2D rb;
     //public Vector3 billControllerPosition { get; private set; }
 
     public void Start()
     {
+        isopareton = true;
         rb = this.gameObject.GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Dynamic;
         if (_col != null && _col2 != null)
