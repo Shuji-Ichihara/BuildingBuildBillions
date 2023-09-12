@@ -5,7 +5,7 @@ using UnityEngine;
 public class CraneJib : NewBuildingcon
 {
     private float startPosition = 15;
-    
+
     private float ratio = 0;
 
     private bool jibExtend = false;
@@ -14,15 +14,17 @@ public class CraneJib : NewBuildingcon
     CraneSensor2 craneSensor;
     [SerializeField]
     private SpriteRenderer armSprite;
-    [Header("アームが横に伸びるスピード"),SerializeField]
+    [Header("アームが横に伸びるスピード"), SerializeField]
     private float speed = 2f;
     [Header("アームが横に伸びるMAX長さ(90が限界"), SerializeField]
     private float endPosition = 19;
 
-    private void Start()
-    {
+    private bool doOnce = false;
 
-        Debug.Log(armSprite.size);
+    new private void Start()
+    {
+        doOnce = false;
+        //Debug.Log(armSprite.size);
         craneSensor.GetComponent<Transform>();
     }
     private void Update()
@@ -47,7 +49,7 @@ public class CraneJib : NewBuildingcon
             //Debug.Log(armSprite.size);
         }
         //腕が縮む
-        if(jibContract)
+        if (jibContract)
         {
             //
             armSprite.size = new Vector2(Mathf.Lerp(endPosition, startPosition + 1.5f, ratio), armSprite.size.y);
@@ -58,17 +60,21 @@ public class CraneJib : NewBuildingcon
                 jibContract = false;
                 ratio = 0;
             }
-            
+
         }
     }
     private void CanExtend()
     {
-        jibExtend = true;
-        craneSensor.widthExtend = true;
+        if(false == doOnce)
+        {
+            jibExtend = true;
+            craneSensor.widthExtend = true;
+            doOnce = true;
+        }
     }
     public void CanContract()
     {
-        jibContract= true;
+        jibContract = true;
         craneSensor.widthContract = true;
     }
     public float ExtendSpeed()
@@ -77,7 +83,7 @@ public class CraneJib : NewBuildingcon
     }
     public float ExtendDistance()
     {
-        return endPosition-startPosition;
+        return endPosition - startPosition;
     }
     /// <summary>
     /// イベント登録用関数

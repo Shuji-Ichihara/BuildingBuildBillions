@@ -68,6 +68,7 @@ public class NewBuildingcon : MonoBehaviour
     public void Start()
     {
         rb = this.gameObject.GetComponent<Rigidbody2D>();
+        if (rb == null) { rb = gameObject.GetComponentInChildren<Rigidbody2D>(); }
         rb.bodyType = RigidbodyType2D.Dynamic;
         if (_col != null && _col2 != null)
         {
@@ -75,7 +76,8 @@ public class NewBuildingcon : MonoBehaviour
             _col2.SetActive(false);
 
         }
-        this.transform.gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
+        //this.transform.gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
+        rb.gravityScale = 0;
         switch (Block)
         {
             case BlockStae.Normal:

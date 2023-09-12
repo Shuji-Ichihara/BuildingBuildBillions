@@ -64,8 +64,8 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     public Image Player2Result = null;
     public TextMeshProUGUI DrawText = null;
     [SerializeField]
-    private string _pleasePushToAText = "Please push to A";
-    private TextMeshProUGUI _pleasePushToA = null;
+    private string _pronptTitleText = "Please push to A";
+    private TextMeshProUGUI _pronptTitle = null;
     [Space(3)]
     #endregion
 
@@ -87,11 +87,8 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         _resultTtile.color = Color.white;
         Player1Result.color = Color.clear;
         Player2Result.color = Color.clear;
-        _pleasePushToA = GameObject.Find("PleasePushToA").GetComponent<TextMeshProUGUI>();
-        _pleasePushToA.text = "";
-        // 次建材表示のバックグラウンドのカラー指定
-        //_player1NextBack = GameObject.Find("Player1NextBack").GetComponent<Image>();
-        // _player2NextBack = GameObject.Find("Player2NextBack").GetComponent<Image>();
+        _pronptTitle = GameObject.Find("PronptTitle").GetComponent<TextMeshProUGUI>();
+        _pronptTitle.text = "";
         // ゲーム中に使用するキャンバスを非アクティブ化
         // 同時に、リザルトシーンのキャンバスを透明化
         _gameUICanvas.gameObject.SetActive(false);
@@ -150,9 +147,9 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
                 SoundManager.Instance.StopBGM();
                 SoundManager.Instance.PlaySE(SESoundData.SE.Cheer);
                 SoundManager.Instance.PlayBGM(BGMSoundData.BGM.ResultBGM);
-                _pleasePushToA = GameObject.Find("PleasePushToA").GetComponent<TextMeshProUGUI>();
-                _pleasePushToA.text = _pleasePushToAText;
-                FadeText(_pleasePushToA, cts: _cts).Forget();
+                _pronptTitle = GameObject.Find("PronptTitle").GetComponent<TextMeshProUGUI>();
+                _pronptTitle.text = _pronptTitleText;
+                FadeText(_pronptTitle, cts: _cts).Forget();
                 GameManager.Instance.PlayerInput.enabled = true;
             }
         }

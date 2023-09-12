@@ -13,19 +13,19 @@ public class Jack : MonoBehaviour
     private bool isOne = false;
     private bool isUp = false;
     private bool isDown = false;
-   
+
     private void Awake()
     {
         _mainSprite = this.gameObject.GetComponent<SpriteRenderer>();//SpriterRendereräiî[
         _jackAnim = this.gameObject.GetComponent<Animator>();
-       _mainSprite.sprite = _jackSprite[0];
+        _mainSprite.sprite = _jackSprite[0];
     }
     private void FixedUpdate()
     {
-        if(isUp == true && isDown == true && isOne == false)
+        if (isUp == true && isDown == true && isOne == false)
         {
             JackingStart();
-            isOne= true;
+            isOne = true;
         }
 
     }
@@ -77,9 +77,19 @@ public class Jack : MonoBehaviour
     public async void JackingStart()
     {
         await Task.Delay(500);
+        if (GameManager.Instance.IsEndedGame == true)
+        {
+            _jackAnim.speed = 0;
+            return;
+        }
         _jackAnim.SetTrigger("JackActive");
         _mainSprite.sprite = _jackSprite[1];
         await Task.Delay(500);
+        if (GameManager.Instance.IsEndedGame == true)
+        {
+            _jackAnim.speed = 0;
+            return;
+        }
         _mainSprite.sprite = _jackSprite[2];
     }
 }

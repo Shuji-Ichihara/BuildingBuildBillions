@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 6066838558327290541}
   m_Layer: 0
   m_Name: Conveyor
-  m_TagString: Bill
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -178,7 +178,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5244368082632879543}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 15bdbf6d1f64f9d44bc81c60a54e9d0f, type: 3}
   m_Name: 
@@ -193,19 +193,7 @@ MonoBehaviour:
   _pastPositions: []
   myEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5244368082632879539}
-        m_TargetAssemblyTypeName: BeltConveyorManager, Assembly-CSharp
-        m_MethodName: EventRegistration
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   sprites: []
   BuildingStop: 0
   Stop: 0
@@ -217,7 +205,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5244368082632879543}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
@@ -497,9 +485,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1888639292225053014}
   - component: {fileID: 26209017298122131}
+  - component: {fileID: 5911215350869370584}
+  - component: {fileID: 7508278970335721890}
   m_Layer: 0
   m_Name: Conveyor_P1
-  m_TagString: Untagged
+  m_TagString: Bill
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -546,3 +536,144 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 7.3, y: 0.5}
   m_EdgeRadius: 0
+--- !u!114 &5911215350869370584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8846558326624306653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15bdbf6d1f64f9d44bc81c60a54e9d0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _downSpeed: 250
+  _rotateAngle: 0
+  _col: {fileID: 8703305623878784279}
+  _col2: {fileID: 1844954539542336827}
+  Player: 0
+  Block: 0
+  _restTime: 0.25
+  _pastPositions: []
+  myEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  sprites: []
+  BuildingStop: 0
+  Stop: 0
+  rb: {fileID: 7537108417103978852}
+--- !u!114 &7508278970335721890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8846558326624306653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 98724dfa57535eb47828452304154856, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5911215350869370584}
+        m_TargetAssemblyTypeName: NewBuildingcon, Assembly-CSharp
+        m_MethodName: BuildingMove
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 3663b707-1eb6-4bad-926e-07624b321ff0
+    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/XInputControllerWindows/dpad]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5911215350869370584}
+        m_TargetAssemblyTypeName: NewBuildingcon, Assembly-CSharp
+        m_MethodName: BuildingRotation
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 87e7c1a9-65cc-4c53-bf32-6a0c461e0ad1
+    m_ActionName: Player/Ro[/XInputControllerWindows/leftShoulder,/XInputControllerWindows/rightShoulder,/Keyboard/r,/Keyboard/t]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2c5ffce0-68c6-4b81-a9b4-540f96b776bf
+    m_ActionName: Player/Look[/XInputControllerWindows/rightStick,/Mouse/delta]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 87b4351a-9819-428c-8319-85336c5a0067
+    m_ActionName: Player/Fire[/XInputControllerWindows/rightTrigger,/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a5ccfafa-94a6-46f5-8400-3fa354030068
+    m_ActionName: UI/Navigate[/XInputControllerWindows/leftStick/up,/XInputControllerWindows/rightStick/up,/XInputControllerWindows/leftStick/down,/XInputControllerWindows/rightStick/down,/XInputControllerWindows/leftStick/left,/XInputControllerWindows/rightStick/left,/XInputControllerWindows/leftStick/right,/XInputControllerWindows/rightStick/right,/XInputControllerWindows/dpad,/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3c8358b2-bbb4-4192-8487-ba04b3442b1c
+    m_ActionName: UI/Submit[/Keyboard/enter,/XInputControllerWindows/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6e003eee-9996-4fe3-a0d1-21e6afe0b6db
+    m_ActionName: UI/Cancel[/Keyboard/escape,/XInputControllerWindows/buttonEast]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f2453299-9bc6-4a22-8b33-b9d13f681edf
+    m_ActionName: UI/Point[/Mouse/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2a32c547-2cb2-4d9e-8162-970e7d73033e
+    m_ActionName: UI/Click[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6b58f18a-0fc4-4be1-a912-920cbeb5431a
+    m_ActionName: UI/ScrollWheel[/Mouse/scroll]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: dbdeca07-3a2a-4af6-b79c-5eb124d50791
+    m_ActionName: UI/MiddleClick[/Mouse/middleButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c6c7f0a6-a2b0-420e-896b-d7e9f2992e0c
+    m_ActionName: UI/RightClick[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b41ca475-7410-4bc8-bb45-07174edd13f6
+    m_ActionName: UI/TrackedDevicePosition
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 59a3328c-87f8-459e-beef-5bdd86cb5964
+    m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 45790e52-07e9-4511-bf17-dbf6eee8096a
+    m_ActionName: 1P_Move/Move[/XInputControllerWindows/leftStick,/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow,/XInputControllerWindows/dpad]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: Gamepad
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}

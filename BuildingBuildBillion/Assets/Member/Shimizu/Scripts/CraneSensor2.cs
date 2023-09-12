@@ -15,7 +15,7 @@ public class CraneSensor2 : MonoBehaviour
 
     private bool armCanMove = false; //ƒA[ƒ€‚ªˆÚ“®‚·‚é‚©‚Ç‚¤‚©
     private bool armCatch = false;
-    private bool isCatch = false;
+    //private bool isCatch = false;
 
     private float pickUpTime = 3;
 

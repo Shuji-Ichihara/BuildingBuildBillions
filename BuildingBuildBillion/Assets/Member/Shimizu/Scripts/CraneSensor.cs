@@ -20,7 +20,7 @@ public class CraneSensor : MonoBehaviour
 
     private Vector3 defaultPosition; //デフォルトポジション格納用
     private float speed = 0;
-    private float endPosition = 0;
+    //private float endPosition = 0;
 
     private bool craneMoving = false; //アームが移動するかどうか
 
