@@ -1,6 +1,4 @@
-ï»¿using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+using System.Collections;
 using UnityEngine;
 
 public class Bomb : MonoBehaviour
@@ -9,104 +7,83 @@ public class Bomb : MonoBehaviour
     CircleCollider2D _bombCollider;
     Rigidbody2D _rb;
     Animator _animator;
+
     [SerializeField]
     GameObject colObj;
-    [SerializeField, Header("ãƒœãƒ ã®çˆ†ç™ºã®ç¯„å›²")]
+    [SerializeField, Header("ƒ{ƒ€‚Ì”š”­‚Ì”ÍˆÍ")]
     private int bombRadius = 0;
-    [SerializeField, Header("ãƒœãƒ ã®çˆ†ç™ºã®åºƒãŒã‚‹ã‚¹ãƒ”ãƒ¼ãƒ‰")]
+    [SerializeField, Header("ƒ{ƒ€‚Ì”š”­‚ÌL‚ª‚éƒXƒs[ƒh")]
     private int bombSpeed = 0;
-    [SerializeField, Header("ãƒœãƒ ã®å¹ã£é£›ã°ã™ãƒ‘ãƒ¯ãƒ¼")]
-    private int power = 0;
+    [SerializeField,Header("ƒ{ƒ€‚Ì‚Á”ò‚Î‚·ƒpƒ[")]
+    private int power=0;
+
     // Start is called before the first frame update
     void Start()
     {
-        _bombCollider = colObj.GetComponent<CircleCollider2D>();
+        _bombCollider =colObj.GetComponent<CircleCollider2D>();
         _rb = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        /*
         if(Input.GetKeyDown(KeyCode.A))
         {
-            //Debug.Log(this.transform.localPosition);
-            //BombEvent();
-        }*/
-        if (GameManager.Instance.IsEndedGame == true)
-        {
-            this.enabled = false;
+            BombEvent();
         }
     }
 
     void BombEvent()
-    {//ã“ã“ã§çˆ†ç™º
+    {//ƒAƒjƒ[ƒVƒ‡ƒ“‚©‚çŒÄ‚Ño‚µ
+
         StartCoroutine(BombCor());
-        //_bombCollider.radius = 5;
         GetComponent<SpriteRenderer>().enabled = false;
-        GetComponent<CircleCollider2D>().enabled = false;
-        //_bombCollider.enabled = false;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        //_animator.SetBool("BombBool", true);
-    }
 
     public void AnimStart()
     {
         _animator.SetBool("BombBool", true);
     }
 
-
     private void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.CompareTag("Bill") || col.CompareTag("Bill2"))
+    {//ƒRƒ‰ƒCƒ_[’Ê‚è”²‚¯‚½‚ç”ò‚Î‚·
+
+        if(col.gameObject.GetComponent<NewBuildingcon>()!=null)
         {
-            //ã‚³ãƒ©ã‚¤ã ãƒ¼é€šã‚ŠæŠœã‘ãŸã‚‰é£›ã°ã™
-            //ver2
-            Vector3 hit;
-            hit = col.ClosestPoint(this.transform.position);//triggerè¡çªä½ç½®
+            if (col.gameObject.GetComponent<NewBuildingcon>().isopareton == false)
+            {//ŒšŞ‚ª‘€ì’†‚©‚Ç‚¤‚©‚Ì”»’f
 
+                Vector3 hit;
+                hit = col.ClosestPoint(this.transform.position);//triggerÕ“ËˆÊ’u
 
-            hit = transform.InverseTransformPoint(hit);//è§¦ã‚ŒãŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™
-                                                       //Debug.Log(hit);
-                                                       //Debug.LogError(Mathf.Atan2(hit.y,hit.x)*Mathf.Rad2Deg);//è§’åº¦ã ã‚ˆ
-            try
-            {
-                Rigidbody2D rigidbody2D = col.gameObject.GetComponent<Rigidbody2D>();
-                if (rigidbody2D != null)
-                {
-                    rigidbody2D.AddForce(hit * power, ForceMode2D.Impulse);
-                }
+                hit = transform.InverseTransformPoint(hit);//G‚ê‚½ƒIƒuƒWƒFƒNƒg‚Ìƒ[ƒJƒ‹À•W
 
+                col.gameObject.GetComponent<Rigidbody2D>().AddForce(hit * power, ForceMode2D.Impulse);
+                //‚Á”ò‚Î‚·ˆ—
             }
-            catch (System.Exception e)
-            {
-                throw e;
-            }
-            //å¹ã£é£›ã°ã™
         }
     }
 
-    IEnumerator BombCor()
-    {
-        //çˆ†ç™ºåŠ¹æœéŸ³å…¥ã‚Œã‚‹ãªã‚‰ã‚³ã‚³!!
-        SoundManager.Instance.PlaySE(SESoundData.SE.ExplosionBomb);
+    IEnumerator BombCor() 
+    {//”š”­‚Ìˆê˜A‚Ìˆ—
 
         _bombCollider.enabled = false;
         _bombCollider.enabled = true;
         _bombCollider.isTrigger = true;
+
         float count = 0;
         float time = 1f / bombSpeed;
+
         _rb.bodyType = RigidbodyType2D.Static;
-        while (count < time)
+
+        while(count<time)
         {
-            _bombCollider.radius += Time.deltaTime * bombSpeed * bombRadius;
-            count += Time.deltaTime;
+            _bombCollider.radius += Time.deltaTime*bombSpeed*bombRadius;
+            count+=Time.deltaTime;
             yield return null;
         }
+
         _bombCollider.enabled = false;
     }
 }
