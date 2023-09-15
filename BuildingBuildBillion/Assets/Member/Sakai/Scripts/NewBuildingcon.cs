@@ -125,14 +125,13 @@ public class NewBuildingcon : MonoBehaviour
 
         if (Stop == true || BuildingStop == true)
         {
-            //Debug.Log(Stop);
-            //Debug.Log(billstop);
+           
             this.GetComponent<PlayerInput>().enabled = false;
             this.transform.gameObject.GetComponent<Rigidbody2D>().gravityScale = 400;
-            //rb.isKinematic = false;
+           
         }
 
-        switch (Player)
+        switch (Player)//1Pと2pで別々の移動制御
         {
             case PlayerNum.Player1:
                 if (_screenPoint.x <= 0.04f || _screenPoint.x >= 0.45f)
@@ -216,16 +215,6 @@ public class NewBuildingcon : MonoBehaviour
 
                 break;
         }
-
-        //_fromRotate += Time.deltaTime;
-
-        //if (_fromRotate >= _rotateRestTime)
-        //{
-        //    _rotatePermission = true;
-        //    _fromRotate = 0.0f;
-        //}
-        //if (_rotatePermission == true)
-        //{
         if (_isLeftPressed)
         {
             if (_rotatePermission == false || Block == BlockStae.Canon)
@@ -250,7 +239,7 @@ public class NewBuildingcon : MonoBehaviour
         }
         if (_isRightPressed)
         {
-            if (_rotatePermission == false || Block == BlockStae.Canon)
+            if (_rotatePermission == false || Block == BlockStae.Canon)//大砲の場合のみ1度ずつ回転させる
             {
                 transform.RotateAround(transform.TransformPoint(_rotationPoint), new Vector3(0, 0, 1), _rotateAngle);
                 if (_col != null)
@@ -270,7 +259,7 @@ public class NewBuildingcon : MonoBehaviour
             }
         }
 
-        if (_pad == true && _inputMove.x * _inputMove.x >= 0.25f)
+        if (_pad == true && _inputMove.x * _inputMove.x >= 0.25f)//横移動の制御
         {
 
 
@@ -280,15 +269,12 @@ public class NewBuildingcon : MonoBehaviour
                 {
                     if (Mathf.Ceil(_inputMove.x) == -1)
                     {
-                        //transform.position += new Vector3(moveDistance, 0, 0);
-                        //Vector2 Move = this.transform.position + moveDistance;
-                        //rb.MovePosition(Move);
+                       
                         rb.velocity -= _moveDistance * 30;
                     }
                     if (Mathf.Ceil(_inputMove.x) == 1)
                     {
-                        //Vector2 Move = this.transform.position + moveDistance;
-                        //rb.MovePosition(Move);
+                       
                         rb.velocity += _moveDistance * 30;
                     }
                 }

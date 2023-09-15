@@ -109,9 +109,8 @@ public class JadgementBarController : SingletonMonoBehaviour<JadgementBarControl
         // 引き分け処理
         if (Objects.Count >= 2 || rightOfCenter == leftOfCenter)
         {
-            UIManager.Instance.DrawText.fontSize = 180.0f;
-            UIManager.Instance.DrawText.text
-                = "Draw.\nThank you for Playing!";
+            UIManager.Instance.DrawImage.sprite
+                 = UIManager.Instance.YouDraw;
             isPreviewDraw = true;
             return isPreviewDraw;
         }
