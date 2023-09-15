@@ -25,6 +25,13 @@ public class Bomb : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.A))
+        {
+            BombEvent();
+        }
+    }
 
     void BombEvent()
     {//アニメーションから呼び出し
@@ -42,13 +49,20 @@ public class Bomb : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D col)
     {//コライダー通り抜けたら飛ばす
 
-        Vector3 hit;
-        hit = col.ClosestPoint(this.transform.position);//trigger衝突位置
+        if(col.gameObject.GetComponent<NewBuildingcon>()!=null)
+        {
+            if (col.gameObject.GetComponent<NewBuildingcon>().isopareton == false)
+            {//建材が操作中かどうかの判断
 
-        hit = transform.InverseTransformPoint(hit);//触れたオブジェクトのローカル座標
+                Vector3 hit;
+                hit = col.ClosestPoint(this.transform.position);//trigger衝突位置
 
-        col.gameObject.GetComponent<Rigidbody2D>().AddForce(hit*power, ForceMode2D.Impulse);
-        //吹っ飛ばす処理
+                hit = transform.InverseTransformPoint(hit);//触れたオブジェクトのローカル座標
+
+                col.gameObject.GetComponent<Rigidbody2D>().AddForce(hit * power, ForceMode2D.Impulse);
+                //吹っ飛ばす処理
+            }
+        }
     }
 
     IEnumerator BombCor() 
