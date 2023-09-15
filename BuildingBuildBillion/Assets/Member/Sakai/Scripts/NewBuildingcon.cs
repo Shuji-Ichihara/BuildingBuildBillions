@@ -1,4 +1,5 @@
-using Cysharp.Threading.Tasks;
+ï»¿using Cysharp.Threading.Tasks;
+using SpriteGlow;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,42 +10,42 @@ using UnityEngine.InputSystem;
 
 public class NewBuildingcon : MonoBehaviour
 {
-    [SerializeField] private float _downSpeed = 10;
-    private float _previousTime;
-    // ƒuƒƒbƒN‚Ì—‚¿‚éŠÔ
+    [SerializeField] private float _downSpeed = 250;
+    private float _previousTime = 0;
+    // ãƒ–ãƒ­ãƒƒã‚¯ã®è½ã¡ã‚‹æ™‚é–“
     private float _fallTime = 1f;
     [SerializeField]
-    private float _rotateAngle = 90;
+    private float _rotateAngle;
     [SerializeField]
-    private GameObject _col;
+    private GameObject _col = null;
     [SerializeField]
-    private GameObject _col2;
+    private GameObject _col2 = null;
     private enum PlayerNum
     {
         Player1 = 0,
         Player2 = 1
     }
+    private enum BlockStae
+    {
+        Normal,
+        Canon
+    }
     [SerializeField]
- 
     private PlayerNum Player;
+    [SerializeField] private BlockStae Block;
 
     private bool _isRightPressed = false;
     private bool _isLeftPressed = false;
-    // ƒuƒƒbƒN‰ñ“]
-    private Vector3 _rotationPoint;  
+    // ãƒ–ãƒ­ãƒƒã‚¯å›è»¢
+    private Vector3 _rotationPoint;
     private Vector2 _inputMove = Vector2.zero;
-    //private bool rightwall;
-    //private bool leftwall;
-   
-    Rigidbody2D rb;
+
     private bool _pad = false;
     private bool _rotatePermission = false;
 
     [SerializeField]
     private float _restTime = 0.25f;
-    private float _rotateRestTime = 0.5f;
     private float _fromMoveHorizonal = 0.0f;
-    private float _fromRotate = 0.0f;
 
     private bool _right = true;
     private bool _left = true;
@@ -55,31 +56,51 @@ public class NewBuildingcon : MonoBehaviour
     private Vector2 _moveDistance = new Vector2(50.0f, 0);
 
     [SerializeField] private UnityEvent myEvent = new UnityEvent();
-    public Sprite[] sprites; // ƒXƒvƒ‰ƒCƒg‚Ì”z—ñ
+    public Sprite[] sprites; // ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã®é…åˆ—
 
     private SpriteRenderer spriteRenderer;
 
     public bool BuildingStop;
     public bool Stop;
+    public bool isopareton;
+    public Rigidbody2D rb;
     //public Vector3 billControllerPosition { get; private set; }
 
-
-    void Start()
+    public void Start()
     {
-       
+        isopareton = true;
         rb = this.gameObject.GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Dynamic;
-        _col.SetActive(true);
-        _col2.SetActive(false);
+        if (_col != null && _col2 != null)
+        {
+            _col.SetActive(true);
+            _col2.SetActive(false);
+
+        }
         this.transform.gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        // Å‰‚ÉƒXƒvƒ‰ƒCƒg‚ğƒ‰ƒ“ƒ_ƒ€‚É‘I‘ğ‚·‚é
-        ChangeSpriteRandomly();
+        switch (Block)
+        {
+            case BlockStae.Normal:
+                _rotateAngle = 90;
+                break;
+            case BlockStae.Canon:
+                _rotateAngle = 5;
+                break;
+        }
     }
 
-  
     void Update()
     {
+        SpriteGlowEffect scriptA = this.GetComponent<SpriteGlowEffect>();
+        _previousTime += Time.deltaTime;
+        if (_previousTime >= _fallTime)
+        {
+
+            transform.position += _buildingPosi;
+            _previousTime = 0;
+
+        }
+
         _screenPoint = Camera.main.WorldToViewportPoint(this.transform.position + new Vector3(_moveDistance.x, 0, 0));// 0,0~1.1
         if (_inputMove.x == 0 && _inputMove.y == 0)
         {
@@ -110,14 +131,14 @@ public class NewBuildingcon : MonoBehaviour
             this.transform.gameObject.GetComponent<Rigidbody2D>().gravityScale = 400;
             //rb.isKinematic = false;
         }
-        
+
         switch (Player)
         {
             case PlayerNum.Player1:
                 if (_screenPoint.x <= 0.04f || _screenPoint.x >= 0.45f)
                 {
-                  
-                   
+
+
                     _left = false;
                     rb.velocity = Vector2.zero;
                 }
@@ -156,11 +177,11 @@ public class NewBuildingcon : MonoBehaviour
             case PlayerNum.Player2:
                 if (_screenPoint.x <= 0.55f || _screenPoint.x >= 1.0f)
                 {
-                   
+
 
                     _right = false;
                     rb.velocity = Vector2.zero;
-                  
+
                 }
                 else if (_screenPoint.x >= 0.55f && _screenPoint.x <= 1.0f)
                 {
@@ -178,13 +199,13 @@ public class NewBuildingcon : MonoBehaviour
                         _right = true;
 
                     }
-                     if (_inputMove.x == 0 && _inputMove.y != 0)
+                    if (_inputMove.x == 0 && _inputMove.y != 0)
                     {
 
                         _right = true;
 
                     }
-                     if (_inputMove.x == 0 && _inputMove.y == 0)
+                    if (_inputMove.x == 0 && _inputMove.y == 0)
                     {
 
                         _right = true;
@@ -196,63 +217,64 @@ public class NewBuildingcon : MonoBehaviour
                 break;
         }
 
-        _fromRotate += Time.deltaTime;
+        //_fromRotate += Time.deltaTime;
 
-        if (_fromRotate >= _rotateRestTime)
+        //if (_fromRotate >= _rotateRestTime)
+        //{
+        //    _rotatePermission = true;
+        //    _fromRotate = 0.0f;
+        //}
+        //if (_rotatePermission == true)
+        //{
+        if (_isLeftPressed)
         {
-            _rotatePermission = true;
-            _fromRotate = 0.0f;
-        }
-        if (_rotatePermission == true)
-        {
-            if (_isLeftPressed)
+            if (_rotatePermission == false || Block == BlockStae.Canon)
             {
-                
                 transform.RotateAround(transform.TransformPoint(_rotationPoint), new Vector3(0, 0, 1), -_rotateAngle);
-
-
-                if (_col.activeSelf == false)
+                if (_col != null)
                 {
-                    _col.SetActive(true);
-                    _col2.SetActive(false);
+                    if (_col.activeSelf == false && _col != null)
+                    {
+                        _col.SetActive(true);
+                        _col2.SetActive(false);
+                    }
+                    else if (_col.activeSelf == true && _col != null)
+                    {
+                        _col.SetActive(false);
+                        _col2.SetActive(true);
+                    }
                 }
-                else if (_col.activeSelf == true)
-                {
-                    _col.SetActive(false);
-                    _col2.SetActive(true);
-                }
-
-
-
-               
+                _rotatePermission = true;
             }
-            if (_isRightPressed)
+
+        }
+        if (_isRightPressed)
+        {
+            if (_rotatePermission == false || Block == BlockStae.Canon)
             {
-               
                 transform.RotateAround(transform.TransformPoint(_rotationPoint), new Vector3(0, 0, 1), _rotateAngle);
-
-                if (_col.activeSelf == true)
+                if (_col != null)
                 {
-                    _col.SetActive(false);
-                    _col2.SetActive(true);
+                    if (_col.activeSelf == true && _col != null)
+                    {
+                        _col.SetActive(false);
+                        _col2.SetActive(true);
+                    }
+                    else if (_col.activeSelf == false && _col != null)
+                    {
+                        _col.SetActive(true);
+                        _col2.SetActive(false);
+                    }
                 }
-                else if (_col.activeSelf == false)
-                {
-                    _col.SetActive(true);
-                    _col2.SetActive(false);
-                }
-
-
-                
+                _rotatePermission = true;
             }
-            _rotatePermission = false;
         }
 
         if (_pad == true && _inputMove.x * _inputMove.x >= 0.25f)
         {
 
 
-            if (CameraControllerTest.Instance.Camera.orthographicSize < 1080.0f * 1.5f)
+            if (CameraController.Instance.Camera.m_Lens.OrthographicSize < 1080.0f * 1.5f)
             {
                 if (_right || _left)
                 {
@@ -261,55 +283,47 @@ public class NewBuildingcon : MonoBehaviour
                         //transform.position += new Vector3(moveDistance, 0, 0);
                         //Vector2 Move = this.transform.position + moveDistance;
                         //rb.MovePosition(Move);
-                        rb.velocity -= _moveDistance * 20;
+                        rb.velocity -= _moveDistance * 30;
                     }
                     if (Mathf.Ceil(_inputMove.x) == 1)
                     {
                         //Vector2 Move = this.transform.position + moveDistance;
                         //rb.MovePosition(Move);
-                        rb.velocity += _moveDistance * 20;
+                        rb.velocity += _moveDistance * 30;
                     }
                 }
 
                 _pad = false;
-      
-              
+
+
             }
         }
 
-        if (Time.time - _previousTime >= _fallTime)
-        {
-
-            transform.position += _buildingPosi;
-            _previousTime = Time.time;
-          
-            _right = true;
-            _left = true;
-
-        }
         if (Stop == true)
         {
-          if(myEvent != null)
+            if (myEvent != null)
             {
-            //myEvent‚É“o˜^‚³‚ê‚Ä‚¢‚éŠÖ”‚ğÀs
-            myEvent.Invoke();
+                //myEventã«ç™»éŒ²ã•ã‚Œã¦ã„ã‚‹é–¢æ•°ã‚’å®Ÿè¡Œ
+                myEvent.Invoke();
             }
             rb.constraints = RigidbodyConstraints2D.None;
             transform.position = new Vector3(transform.position.x, transform.position.y, 0);
-            //transform.position = new Vector3(transform.position.x, 1, 0);//À•W‚ğ(0,1)‚É–ß‚·
+            //transform.position = new Vector3(transform.position.x, 1, 0);//åº§æ¨™ã‚’(0,1)ã«æˆ»ã™
             this.enabled = false;
+            scriptA.DisableGlow();
             CreateNextBlock();
         }
         if (BuildingStop == true)
         {
-            if(myEvent != null)
+            if (myEvent != null)
             {
-            //myEvent‚É“o˜^‚³‚ê‚Ä‚¢‚éŠÖ”‚ğÀs
-            myEvent.Invoke();
+                //myEventã«ç™»éŒ²ã•ã‚Œã¦ã„ã‚‹é–¢æ•°ã‚’å®Ÿè¡Œ
+                myEvent.Invoke();
             }
             rb.constraints = RigidbodyConstraints2D.None;
-            transform.position = new Vector3(transform.position.x, transform.position.y, 0);//À•W‚ğ‚»‚Ìê‚É‚Æ‚Ç‚Ü‚é
+            transform.position = new Vector3(transform.position.x, transform.position.y, 0);//åº§æ¨™ã‚’ãã®å ´ã«ã¨ã©ã¾ã‚‹
 
+            scriptA.DisableGlow();
             this.enabled = false;
             CreateNextBlock();
         }
@@ -323,16 +337,13 @@ public class NewBuildingcon : MonoBehaviour
         }
         if (Mathf.Ceil(_inputMove.y) == -1)
         {
-
-            rb.velocity += new Vector2(0, Mathf.Abs(_inputMove.y) * -_downSpeed * 10);
-            _right = true;
-            _left = true;
+            rb.velocity += new Vector2(0, Mathf.Abs(_inputMove.y) * -_downSpeed * 5);
         }
 
 
     }
 
-    public void _Rotate(InputAction.CallbackContext context)
+    public void BuildingRotation(InputAction.CallbackContext context)
     {
         var y = context.control.name;
         //Debug.Log(y);
@@ -342,6 +353,7 @@ public class NewBuildingcon : MonoBehaviour
 
                 if (y == "leftShoulder" || y == "r" || y == "n")
                 {
+
                     _isLeftPressed = true;
                 }
                 if (y == "rightShoulder" || y == "t" || y == "m")
@@ -352,18 +364,23 @@ public class NewBuildingcon : MonoBehaviour
             case InputActionPhase.Canceled:
                 _isLeftPressed = false;
                 _isRightPressed = false;
+                _rotatePermission = false;
                 break;
         }
+        SoundManager.Instance.PlaySE(SESoundData.SE.MoveBuilding);
     }
-    public void OnHold(InputAction.CallbackContext context)
+    public void BuildingMove(InputAction.CallbackContext context)
     {
         _inputMove = context.ReadValue<Vector2>();
         //Debug.Log(_inputMove);
+        SoundManager.Instance.PlaySE(SESoundData.SE.MoveBuilding);
 
     }
 
+    static SpownBill cacheSpownBill;
+    static SpownBill2P cachespownBill2P;
     /// <summary>
-    /// Ÿ‚ÌƒuƒƒbƒN‚Ì¶¬ƒƒWƒbƒN
+    /// æ¬¡ã®ãƒ–ãƒ­ãƒƒã‚¯ã®ç”Ÿæˆãƒ­ã‚¸ãƒƒã‚¯
     /// </summary>
     void CreateNextBlock()
     {
@@ -371,14 +388,16 @@ public class NewBuildingcon : MonoBehaviour
         {
             case PlayerNum.Player1:
                 this.GetComponent<PlayerInput>().enabled = false;
-                FindObjectOfType<SpownBill>().NewBill();//V‚µ‚¢ƒrƒ‹‚ğƒŠƒXƒ|[ƒ“
-                                                        // ‚±‚ÌƒIƒuƒWƒFƒNƒg‚ª–³Œø‰»‚³‚ê‚é‚ÉA©g‚ÌÀ•W‚ğŠi”[
+                if (cacheSpownBill == null) cacheSpownBill = FindObjectOfType<SpownBill>();
+                cacheSpownBill.NewBill();//æ–°ã—ã„ãƒ“ãƒ«ã‚’ãƒªã‚¹ãƒãƒ¼ãƒ³
+                                         // ã“ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒç„¡åŠ¹åŒ–ã•ã‚Œã‚‹æ™‚ã«ã€è‡ªèº«ã®åº§æ¨™ã‚’æ ¼ç´
                 GameManager.Instance.SpownBill.BuildingPosition = transform.position;
                 break;
             case PlayerNum.Player2:
                 this.GetComponent<PlayerInput>().enabled = false;
-                FindObjectOfType<SpownBill2P>().NewBill2P();//V‚µ‚¢ƒrƒ‹‚ğƒŠƒXƒ|[ƒ“
-                                                            // ‚±‚ÌƒIƒuƒWƒFƒNƒg‚ª–³Œø‰»‚³‚ê‚é‚ÉA©g‚ÌÀ•W‚ğŠi”[
+                if (cachespownBill2P == null) cachespownBill2P = FindObjectOfType<SpownBill2P>();
+                cachespownBill2P.NewBill2P();//æ–°ã—ã„ãƒ“ãƒ«ã‚’ãƒªã‚¹ãƒãƒ¼ãƒ³
+                                             // ã“ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒç„¡åŠ¹åŒ–ã•ã‚Œã‚‹æ™‚ã«ã€è‡ªèº«ã®åº§æ¨™ã‚’æ ¼ç´
                 GameManager.Instance.SpownBill.BuildingPosition = transform.position;
                 break;
         }
@@ -390,19 +409,26 @@ public class NewBuildingcon : MonoBehaviour
         if (targetIndex >= 0 && targetIndex < _pastPositions.Count)
         {
             float targetPosition = _pastPositions[targetIndex];
-            this.transform.position = new Vector2( targetPosition,this.transform.position.y);
-
+            this.transform.position = new Vector2(targetPosition, this.transform.position.y);
             rb.velocity = Vector2.zero;
         }
-       
-    }
-    private void ChangeSpriteRandomly()
-    {
-        // ƒXƒvƒ‰ƒCƒg‚Ì”z—ñ‚©‚çƒ‰ƒ“ƒ_ƒ€‚ÉƒXƒvƒ‰ƒCƒg‚ğ‘I‘ğ‚·‚é
-        Sprite randomSprite = sprites[UnityEngine.Random.Range(0, sprites.Length)];
 
-        // ƒXƒvƒ‰ƒCƒg‚ğ•ÏX‚·‚é
-        spriteRenderer.sprite = randomSprite;
+    }
+    public void ChangeSpriteRandomly(SpriteRenderer renderer)
+    {
+        // ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã®é…åˆ—ã‹ã‚‰ãƒ©ãƒ³ãƒ€ãƒ ã«ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã‚’é¸æŠã™ã‚‹
+        Sprite randomSprite = sprites[UnityEngine.Random.Range(0, sprites.Length)];
+        // ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã‚’å¤‰æ›´ã™ã‚‹
+        renderer.sprite = randomSprite;
+    }
+
+    /// <summary>
+    /// ãƒ–ãƒ­ãƒƒã‚¯ã®é‹å‹•ã‚’ç„¡åŠ¹åŒ–
+    /// </summary>
+    /// <param name="obj">å¯¾è±¡ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ</param>
+    public void FreezeAllConstrains(GameObject obj)
+    {
+        Rigidbody2D rb2D = obj.GetComponent<Rigidbody2D>();
+        rb2D.constraints = RigidbodyConstraints2D.FreezeAll;
     }
 }
-

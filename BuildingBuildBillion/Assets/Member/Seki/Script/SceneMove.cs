@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -28,6 +27,7 @@ public class SceneMove : MonoBehaviour
         }
        
         _fadeEvent.FadeIn();
+        SoundManager.Instance.PlayBGM(BGMSoundData.BGM.TitleBGM);
     }
 
     private void Update()
@@ -63,7 +63,7 @@ public class SceneMove : MonoBehaviour
         _fadeEvent.FadeOut();
     }
 
-    void TitleMove()
+    public void TitleMove()
     {
         SceneManager.LoadScene(_titleSceneName);
     }

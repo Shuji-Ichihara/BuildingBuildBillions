@@ -154,9 +154,9 @@ GameObject:
   - component: {fileID: 4356865857506395293}
   - component: {fileID: 6005958509353397183}
   - component: {fileID: 9219266272503271502}
-  - component: {fileID: -8153811063297168897}
   - component: {fileID: 5249087020731422277}
   - component: {fileID: 6689021729462517443}
+  - component: {fileID: 4612967954036316800}
   m_Layer: 0
   m_Name: Ma_002_2P
   m_TagString: Bill2
@@ -227,7 +227,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 7, y: 5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -251,7 +251,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 7, y: 5}
-    newSize: {x: 1, y: 1}
+    newSize: {x: 7, y: 5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -280,22 +280,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!58 &-8153811063297168897
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4356865857506395295}
-  m_Enabled: 0
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 3.98
 --- !u!114 &5249087020731422277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -324,8 +308,8 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6689021729462517443}
-        m_TargetAssemblyTypeName: NewBillcon, Assembly-CSharp
-        m_MethodName: OnHold
+        m_TargetAssemblyTypeName: NewBuildingcon, Assembly-CSharp
+        m_MethodName: BuildingMove
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -348,8 +332,8 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6689021729462517443}
-        m_TargetAssemblyTypeName: NewBillcon, Assembly-CSharp
-        m_MethodName: _Rotate
+        m_TargetAssemblyTypeName: NewBuildingcon, Assembly-CSharp
+        m_MethodName: BuildingRotation
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -418,11 +402,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15bdbf6d1f64f9d44bc81c60a54e9d0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _downSpeed: 50
+  _downSpeed: 100
   _rotateAngle: 90
   _col: {fileID: 1302796589763629647}
   _col2: {fileID: 3044437166493361469}
   Player: 1
+  Block: 0
   _restTime: 0.25
   _pastPositions: []
   myEvent:
@@ -434,3 +419,24 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 37f67db5ec2f9e1489fd4489ea1e1021, type: 3}
   BuildingStop: 0
   Stop: 0
+  isopareton: 0
+  rb: {fileID: 0}
+--- !u!114 &4612967954036316800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4356865857506395295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8f6d3c6e4250e84192f5b34ce9e71bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlowOff: 0
+  glowColor: {r: 1, g: 1, b: 1, a: 1}
+  glowBrightness: 5
+  outlineWidth: 20
+  alphaThreshold: 0.01
+  drawOutside: 0
+  enableInstancing: 0
