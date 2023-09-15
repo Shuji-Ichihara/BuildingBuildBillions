@@ -25,7 +25,7 @@ public class SceneMove : MonoBehaviour
         {
             _fadeEvent = GetComponent<FadeEvent>();
         }
-        Debug.Log("‚Ş[ƒ”ŒÄ‚Î‚ê");
+       
         _fadeEvent.FadeIn();
         SoundManager.Instance.PlayBGM(BGMSoundData.BGM.TitleBGM);
     }

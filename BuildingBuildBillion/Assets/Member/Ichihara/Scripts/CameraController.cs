@@ -21,7 +21,8 @@ public class CameraController : SingletonMonoBehaviour<CameraController>
     [SerializeField]
     private GameObject _empty = null;
     private Vector3 _defaultPosition = Vector3.zero;
-    
+
+    private CancellationTokenSource _cts = new CancellationTokenSource();
     private Func<GameObject, GameObject, float> ObjectTop;
 
     // Start is called before the first frame update
@@ -37,13 +38,14 @@ public class CameraController : SingletonMonoBehaviour<CameraController>
     /// </summary>
     public void CallCalucrateCameraMovement()
     {
-        CalucrateCameraMovement(this.GetCancellationTokenOnDestroy()).Forget();
+        CalucrateCameraMovement(_cts).Forget();
     }
 
     /// <summary>
     /// カメラズーム
     /// </summary>
-    private async UniTask CalucrateCameraMovement(CancellationToken token = default)
+    /// <param name="cts">キャンセル処理用のトークン</param>
+    private async UniTask CalucrateCameraMovement(CancellationTokenSource cts = default)
     {
         // カメラの OrthographicSize の変化量
         float zoom = _zoomCameraSpeed * Time.deltaTime;
@@ -58,28 +60,29 @@ public class CameraController : SingletonMonoBehaviour<CameraController>
             // 要変更
             if (GameManager.Instance.CountDownGameTime < 0.0f) { break; }
             // カメラがズームアウトするのに必要なビルの高さ
-            float buildingTop = _camera.m_Lens.OrthographicSize * GameManager.Instance.BuildingHeightAndScreenRatio;
+            float needBuildingTop = _camera.m_Lens.OrthographicSize * GameManager.Instance.BuildingHeightAndScreenRatio;
+            float buildingTop = GetBuildingTop().y;
             // ビルの高さが buildingTop 以上であればズームアウト
-            if (GetBuildingTop().y > buildingTop)
+            if (buildingTop > needBuildingTop)
             {
                 if (zoom < 0.0f) { zoom *= -1; }
                 moveVector = Vector3.up;
                 isMovedCameraSwtich = true;
             }
             // ビルの高さが buildingTop より低ければズームイン
-            else if (GetBuildingTop().y < buildingTop)
+            else if (buildingTop < needBuildingTop)
             {
                 if (zoom > 0.0f) { zoom *= -1; }
                 moveVector = Vector3.down;
                 isMovedCameraSwtich = false;
             }
             else { continue; }
-            await MoveCamera(zoom, moveVector, isMovedCameraSwtich, token);
+            await MoveCamera(zoom, moveVector, isMovedCameraSwtich, cts);
             // カメラの OrthgraphicSize の限界値を定義
             _camera.m_Lens.OrthographicSize = Mathf.Clamp(_camera.m_Lens.OrthographicSize
                                                      , Screen.height / 2.0f
                                                      , Screen.height); ;
-            await UniTask.Yield(token);
+            await UniTask.Yield(cts.Token);
         }
 
     }
@@ -95,7 +98,7 @@ public class CameraController : SingletonMonoBehaviour<CameraController>
         if (GameManager.Instance.CountDownGameTime < 0.0f)
         {
             ObjectTop -= GetObjectTop;
-            return default;
+            return 0;
         }
         float top = 0.0f;
         if (obj.transform.position.y > obj2.transform.position.y)
@@ -115,16 +118,21 @@ public class CameraController : SingletonMonoBehaviour<CameraController>
     /// <param name="zoom">カメラズームの変化量</param>
     /// <param name="vector">カメラの Y 軸の移動方向</param>
     /// <param name="movedSwitch">カメラの移動方向の切り替え</param>
-    /// <param name="token">UniTask 中止用のトークン</param>
+    /// <param name="cts">UniTask 中止用のトークン</param>
     /// <returns></returns>
-    private async UniTask MoveCamera(float zoom, Vector3 vector, bool movedSwitch, CancellationToken token = default)
+    private async UniTask MoveCamera(float zoom, Vector3 vector, bool movedSwitch, CancellationTokenSource cts = default)
     {
         // 変更の可能性有
-        await UniTask.WaitForFixedUpdate(token);
+        await UniTask.WaitForFixedUpdate(cts.Token);
         try
         {
             // カメラのズーム、移動を止める処理
             float top = ObjectTop(GameManager.Instance.Obj, GameManager.Instance.Obj2);
+            if (ObjectTop == null)
+            {
+                cts.Cancel();
+                return;
+            }
             if (_empty.transform.position.y - top
                 > _camera.m_Lens.OrthographicSize * GameManager.Instance.BuildingHeightAndScreenRatio / 2.0f) { return; }
             _empty.transform.position += new Vector3(0.0f, zoom, 0.0f);
@@ -144,10 +152,10 @@ public class CameraController : SingletonMonoBehaviour<CameraController>
                                                                 , Screen.height / 2.0f)
                                                    , _camera.transform.position.z);
         }
-        catch(MissingReferenceException mre)
+        catch (MissingReferenceException mre)
         {
             ObjectTop -= GetObjectTop;
-            throw mre.InnerException;
+            throw;
         }
     }
 
@@ -155,8 +163,9 @@ public class CameraController : SingletonMonoBehaviour<CameraController>
     /// 積みあがっている建材オブジェクトで、一番 Y 座標が大きい建材オブジェクトを検索する
     /// </summary>
     /// <returns></returns>
-    private Vector3 GetBuildingTop(Vector3 buildingTop = default)
+    private Vector3 GetBuildingTop()
     {
+        Vector3 buildingTop = Vector3.zero;
         // 接地したオブジェクトを検索
         Vector3 dummy1Position = GameManager.Instance.SpownBill.BuildingPosition;
         Vector3 dummy2Position = GameManager.Instance.SpownBill2P.BuildingPosition;
@@ -171,7 +180,6 @@ public class CameraController : SingletonMonoBehaviour<CameraController>
             {
                 buildingTop = dummy2Position;
             }
-
         }
         catch (MissingReferenceException mre)
         {

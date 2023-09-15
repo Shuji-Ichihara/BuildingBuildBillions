@@ -12,11 +12,15 @@ public class CraneSensor : MonoBehaviour
     private float period = 2;
     [SerializeField]
     DistanceJoint2D distanceJoint2D;
+    [SerializeField]
+    CraneJib craneJib;
 
     private float pickUpTime = 3;
     
 
     private Vector3 defaultPosition; //デフォルトポジション格納用
+    private float speed = 0;
+    private float endPosition = 0;
 
     private bool craneMoving = false; //アームが移動するかどうか
 
@@ -33,7 +37,8 @@ public class CraneSensor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        speed = craneJib.ExtendSpeed();
+        speed = craneJib.ExtendDistance();
     }
 
     // Update is called once per frame
@@ -58,8 +63,6 @@ public class CraneSensor : MonoBehaviour
             distanceJoint2D.connectedBody = collision.gameObject.GetComponent<Rigidbody2D>();
             StartCoroutine(ConfigureDistance());
             //Debug.Log("つかんだよ");
-
-            
         }
     }
     IEnumerator ConfigureDistance()

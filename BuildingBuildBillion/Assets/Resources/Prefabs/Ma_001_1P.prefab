@@ -156,6 +156,7 @@ GameObject:
   - component: {fileID: 1620623725155970353}
   - component: {fileID: 3602916846280641195}
   - component: {fileID: 35604521499659847}
+  - component: {fileID: -2992503959986723235}
   m_Layer: 0
   m_Name: Ma_001_1P
   m_TagString: Bill
@@ -171,7 +172,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2802399254260151252}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 197, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 20, y: 20, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -200,7 +201,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -221,12 +222,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: fcfc4e29bf3cf57469f920351603ec08, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2ba37c038fdc1da4a824ff25d6f6f8c0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 5, y: 5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -250,7 +251,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 5, y: 5}
-    newSize: {x: 1, y: 1}
+    newSize: {x: 5, y: 5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -405,7 +406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15bdbf6d1f64f9d44bc81c60a54e9d0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _downSpeed: 50
+  _downSpeed: 100
   _rotateAngle: 90
   _col: {fileID: 2228780873720440308}
   _col2: {fileID: 652442458824834833}
@@ -422,3 +423,24 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 2ba37c038fdc1da4a824ff25d6f6f8c0, type: 3}
   BuildingStop: 0
   Stop: 0
+  isopareton: 0
+  rb: {fileID: 0}
+--- !u!114 &-2992503959986723235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2802399254260151252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8f6d3c6e4250e84192f5b34ce9e71bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlowOff: 0
+  glowColor: {r: 1, g: 1, b: 1, a: 1}
+  glowBrightness: 10
+  outlineWidth: 20
+  alphaThreshold: 0
+  drawOutside: 0
+  enableInstancing: 0

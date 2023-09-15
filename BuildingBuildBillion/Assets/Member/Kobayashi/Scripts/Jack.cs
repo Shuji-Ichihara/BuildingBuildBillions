@@ -52,7 +52,7 @@ public class Jack : MonoBehaviour
         // ブロックの法線ベクトルとの角度を計算
         float angle = Vector2.Angle(Vector2.up, contactNormal);
 
-        Debug.Log(angle);
+        //Debug.Log(angle);
         // 角度が一定の範囲内にない場合は処理をスキップ
         if (angle < _maxAllowedAngleDown)
         {

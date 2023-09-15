@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CraneSensor2 : MonoBehaviour
 {
-    [Header("ÉAÅ[ÉÄà⁄ìÆïù"),SerializeField]
+    [Header("ÉAÅ[ÉÄà⁄ìÆïù(èc)"),SerializeField]
     private float width = 1;
     [SerializeField]
     DistanceJoint2D distanceJoint2D;
@@ -25,24 +25,59 @@ public class CraneSensor2 : MonoBehaviour
     private float otherObjStartPos;
 
     BoxCollider2D boxCollider2D;
-
+    //â°óp
+    public bool widthExtend = false;
+    public bool widthContract = false;
+    private float speedWidth = 0;
+    private Vector2 defaultPositionParent;
+    private float endPositionWidth = 0;
+    //èc
     private float startPosition;
     private float endPosition;
     private float speed = 5f;
     private float ratio = 0;
+    private float ratio2 = 0;
     // Start is called before the first frame update
     void Start()
     {
         defaultPosition = transform.localPosition;
+        defaultPositionParent = transform.parent.localPosition;
         parentObj = transform.parent.gameObject;
         boxCollider2D = GetComponent<BoxCollider2D>();
         endPosition = defaultPosition.y - width;
+        //
+        speedWidth = craneJib.ExtendSpeed();
+        endPositionWidth = craneJib.ExtendDistance();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        //â°
+        //êLÇŒÇ∑
+        if(widthExtend)
+        {
+            transform.parent.localPosition = new Vector2(Mathf.Lerp(defaultPositionParent.x, -endPositionWidth + defaultPositionParent.x, ratio),transform.parent.localPosition.y);
+            ratio += Time.deltaTime / speedWidth;
+            if (ratio > 1f)
+            {
+                widthExtend = false;
+                ratio = 0;
+            }
+        }
+        //èkÇﬂÇÈ
+        if (widthContract)
+        {
+            //Debug.Log(defaultPositionParent.x);
+            transform.parent.localPosition = new Vector2(Mathf.Lerp(-endPositionWidth + defaultPositionParent.x, defaultPositionParent.x - 8.5f, ratio2), transform.parent.localPosition.y);
+            ratio2 += Time.deltaTime / speedWidth;
+            if (ratio2 > 1f)
+            {
+                widthContract = false;
+                ratio2 = 0;
+            }
+        }
+        //èc
         if (armCanMove)
         {
             //Debug.Log(defaultPosition.y);
@@ -54,15 +89,15 @@ public class CraneSensor2 : MonoBehaviour
                 ratio = 0;
             }
         }
-        else if(armCatch)
+        else if (armCatch)
         {
             transform.localPosition = otherObject.transform.localPosition;
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Materials"))
-        {
+        if (collision.gameObject.CompareTag("Bill")||  (collision.gameObject.CompareTag("Bill2")))
+        { 
             armCanMove = false;
             armCatch = true;
             otherObject = collision.gameObject;
