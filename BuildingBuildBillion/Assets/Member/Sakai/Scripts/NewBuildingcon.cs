@@ -219,7 +219,7 @@ public class NewBuildingcon : MonoBehaviour
         {
             if (_rotatePermission == false || Block == BlockStae.Canon)
             {
-                transform.RotateAround(transform.TransformPoint(_rotationPoint), new Vector3(0, 0, 1), -_rotateAngle);
+                transform.RotateAround(transform.TransformPoint(_rotationPoint), new Vector3(0, 0, -1), -_rotateAngle);
                 if (_col != null)
                 {
                     if (_col.activeSelf == false && _col != null)
@@ -241,7 +241,7 @@ public class NewBuildingcon : MonoBehaviour
         {
             if (_rotatePermission == false || Block == BlockStae.Canon)//大砲の場合のみ1度ずつ回転させる
             {
-                transform.RotateAround(transform.TransformPoint(_rotationPoint), new Vector3(0, 0, 1), _rotateAngle);
+                transform.RotateAround(transform.TransformPoint(_rotationPoint), new Vector3(0, 0, -1), _rotateAngle);
                 if (_col != null)
                 {
                     if (_col.activeSelf == true && _col != null)
