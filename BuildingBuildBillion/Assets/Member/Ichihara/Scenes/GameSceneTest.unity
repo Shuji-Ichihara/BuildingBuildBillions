@@ -2081,7 +2081,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1158631018
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2443,7 +2443,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1334719700
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3878,7 +3878,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af8910cfe8e418e488bc449e0abb5e87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _setGameTime: 25
+  _setGameTime: 30
   _setWaitingGameTime: 3
   _buildingHeightAndScreenRatio: 0.5
   _buildSpawnPoint1: {fileID: 234395655}
@@ -3927,7 +3927,6 @@ MonoBehaviour:
   Player2NextBuildingMaterial: {fileID: 1055178945}
   _youWon: {fileID: 21300000, guid: 84072b07c479a6e44916b005c00b1f7c, type: 3}
   _youLost: {fileID: 21300000, guid: 66aa9ed380ec11f4686c4037cf23c292, type: 3}
-  _youDraw: {fileID: 21300000, guid: d34d2ec3f4c244149b7cd5e795362cf4, type: 3}
   _resultTtile: {fileID: 1501241415}
   Player1Result: {fileID: 1158631019}
   Player2Result: {fileID: 1334719701}

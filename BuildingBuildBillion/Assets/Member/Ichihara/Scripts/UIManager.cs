@@ -59,9 +59,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     public Sprite YouLost => _youLost;
 
 
-    [SerializeField]
-    private Sprite _youDraw = null;
-    public Sprite YouDraw => _youDraw;
+    
     [SerializeField]
     private Image _resultTtile = null;
     // 外部から書き換えるため。
