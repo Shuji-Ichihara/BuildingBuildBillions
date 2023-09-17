@@ -57,15 +57,20 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     [SerializeField]
     private Sprite _youLost = null;
     public Sprite YouLost => _youLost;
+
+
+    [SerializeField]
+    private Sprite _youDraw = null;
+    public Sprite YouDraw => _youDraw;
     [SerializeField]
     private Image _resultTtile = null;
     // 外部から書き換えるため。
     public Image Player1Result = null;
     public Image Player2Result = null;
-    public TextMeshProUGUI DrawText = null;
+    public Image DrawImage = null;
     [SerializeField]
-    private string _pronptTitleText = "Please push to A";
-    private TextMeshProUGUI _pronptTitle = null;
+    private GameObject _pleasePushToAImage = null;
+  
     [Space(3)]
     #endregion
 
@@ -87,18 +92,22 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         _resultTtile.color = Color.white;
         Player1Result.color = Color.clear;
         Player2Result.color = Color.clear;
-        _pronptTitle = GameObject.Find("PronptTitle").GetComponent<TextMeshProUGUI>();
-        _pronptTitle.text = "";
+        DrawImage.color = Color.clear;
+        _pleasePushToAImage.SetActive(false);
+
+        // 次建材表示のバックグラウンドのカラー指定
+        //_player1NextBack = GameObject.Find("Player1NextBack").GetComponent<Image>();
+        // _player2NextBack = GameObject.Find("Player2NextBack").GetComponent<Image>();
         // ゲーム中に使用するキャンバスを非アクティブ化
         // 同時に、リザルトシーンのキャンバスを透明化
         _gameUICanvas.gameObject.SetActive(false);
         var resultSceneCanvasGroup = _resultSceneCanvas.GetComponent<CanvasGroup>();
         resultSceneCanvasGroup.alpha = 0.0f;
         _resultTtile.enabled = false;
-        _waitingGameTimeText.color = Color.yellow;
+        _waitingGameTimeText.color = new Color32(255, 177, 0, 255);
         _backGroundImage.color = new Color32(0, 0, 0, 128);
-        // DrawText の中身を空文字で初期化する
-        DrawText.text = "";
+
+       
     }
 
     // Update is called once per frame
@@ -135,11 +144,14 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
                 {
                     Player1Result.color = Color.clear;
                     Player2Result.color = Color.clear;
+                    DrawImage.color = Color.white;
+                   
                 }
                 else if(false == isDraw)
                 {
                     Player1Result.color = Color.white;
                     Player2Result.color = Color.white;
+                    DrawImage.color = Color.clear;
                 }
                 PlayPlayer1ResultAnimation(Player1Result, _cts).Forget();
                 PlayPlayer2ResultAnimation(Player2Result, _cts).Forget();
@@ -147,9 +159,10 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
                 SoundManager.Instance.StopBGM();
                 SoundManager.Instance.PlaySE(SESoundData.SE.Cheer);
                 SoundManager.Instance.PlayBGM(BGMSoundData.BGM.ResultBGM);
-                _pronptTitle = GameObject.Find("PronptTitle").GetComponent<TextMeshProUGUI>();
-                _pronptTitle.text = _pronptTitleText;
-                FadeText(_pronptTitle, cts: _cts).Forget();
+                if (_pleasePushToAImage != null)
+                {
+                    _pleasePushToAImage.gameObject.SetActive(true);
+                }
                 GameManager.Instance.PlayerInput.enabled = true;
             }
         }
@@ -193,7 +206,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     public async UniTask StartGameEffect(CancellationTokenSource cts = default)
     {
         _waitingGameTimeText.fontSize = 300.0f;
-        _waitingGameTimeText.text = "Let's build!!!";
+        _waitingGameTimeText.text = "LET'S BUILD!!";
         SoundManager.Instance.PlaySE(SESoundData.SE.StartGame);
         await UniTask.Delay(1500, false, PlayerLoopTiming.Update, cts.Token);
         var waitingGameTimeTextParent = _waitingGameTimeText.GetComponentInParent<CanvasGroup>();

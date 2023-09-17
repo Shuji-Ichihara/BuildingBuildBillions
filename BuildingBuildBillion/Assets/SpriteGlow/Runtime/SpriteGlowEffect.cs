@@ -14,7 +14,7 @@ namespace SpriteGlow
         public bool GlowOff = false;
         private void Update()
         {
-            if (GlowOff == true)
+            if (GlowOff == true)　//操作終了時に発光終了
             {
                 this.enabled = false;
             }
@@ -98,13 +98,13 @@ namespace SpriteGlow
         {
             if (!isActiveAndEnabled) return;
 
-            // Update material properties when changing serialized fields with editor GUI.
+            
             SetMaterialProperties();
         }
 
         private void OnDidApplyAnimationProperties ()
         {
-            // Update material properties when changing serialized fields with Unity animation.
+            // UnityでSerializeFielを変更する際に、マテリアルのプロパティを更新します。
             SetMaterialProperties();
         }
 
@@ -114,7 +114,7 @@ namespace SpriteGlow
 
             Renderer.sharedMaterial = SpriteGlowMaterial.GetSharedFor(this);
 
-            if (materialProperties == null) // Initializing it at `Awake` or `OnEnable` causes nullref in editor in some cases.
+            if (materialProperties == null) 
                 materialProperties = new MaterialPropertyBlock();
 
             materialProperties.SetFloat(isOutlineEnabledId, isActiveAndEnabled ? 1 : 0);

@@ -26,16 +26,19 @@ public class CheckBlock : MonoBehaviour
         {
             bill.Stop = true;
             glow.GlowOff = true;
+            bill.isopareton = false;
         }
         if (collision.gameObject.CompareTag("Bill"))
         {
             bill.BuildingStop = true;
             glow.GlowOff = true;
+            bill.isopareton = false;
         }
         if (collision.gameObject.CompareTag("Bill2"))
         {
             bill.BuildingStop = true;
             glow.GlowOff = true;
+            bill.isopareton = false;
         }
     }
 
