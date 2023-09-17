@@ -109,8 +109,7 @@ public class JadgementBarController : SingletonMonoBehaviour<JadgementBarControl
         // 引き分け処理
         if (Objects.Count >= 2 || rightOfCenter == leftOfCenter)
         {
-            UIManager.Instance.DrawImage.sprite
-                 = UIManager.Instance.YouDraw;
+            UIManager.Instance.DrawImage.SetActive(true);
             isPreviewDraw = true;
             return isPreviewDraw;
         }

@@ -67,7 +67,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     // 外部から書き換えるため。
     public Image Player1Result = null;
     public Image Player2Result = null;
-    public Image DrawImage = null;
+    public GameObject DrawImage = null;
     [SerializeField]
     private GameObject _pleasePushToAImage = null;
   
@@ -92,7 +92,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         _resultTtile.color = Color.white;
         Player1Result.color = Color.clear;
         Player2Result.color = Color.clear;
-        DrawImage.color = Color.clear;
+        DrawImage.SetActive(false);
         _pleasePushToAImage.SetActive(false);
 
         // 次建材表示のバックグラウンドのカラー指定
@@ -144,14 +144,14 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
                 {
                     Player1Result.color = Color.clear;
                     Player2Result.color = Color.clear;
-                    DrawImage.color = Color.white;
-                   
+                    DrawImage.SetActive(true);
+
                 }
                 else if(false == isDraw)
                 {
                     Player1Result.color = Color.white;
                     Player2Result.color = Color.white;
-                    DrawImage.color = Color.clear;
+                    DrawImage.SetActive(false);
                 }
                 PlayPlayer1ResultAnimation(Player1Result, _cts).Forget();
                 PlayPlayer2ResultAnimation(Player2Result, _cts).Forget();
