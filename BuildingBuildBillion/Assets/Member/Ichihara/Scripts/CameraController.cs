@@ -53,11 +53,10 @@ public class CameraController : SingletonMonoBehaviour<CameraController>
         // 初期値が最低値の為、Vector3.up で初期化
         Vector3 moveVector = Vector3.up;
         // 判定バーの移動方向の設定
-        // 初期値が最低値の為、true で初期化
+        // true でズームイン、false でズームアウト。初期値が最低値の為、true で初期化
         bool isMovedCameraSwtich = true;
         while (_camera.m_Lens.OrthographicSize >= 540 && _camera.m_Lens.OrthographicSize <= Screen.height)
         {
-            // 要変更
             if (GameManager.Instance.CountDownGameTime < 0.0f) { break; }
             // カメラがズームアウトするのに必要なビルの高さ
             float needBuildingTop = _camera.m_Lens.OrthographicSize * GameManager.Instance.BuildingHeightAndScreenRatio;
@@ -122,7 +121,6 @@ public class CameraController : SingletonMonoBehaviour<CameraController>
     /// <returns></returns>
     private async UniTask MoveCamera(float zoom, Vector3 vector, bool movedSwitch, CancellationTokenSource cts = default)
     {
-        // 変更の可能性有
         await UniTask.WaitForFixedUpdate(cts.Token);
         try
         {
