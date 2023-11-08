@@ -36,6 +36,8 @@ public class SceneMove : MonoBehaviour
         {
             Title();
         }
+        QuitApplication();
+
     }
     public void Title()
     {
@@ -80,5 +82,20 @@ public class SceneMove : MonoBehaviour
     void ResultMove()
     {
         SceneManager.LoadScene(_resultSceneName);
+    }
+
+    /// <summary>
+    /// ÉAÉvÉäèIóπ
+    /// </summary>
+    private void QuitApplication()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();        
+#endif
+        }
     }
 }

@@ -88,7 +88,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     private void Update()
     {
         MoveScene();
-        QuitApplication();
     }
 
     /// <summary>
@@ -242,21 +241,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         if (Input.GetKeyDown(KeyCode.Return))
         {
             SceneMove.instance.TitleMove();
-        }
-    }
-
-    /// <summary>
-    /// アプリ終了
-    /// </summary>
-    private void QuitApplication()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-#if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-#else
-            Application.Quit();        
-#endif
         }
     }
 }
